@@ -397,7 +397,7 @@ input[type=range]{width:60px;accent-color:var(--gold);cursor:pointer;height:3px}
   }
   
   /* Top Bar adjustments */
-  #top > *:not(.cnav):not(#tr):not([onclick="openS()"]) {
+  #top > *:not(.cnav):not(#tr):not([onclick="openS()"]):not(#sbic):not(#theme-btn) {
     display: none !important;
   }
   .cnav {
@@ -410,8 +410,8 @@ input[type=range]{width:60px;accent-color:var(--gold);cursor:pointer;height:3px}
   #pb { display: flex !important; }
   #nb { display: none !important; }
   
-  /* 齒輪按鈕強制顯示 */
-  button[onclick="openS()"] {
+  /* 強制顯示選單、主題、齒輪按鈕，並確保點擊區域夠大 */
+  #sbic, #theme-btn, button[onclick="openS()"] {
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -1246,6 +1246,44 @@ function markRead(num){
   try{localStorage.setItem('iz6_read',JSON.stringify([...readSet]));}catch(e){}
   const el=document.getElementById('si'+num);
   if(el)el.classList.add('read');
+}
+
+function openS() {
+  document.getElementById('sov').classList.add('show');
+  pickV();
+}
+function closeS() {
+  document.getElementById('sov').classList.remove('show');
+}
+function pickV() {
+  const list = document.getElementById('vlist');
+  if (!list) return;
+  list.innerHTML = '';
+  const voices = speechSynthesis.getVoices();
+  const enList = voices.filter(v => v.lang.startsWith('en'));
+  const zhList = voices.filter(v => v.lang.startsWith('zh'));
+  
+  const createSection = (title, vcs, type) => {
+    const h = document.createElement('div');
+    h.className = 'tp-title';
+    h.textContent = title;
+    list.appendChild(h);
+    vcs.forEach(v => {
+      const d = document.createElement('div');
+      d.className = 'tp-item';
+      if ((type === 'en' && enV === v) || (type === 'zh' && zhV === v)) d.classList.add('active');
+      d.innerHTML = `<div><div class="tp-label">${v.name}</div><div class="tp-sub">${v.lang}</div></div>`;
+      d.onclick = () => {
+        if (type === 'en') enV = v;
+        else zhV = v;
+        pickV();
+      };
+      list.appendChild(d);
+    });
+  };
+  
+  if (enList.length) createSection('English Voices', enList, 'en');
+  if (zhList.length) createSection('中文語音', zhList, 'zh');
 }
 </script>
 
