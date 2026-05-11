@@ -1,0 +1,5760 @@
+{
+  "title": "Lord of the Mysteries",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Chapter 1 - Crimson",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "Chapter 2 - Situation",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "Chapter 3 - Melissa",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "Chapter 4 - Divination",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "Chapter 5 - Ritual",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "Chapter 6 - Beyonder",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "Chapter 7 - Call Sign",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "Chapter 8 - A New Era",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "Chapter 9 - The Notebook",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "Chapter 10 - The Norm",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "Chapter 11 - Real Culinary Skills",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "Chapter 12 - Here Again",
+      "url": "chapters/0012.json"
+    },
+    {
+      "id": 13,
+      "title": "Chapter 13 - Nighthawk",
+      "url": "chapters/0013.json"
+    },
+    {
+      "id": 14,
+      "title": "Chapter 14 - The Medium",
+      "url": "chapters/0014.json"
+    },
+    {
+      "id": 15,
+      "title": "Chapter 15 - The Invitation",
+      "url": "chapters/0015.json"
+    },
+    {
+      "id": 16,
+      "title": "Chapter 16 - Rat-baiting With Dogs",
+      "url": "chapters/0016.json"
+    },
+    {
+      "id": 17,
+      "title": "Chapter 17 - Special Operations Department",
+      "url": "chapters/0017.json"
+    },
+    {
+      "id": 18,
+      "title": "Chapter 18 - Origin and Cause",
+      "url": "chapters/0018.json"
+    },
+    {
+      "id": 19,
+      "title": "Chapter 19 - Sealed Artifacts",
+      "url": "chapters/0019.json"
+    },
+    {
+      "id": 20,
+      "title": "Chapter 20 - The Forgetful Dunn",
+      "url": "chapters/0020.json"
+    },
+    {
+      "id": 21,
+      "title": "Chapter 21 - An Old Friend In A Different World",
+      "url": "chapters/0021.json"
+    },
+    {
+      "id": 22,
+      "title": "Chapter 22 - Starting Sequence",
+      "url": "chapters/0022.json"
+    },
+    {
+      "id": 23,
+      "title": "Chapter 23 - Side Arm",
+      "url": "chapters/0023.json"
+    },
+    {
+      "id": 24,
+      "title": "Chapter 24 - Penny-pincher",
+      "url": "chapters/0024.json"
+    },
+    {
+      "id": 25,
+      "title": "Chapter 25 - Cathedral",
+      "url": "chapters/0025.json"
+    },
+    {
+      "id": 26,
+      "title": "Chapter 26 - Practice",
+      "url": "chapters/0026.json"
+    },
+    {
+      "id": 27,
+      "title": "Chapter 27 - Siblings Dinner",
+      "url": "chapters/0027.json"
+    },
+    {
+      "id": 28,
+      "title": "Chapter 28 - Secret Order",
+      "url": "chapters/0028.json"
+    },
+    {
+      "id": 29,
+      "title": "Chapter 29 - Jobs and Rentals Are Serious Business",
+      "url": "chapters/0029.json"
+    },
+    {
+      "id": 30,
+      "title": "Chapter 30 - Brand New Beginning",
+      "url": "chapters/0030.json"
+    },
+    {
+      "id": 31,
+      "title": "Chapter 31 - Potion",
+      "url": "chapters/0031.json"
+    },
+    {
+      "id": 32,
+      "title": "Chapter 32 - Spirit Vision",
+      "url": "chapters/0032.json"
+    },
+    {
+      "id": 33,
+      "title": "Chapter 33 - Switch",
+      "url": "chapters/0033.json"
+    },
+    {
+      "id": 34,
+      "title": "Chapter 34 - Advance Payment",
+      "url": "chapters/0034.json"
+    },
+    {
+      "id": 35,
+      "title": "Chapter 35 - Exchange of Information",
+      "url": "chapters/0035.json"
+    },
+    {
+      "id": 36,
+      "title": "Chapter 36 - A Simple Question",
+      "url": "chapters/0036.json"
+    },
+    {
+      "id": 37,
+      "title": "Chapter 37 - The Club",
+      "url": "chapters/0037.json"
+    },
+    {
+      "id": 38,
+      "title": "Chapter 38 - Novice Hobbyist",
+      "url": "chapters/0038.json"
+    },
+    {
+      "id": 39,
+      "title": "Chapter 39 - Interesting Trick",
+      "url": "chapters/0039.json"
+    },
+    {
+      "id": 40,
+      "title": "Chapter 40 - Mysticism Curriculum",
+      "url": "chapters/0040.json"
+    },
+    {
+      "id": 41,
+      "title": "Chapter 41 - Audrey and Her Susie",
+      "url": "chapters/0041.json"
+    },
+    {
+      "id": 42,
+      "title": "Chapter 42 - Butler Klee",
+      "url": "chapters/0042.json"
+    },
+    {
+      "id": 43,
+      "title": "Chapter 43 - Search",
+      "url": "chapters/0043.json"
+    },
+    {
+      "id": 44,
+      "title": "Chapter 44 - Fate",
+      "url": "chapters/0044.json"
+    },
+    {
+      "id": 45,
+      "title": "Chapter 45 - Returning",
+      "url": "chapters/0045.json"
+    },
+    {
+      "id": 46,
+      "title": "Chapter 46 - Portrait",
+      "url": "chapters/0046.json"
+    },
+    {
+      "id": 47,
+      "title": "Chapter 47 - Old Neils Lack of Money",
+      "url": "chapters/0047.json"
+    },
+    {
+      "id": 48,
+      "title": "Chapter 48 - Hanass Vincent",
+      "url": "chapters/0048.json"
+    },
+    {
+      "id": 49,
+      "title": "Chapter 49 - Divination Art",
+      "url": "chapters/0049.json"
+    },
+    {
+      "id": 50,
+      "title": "Chapter 50 - Old Neils Method of Repayment",
+      "url": "chapters/0050.json"
+    },
+    {
+      "id": 51,
+      "title": "Chapter 51 - The Grounded Ritualistic Magic",
+      "url": "chapters/0051.json"
+    },
+    {
+      "id": 52,
+      "title": "Chapter 52 - Spectator",
+      "url": "chapters/0052.json"
+    },
+    {
+      "id": 53,
+      "title": "Chapter 53 - Listener",
+      "url": "chapters/0053.json"
+    },
+    {
+      "id": 54,
+      "title": "Chapter 54 - The First Divination Requester",
+      "url": "chapters/0054.json"
+    },
+    {
+      "id": 55,
+      "title": "Chapter 55 - Revelation",
+      "url": "chapters/0055.json"
+    },
+    {
+      "id": 56,
+      "title": "Chapter 56 - Escape from the Sea",
+      "url": "chapters/0056.json"
+    },
+    {
+      "id": 57,
+      "title": "Chapter 57 - Organization and Summary",
+      "url": "chapters/0057.json"
+    },
+    {
+      "id": 58,
+      "title": "Chapter 58 - A Train of Thought",
+      "url": "chapters/0058.json"
+    },
+    {
+      "id": 59,
+      "title": "Chapter 59 - Roselles Origins",
+      "url": "chapters/0059.json"
+    },
+    {
+      "id": 60,
+      "title": "Chapter 60 - Second Blasphemy Slate",
+      "url": "chapters/0060.json"
+    },
+    {
+      "id": 61,
+      "title": "Chapter 61 - Strange Symbol",
+      "url": "chapters/0061.json"
+    },
+    {
+      "id": 62,
+      "title": "Chapter 62 - The Seers Suggestion",
+      "url": "chapters/0062.json"
+    },
+    {
+      "id": 63,
+      "title": "Chapter 63 - Dream Interpretation",
+      "url": "chapters/0063.json"
+    },
+    {
+      "id": 64,
+      "title": "Chapter 64 - Instigator",
+      "url": "chapters/0064.json"
+    },
+    {
+      "id": 65,
+      "title": "Chapter 65 - Beyonder Information",
+      "url": "chapters/0065.json"
+    },
+    {
+      "id": 66,
+      "title": "Chapter 66 - Demoness Sect",
+      "url": "chapters/0066.json"
+    },
+    {
+      "id": 67,
+      "title": "Chapter 67 - Response",
+      "url": "chapters/0067.json"
+    },
+    {
+      "id": 68,
+      "title": "Chapter 68 - Monster",
+      "url": "chapters/0068.json"
+    },
+    {
+      "id": 69,
+      "title": "Chapter 69 - Protection Amulet",
+      "url": "chapters/0069.json"
+    },
+    {
+      "id": 70,
+      "title": "Chapter 70 - 2-049s Arrival",
+      "url": "chapters/0070.json"
+    },
+    {
+      "id": 71,
+      "title": "Chapter 71 - Sluggish Phenomenon",
+      "url": "chapters/0071.json"
+    },
+    {
+      "id": 72,
+      "title": "Chapter 72 - Tracking",
+      "url": "chapters/0072.json"
+    },
+    {
+      "id": 73,
+      "title": "Chapter 73 - First Battle",
+      "url": "chapters/0073.json"
+    },
+    {
+      "id": 74,
+      "title": "Chapter 74 - Ray Bieber",
+      "url": "chapters/0074.json"
+    },
+    {
+      "id": 75,
+      "title": "Chapter 75 - Saving himself",
+      "url": "chapters/0075.json"
+    },
+    {
+      "id": 76,
+      "title": "Chapter 76 - Dealing With The Aftermath",
+      "url": "chapters/0076.json"
+    },
+    {
+      "id": 77,
+      "title": "Chapter 77 - Remnant Items",
+      "url": "chapters/0077.json"
+    },
+    {
+      "id": 78,
+      "title": "Chapter 78 - Trauma",
+      "url": "chapters/0078.json"
+    },
+    {
+      "id": 79,
+      "title": "Chapter 79 - Another Murmuring",
+      "url": "chapters/0079.json"
+    },
+    {
+      "id": 80,
+      "title": "Chapter 80 - Banquet Invitation",
+      "url": "chapters/0080.json"
+    },
+    {
+      "id": 81,
+      "title": "Chapter 81 - Finally Meeting",
+      "url": "chapters/0081.json"
+    },
+    {
+      "id": 82,
+      "title": "Chapter 82 - Herb Store",
+      "url": "chapters/0082.json"
+    },
+    {
+      "id": 83,
+      "title": "Chapter 83 - Carving",
+      "url": "chapters/0083.json"
+    },
+    {
+      "id": 84,
+      "title": "Chapter 84 - Elizabeth",
+      "url": "chapters/0084.json"
+    },
+    {
+      "id": 85,
+      "title": "Chapter 85 - Urgency",
+      "url": "chapters/0085.json"
+    },
+    {
+      "id": 86,
+      "title": "Chapter 86 - Prayer",
+      "url": "chapters/0086.json"
+    },
+    {
+      "id": 87,
+      "title": "Chapter 87 - Exhortation",
+      "url": "chapters/0087.json"
+    },
+    {
+      "id": 88,
+      "title": "Chapter 88 - Report",
+      "url": "chapters/0088.json"
+    },
+    {
+      "id": 89,
+      "title": "Chapter 89 - A Simple Mission",
+      "url": "chapters/0089.json"
+    },
+    {
+      "id": 90,
+      "title": "Chapter 90 - Findings By Sight",
+      "url": "chapters/0090.json"
+    },
+    {
+      "id": 91,
+      "title": "Chapter 91 - Solution",
+      "url": "chapters/0091.json"
+    },
+    {
+      "id": 92,
+      "title": "Chapter 92 - Psychological Expert",
+      "url": "chapters/0092.json"
+    },
+    {
+      "id": 93,
+      "title": "Chapter 93 - New Diary Page",
+      "url": "chapters/0093.json"
+    },
+    {
+      "id": 94,
+      "title": "Chapter 94 - Hidden Sage",
+      "url": "chapters/0094.json"
+    },
+    {
+      "id": 95,
+      "title": "Chapter 95 - The Supplicant",
+      "url": "chapters/0095.json"
+    },
+    {
+      "id": 96,
+      "title": "Chapter 96 - Dalys Guess",
+      "url": "chapters/0096.json"
+    },
+    {
+      "id": 97,
+      "title": "Chapter 97 - Combat Teacher",
+      "url": "chapters/0097.json"
+    },
+    {
+      "id": 98,
+      "title": "Chapter 98 - Mr. Azik",
+      "url": "chapters/0098.json"
+    },
+    {
+      "id": 99,
+      "title": "Chapter 99 - Red Chimney",
+      "url": "chapters/0099.json"
+    },
+    {
+      "id": 100,
+      "title": "Chapter 100 - Interpreting Symbols",
+      "url": "chapters/0100.json"
+    },
+    {
+      "id": 101,
+      "title": "Chapter 101 - Unexpected Clue",
+      "url": "chapters/0101.json"
+    },
+    {
+      "id": 102,
+      "title": "Chapter 102 - Cloth Merchant",
+      "url": "chapters/0102.json"
+    },
+    {
+      "id": 103,
+      "title": "Chapter 103 - Doing As the Heart Willed",
+      "url": "chapters/0103.json"
+    },
+    {
+      "id": 104,
+      "title": "Chapter 104 - Mr. Z",
+      "url": "chapters/0104.json"
+    },
+    {
+      "id": 105,
+      "title": "Chapter 105 - Spirit Channeling",
+      "url": "chapters/0105.json"
+    },
+    {
+      "id": 106,
+      "title": "Chapter 106 - Artist Klein",
+      "url": "chapters/0106.json"
+    },
+    {
+      "id": 107,
+      "title": "Chapter 107 - Fors",
+      "url": "chapters/0107.json"
+    },
+    {
+      "id": 108,
+      "title": "Chapter 108 - Deep Into The Night",
+      "url": "chapters/0108.json"
+    },
+    {
+      "id": 109,
+      "title": "Chapter 109 - Deduction",
+      "url": "chapters/0109.json"
+    },
+    {
+      "id": 110,
+      "title": "Chapter 110 - Confirmation",
+      "url": "chapters/0110.json"
+    },
+    {
+      "id": 111,
+      "title": "Chapter 111 - Letting Slip",
+      "url": "chapters/0111.json"
+    },
+    {
+      "id": 112,
+      "title": "Chapter 112 - Aziks Explanation",
+      "url": "chapters/0112.json"
+    },
+    {
+      "id": 113,
+      "title": "Chapter 113 - Request",
+      "url": "chapters/0113.json"
+    },
+    {
+      "id": 114,
+      "title": "Chapter 114 - The Standards of a Member",
+      "url": "chapters/0114.json"
+    },
+    {
+      "id": 115,
+      "title": "Chapter 115 - Cheat",
+      "url": "chapters/0115.json"
+    },
+    {
+      "id": 116,
+      "title": "Chapter 116 - Lanevuss Child",
+      "url": "chapters/0116.json"
+    },
+    {
+      "id": 117,
+      "title": "Chapter 117 - Contact",
+      "url": "chapters/0117.json"
+    },
+    {
+      "id": 118,
+      "title": "Chapter 118 - August",
+      "url": "chapters/0118.json"
+    },
+    {
+      "id": 119,
+      "title": "Chapter 119 - The True Lower Street",
+      "url": "chapters/0119.json"
+    },
+    {
+      "id": 120,
+      "title": "Chapter 120 - Workhouse",
+      "url": "chapters/0120.json"
+    },
+    {
+      "id": 121,
+      "title": "Chapter 121 - Leonards Hypothesis",
+      "url": "chapters/0121.json"
+    },
+    {
+      "id": 122,
+      "title": "Chapter 122 - Target Building",
+      "url": "chapters/0122.json"
+    },
+    {
+      "id": 123,
+      "title": "Chapter 123 - Beyonder Battle",
+      "url": "chapters/0123.json"
+    },
+    {
+      "id": 124,
+      "title": "Chapter 124 - Wrapping Up Work",
+      "url": "chapters/0124.json"
+    },
+    {
+      "id": 125,
+      "title": "Chapter 125 - Bold Idea",
+      "url": "chapters/0125.json"
+    },
+    {
+      "id": 126,
+      "title": "Chapter 126 - Divination Isnt All-Powerful",
+      "url": "chapters/0126.json"
+    },
+    {
+      "id": 127,
+      "title": "Chapter 127 - Laying the Foundations",
+      "url": "chapters/0127.json"
+    },
+    {
+      "id": 128,
+      "title": "Chapter 128 - The Impoverished Fool",
+      "url": "chapters/0128.json"
+    },
+    {
+      "id": 129,
+      "title": "Chapter 129 - Rampager",
+      "url": "chapters/0129.json"
+    },
+    {
+      "id": 130,
+      "title": "Chapter 130 - Backlunds Secret Gathering",
+      "url": "chapters/0130.json"
+    },
+    {
+      "id": 131,
+      "title": "Chapter 131 - Transaction",
+      "url": "chapters/0131.json"
+    },
+    {
+      "id": 132,
+      "title": "Chapter 132 - Meeting the Monster Again",
+      "url": "chapters/0132.json"
+    },
+    {
+      "id": 133,
+      "title": "Chapter 133 - Expensive Charms",
+      "url": "chapters/0133.json"
+    },
+    {
+      "id": 134,
+      "title": "Chapter 134 - Its Been More Than A Minute",
+      "url": "chapters/0134.json"
+    },
+    {
+      "id": 135,
+      "title": "Chapter 135 - Portrait of a Baron",
+      "url": "chapters/0135.json"
+    },
+    {
+      "id": 136,
+      "title": "Chapter 136 - The Stumped Klein",
+      "url": "chapters/0136.json"
+    },
+    {
+      "id": 137,
+      "title": "Chapter 137 - City of Silver",
+      "url": "chapters/0137.json"
+    },
+    {
+      "id": 138,
+      "title": "Chapter 138 - Giant Pathway",
+      "url": "chapters/0138.json"
+    },
+    {
+      "id": 139,
+      "title": "Chapter 139 - Studying 3-0782",
+      "url": "chapters/0139.json"
+    },
+    {
+      "id": 140,
+      "title": "Chapter 140 - Expert At Courting Death",
+      "url": "chapters/0140.json"
+    },
+    {
+      "id": 141,
+      "title": "Chapter 141 - Nightmare",
+      "url": "chapters/0141.json"
+    },
+    {
+      "id": 142,
+      "title": "Chapter 142 - Association",
+      "url": "chapters/0142.json"
+    },
+    {
+      "id": 143,
+      "title": "Chapter 143 - The Fools Real-time Translator",
+      "url": "chapters/0143.json"
+    },
+    {
+      "id": 144,
+      "title": "Chapter 144 - Three-Way Deal",
+      "url": "chapters/0144.json"
+    },
+    {
+      "id": 145,
+      "title": "Chapter 145 - Request for Cooperation",
+      "url": "chapters/0145.json"
+    },
+    {
+      "id": 146,
+      "title": "Chapter 146 - Creeping Hunger",
+      "url": "chapters/0146.json"
+    },
+    {
+      "id": 147,
+      "title": "Chapter 147 - Night Visitor",
+      "url": "chapters/0147.json"
+    },
+    {
+      "id": 148,
+      "title": "Chapter 148 - Messenger",
+      "url": "chapters/0148.json"
+    },
+    {
+      "id": 149,
+      "title": "Chapter 149 - Direct Hint",
+      "url": "chapters/0149.json"
+    },
+    {
+      "id": 150,
+      "title": "Chapter 150 - Aziks Discovery",
+      "url": "chapters/0150.json"
+    },
+    {
+      "id": 151,
+      "title": "Chapter 151 - Klein's Request",
+      "url": "chapters/0151.json"
+    },
+    {
+      "id": 152,
+      "title": "Chapter 152 - Nice Attempt",
+      "url": "chapters/0152.json"
+    },
+    {
+      "id": 153,
+      "title": "Chapter 153 - Final Act of Laying the Foundation",
+      "url": "chapters/0153.json"
+    },
+    {
+      "id": 154,
+      "title": "Chapter 154 - Sharing Experience",
+      "url": "chapters/0154.json"
+    },
+    {
+      "id": 155,
+      "title": "Chapter 155 - Urgent Meeting",
+      "url": "chapters/0155.json"
+    },
+    {
+      "id": 156,
+      "title": "Chapter 156 - Melissa Who Takes the Long View",
+      "url": "chapters/0156.json"
+    },
+    {
+      "id": 157,
+      "title": "Chapter 157 - Item of His Dreams",
+      "url": "chapters/0157.json"
+    },
+    {
+      "id": 158,
+      "title": "Chapter 158 - Preparedness Averts Peril",
+      "url": "chapters/0158.json"
+    },
+    {
+      "id": 159,
+      "title": "Chapter 159 - Bestowment and Sacrifice",
+      "url": "chapters/0159.json"
+    },
+    {
+      "id": 160,
+      "title": "Chapter 160 - Seizing the Opportunity",
+      "url": "chapters/0160.json"
+    },
+    {
+      "id": 161,
+      "title": "Chapter 161 - Inverted Mausoleum",
+      "url": "chapters/0161.json"
+    },
+    {
+      "id": 162,
+      "title": "Chapter 162 - Intense Sunlight",
+      "url": "chapters/0162.json"
+    },
+    {
+      "id": 163,
+      "title": "Chapter 163 - Various Signs",
+      "url": "chapters/0163.json"
+    },
+    {
+      "id": 164,
+      "title": "Chapter 164 - Miserable Wretches",
+      "url": "chapters/0164.json"
+    },
+    {
+      "id": 165,
+      "title": "Chapter 165 - Epitaph",
+      "url": "chapters/0165.json"
+    },
+    {
+      "id": 166,
+      "title": "Chapter 166 - Examination",
+      "url": "chapters/0166.json"
+    },
+    {
+      "id": 167,
+      "title": "Chapter 167 - Holy Artifact",
+      "url": "chapters/0167.json"
+    },
+    {
+      "id": 168,
+      "title": "Chapter 168 - Clown Potion",
+      "url": "chapters/0168.json"
+    },
+    {
+      "id": 169,
+      "title": "Chapter 169 - New Abilities",
+      "url": "chapters/0169.json"
+    },
+    {
+      "id": 170,
+      "title": "Chapter 170  Copper Whistle",
+      "url": "chapters/0170.json"
+    },
+    {
+      "id": 171,
+      "title": "Chapter 171 - Promotion and Pay Raise",
+      "url": "chapters/0171.json"
+    },
+    {
+      "id": 172,
+      "title": "Chapter 172 - Autopsy",
+      "url": "chapters/0172.json"
+    },
+    {
+      "id": 173,
+      "title": "Chapter 173 - Zombiefication",
+      "url": "chapters/0173.json"
+    },
+    {
+      "id": 174,
+      "title": "Chapter 174 - Madam Sharon",
+      "url": "chapters/0174.json"
+    },
+    {
+      "id": 175,
+      "title": "Chapter 175 - Deduction",
+      "url": "chapters/0175.json"
+    },
+    {
+      "id": 176,
+      "title": "Chapter 176 - Letter",
+      "url": "chapters/0176.json"
+    },
+    {
+      "id": 177,
+      "title": "Chapter 177 - Sudden Turn of Events",
+      "url": "chapters/0177.json"
+    },
+    {
+      "id": 178,
+      "title": "Chapter 178 - The Subsequent Ideas",
+      "url": "chapters/0178.json"
+    },
+    {
+      "id": 179,
+      "title": "Chapter 179 - Praising Mr. Fool",
+      "url": "chapters/0179.json"
+    },
+    {
+      "id": 180,
+      "title": "Chapter 180 - A Smart Person Always Overthinks",
+      "url": "chapters/0180.json"
+    },
+    {
+      "id": 181,
+      "title": "Chapter 181 - Different State",
+      "url": "chapters/0181.json"
+    },
+    {
+      "id": 182,
+      "title": "Chapter 182 - Wanderer Klein",
+      "url": "chapters/0182.json"
+    },
+    {
+      "id": 183,
+      "title": "Chapter 183 - A Lesson on Mediumship",
+      "url": "chapters/0183.json"
+    },
+    {
+      "id": 184,
+      "title": "Chapter 184 - Behind the Gate",
+      "url": "chapters/0184.json"
+    },
+    {
+      "id": 185,
+      "title": "Chapter 185 - Spiritual World",
+      "url": "chapters/0185.json"
+    },
+    {
+      "id": 186,
+      "title": "Chapter 186 - The Handsome Captain",
+      "url": "chapters/0186.json"
+    },
+    {
+      "id": 187,
+      "title": "Chapter 187 - Aziks Warning",
+      "url": "chapters/0187.json"
+    },
+    {
+      "id": 188,
+      "title": "Chapter 188 - Ball",
+      "url": "chapters/0188.json"
+    },
+    {
+      "id": 189,
+      "title": "Chapter 189 - Prayers and Replies",
+      "url": "chapters/0189.json"
+    },
+    {
+      "id": 190,
+      "title": "Chapter 190 - The Assortment of Abilities",
+      "url": "chapters/0190.json"
+    },
+    {
+      "id": 191,
+      "title": "Chapter 191 - Unclear Motives",
+      "url": "chapters/0191.json"
+    },
+    {
+      "id": 192,
+      "title": "Chapter 192 - Attention",
+      "url": "chapters/0192.json"
+    },
+    {
+      "id": 193,
+      "title": "Chapter 193 - Coming To A Close",
+      "url": "chapters/0193.json"
+    },
+    {
+      "id": 194,
+      "title": "Chapter 194 - Infiltration",
+      "url": "chapters/0194.json"
+    },
+    {
+      "id": 195,
+      "title": "Chapter 195 - “Lockpicking Expert” Klein",
+      "url": "chapters/0195.json"
+    },
+    {
+      "id": 196,
+      "title": "Chapter 196 - Spirit Medium Mirror",
+      "url": "chapters/0196.json"
+    },
+    {
+      "id": 197,
+      "title": "Chapter 197 - Operation",
+      "url": "chapters/0197.json"
+    },
+    {
+      "id": 198,
+      "title": "Chapter 198 - Appropriating Uniqueness",
+      "url": "chapters/0198.json"
+    },
+    {
+      "id": 199,
+      "title": "Chapter 199 - Successful Toss of the Die",
+      "url": "chapters/0199.json"
+    },
+    {
+      "id": 200,
+      "title": "Chapter 200 - The Demoness of Pleasure",
+      "url": "chapters/0200.json"
+    },
+    {
+      "id": 201,
+      "title": "Chapter 201 - Inquiry",
+      "url": "chapters/0201.json"
+    },
+    {
+      "id": 202,
+      "title": "Chapter 202 - Confirming the Situation",
+      "url": "chapters/0202.json"
+    },
+    {
+      "id": 203,
+      "title": "Chapter 203 - Mutant",
+      "url": "chapters/0203.json"
+    },
+    {
+      "id": 204,
+      "title": "Chapter 204 - Visitor",
+      "url": "chapters/0204.json"
+    },
+    {
+      "id": 205,
+      "title": "Chapter 205 - Urgent Arrangement",
+      "url": "chapters/0205.json"
+    },
+    {
+      "id": 206,
+      "title": "Chapter 206 - Grade 2 Sealed Artifacts",
+      "url": "chapters/0206.json"
+    },
+    {
+      "id": 207,
+      "title": "Chapter 207 - Guardian",
+      "url": "chapters/0207.json"
+    },
+    {
+      "id": 208,
+      "title": "Chapter 208 - Cry",
+      "url": "chapters/0208.json"
+    },
+    {
+      "id": 209,
+      "title": "Chapter 209 - Light",
+      "url": "chapters/0209.json"
+    },
+    {
+      "id": 210,
+      "title": "Chapter 210 - Story",
+      "url": "chapters/0210.json"
+    },
+    {
+      "id": 211,
+      "title": "Chapter 211 - Funeral",
+      "url": "chapters/0211.json"
+    },
+    {
+      "id": 212,
+      "title": "Chapter 212 - Avenger",
+      "url": "chapters/0212.json"
+    },
+    {
+      "id": 213,
+      "title": "Chapter 213 - Another Look",
+      "url": "chapters/0213.json"
+    },
+    {
+      "id": 214,
+      "title": "Chapter 214 - Land of Hope",
+      "url": "chapters/0214.json"
+    },
+    {
+      "id": 215,
+      "title": "Chapter 215 - Mrs. Sammer",
+      "url": "chapters/0215.json"
+    },
+    {
+      "id": 216,
+      "title": "Chapter 216 - The Same-old Gathering",
+      "url": "chapters/0216.json"
+    },
+    {
+      "id": 217,
+      "title": "Chapter 217 - Mr. Doors Description",
+      "url": "chapters/0217.json"
+    },
+    {
+      "id": 218,
+      "title": "Chapter 218 - Free General Knowledge",
+      "url": "chapters/0218.json"
+    },
+    {
+      "id": 219,
+      "title": "Chapter 219 - Explanation",
+      "url": "chapters/0219.json"
+    },
+    {
+      "id": 220,
+      "title": "Chapter 220 - Kleins Sacrificial Trial",
+      "url": "chapters/0220.json"
+    },
+    {
+      "id": 221,
+      "title": "Chapter 221 - The Tarot Club at a Higher Level",
+      "url": "chapters/0221.json"
+    },
+    {
+      "id": 222,
+      "title": "Chapter 222 - The First Job",
+      "url": "chapters/0222.json"
+    },
+    {
+      "id": 223,
+      "title": "Chapter 223 - Three Matters",
+      "url": "chapters/0223.json"
+    },
+    {
+      "id": 224,
+      "title": "Chapter 224 - Metaphysics-styled Detective",
+      "url": "chapters/0224.json"
+    },
+    {
+      "id": 225,
+      "title": "Chapter 225 - Unnoticeable Guidance",
+      "url": "chapters/0225.json"
+    },
+    {
+      "id": 226,
+      "title": "Chapter 226 - The Terrified Xio",
+      "url": "chapters/0226.json"
+    },
+    {
+      "id": 227,
+      "title": "Chapter 227 - Inventor Leppard",
+      "url": "chapters/0227.json"
+    },
+    {
+      "id": 228,
+      "title": "Chapter 228 - The Mastermind",
+      "url": "chapters/0228.json"
+    },
+    {
+      "id": 229,
+      "title": "Chapter 229 - Lesser of Two Evils",
+      "url": "chapters/0229.json"
+    },
+    {
+      "id": 230,
+      "title": "Chapter 230 - Interrogation",
+      "url": "chapters/0230.json"
+    },
+    {
+      "id": 231,
+      "title": "Chapter 231 - Losses",
+      "url": "chapters/0231.json"
+    },
+    {
+      "id": 232,
+      "title": "Chapter 232 - The Bravehearts Bar",
+      "url": "chapters/0232.json"
+    },
+    {
+      "id": 233,
+      "title": "Chapter 233 - A Man Cannot Be Judged By His Looks",
+      "url": "chapters/0233.json"
+    },
+    {
+      "id": 234,
+      "title": "Chapter 234 - The Night of the Full Moon.",
+      "url": "chapters/0234.json"
+    },
+    {
+      "id": 235,
+      "title": "Chapter 235 - The Busy Monday",
+      "url": "chapters/0235.json"
+    },
+    {
+      "id": 236,
+      "title": "Chapter 236 - Internal Commission",
+      "url": "chapters/0236.json"
+    },
+    {
+      "id": 237,
+      "title": "Chapter 237 - Sequence 2",
+      "url": "chapters/0237.json"
+    },
+    {
+      "id": 238,
+      "title": "Chapter 238 - Dragon of Imagination",
+      "url": "chapters/0238.json"
+    },
+    {
+      "id": 239,
+      "title": "Chapter 239 - Each Having Their Own Gathering",
+      "url": "chapters/0239.json"
+    },
+    {
+      "id": 240,
+      "title": "Chapter 240 - Trying Your Luck?",
+      "url": "chapters/0240.json"
+    },
+    {
+      "id": 241,
+      "title": "Chapter 241 - Language of Foulness",
+      "url": "chapters/0241.json"
+    },
+    {
+      "id": 242,
+      "title": "Chapter 242 - Bakerland",
+      "url": "chapters/0242.json"
+    },
+    {
+      "id": 243,
+      "title": "Chapter 243 - Catching the Adulterous Act",
+      "url": "chapters/0243.json"
+    },
+    {
+      "id": 244,
+      "title": "Chapter 244 - Appointee",
+      "url": "chapters/0244.json"
+    },
+    {
+      "id": 245,
+      "title": "Chapter 245 - Confirmation",
+      "url": "chapters/0245.json"
+    },
+    {
+      "id": 246,
+      "title": "Chapter 246 - Strange Omen",
+      "url": "chapters/0246.json"
+    },
+    {
+      "id": 247,
+      "title": "Chapter 247 - The Whole Story",
+      "url": "chapters/0247.json"
+    },
+    {
+      "id": 248,
+      "title": "Chapter 248 - Waiting From Both Sides",
+      "url": "chapters/0248.json"
+    },
+    {
+      "id": 249,
+      "title": "Chapter 249 - The Assassination",
+      "url": "chapters/0249.json"
+    },
+    {
+      "id": 250,
+      "title": "Chapter 250 - Rich Experience in Courting Death",
+      "url": "chapters/0250.json"
+    },
+    {
+      "id": 251,
+      "title": "Chapter 251 - Gains",
+      "url": "chapters/0251.json"
+    },
+    {
+      "id": 252,
+      "title": "Chapter 252 - Epilogue",
+      "url": "chapters/0252.json"
+    },
+    {
+      "id": 253,
+      "title": "Chapter 253 - Night Thoughts",
+      "url": "chapters/0253.json"
+    },
+    {
+      "id": 254,
+      "title": "Chapter 254 - Various Parties",
+      "url": "chapters/0254.json"
+    },
+    {
+      "id": 255,
+      "title": "Chapter 255 - Photography Expert",
+      "url": "chapters/0255.json"
+    },
+    {
+      "id": 256,
+      "title": "Chapter 256 - Meeting the Apothecary Again",
+      "url": "chapters/0256.json"
+    },
+    {
+      "id": 257,
+      "title": "Chapter 257 - 2-081",
+      "url": "chapters/0257.json"
+    },
+    {
+      "id": 258,
+      "title": "Chapter 258 - Murder Case",
+      "url": "chapters/0258.json"
+    },
+    {
+      "id": 259,
+      "title": "Chapter 259 - Underground Structure",
+      "url": "chapters/0259.json"
+    },
+    {
+      "id": 260,
+      "title": "Chapter 260 - Strange Statues",
+      "url": "chapters/0260.json"
+    },
+    {
+      "id": 261,
+      "title": "Chapter 261 - The Innermost Room",
+      "url": "chapters/0261.json"
+    },
+    {
+      "id": 262,
+      "title": "Chapter 262 - Dream",
+      "url": "chapters/0262.json"
+    },
+    {
+      "id": 263,
+      "title": "Chapter 263 - Spiritual Perception and Attempt",
+      "url": "chapters/0263.json"
+    },
+    {
+      "id": 264,
+      "title": "Chapter 264 - A Five-Person Gathering",
+      "url": "chapters/0264.json"
+    },
+    {
+      "id": 265,
+      "title": "Chapter 265 - Cards of Blasphemy",
+      "url": "chapters/0265.json"
+    },
+    {
+      "id": 266,
+      "title": "Chapter 266 - The Worlds Commission",
+      "url": "chapters/0266.json"
+    },
+    {
+      "id": 267,
+      "title": "Chapter 267 - Singing to the Same Tune",
+      "url": "chapters/0267.json"
+    },
+    {
+      "id": 268,
+      "title": "Chapter 268 - The Cemetery and the Hospital",
+      "url": "chapters/0268.json"
+    },
+    {
+      "id": 269,
+      "title": "Chapter 269 - Clues to the Psychology Alchemists",
+      "url": "chapters/0269.json"
+    },
+    {
+      "id": 270,
+      "title": "Chapter 270 - Reporter",
+      "url": "chapters/0270.json"
+    },
+    {
+      "id": 271,
+      "title": "Chapter 271 - Golden Rose",
+      "url": "chapters/0271.json"
+    },
+    {
+      "id": 272,
+      "title": "Chapter 272 - Observing Each Other",
+      "url": "chapters/0272.json"
+    },
+    {
+      "id": 273,
+      "title": "Chapter 273 - Handing Out A Formula",
+      "url": "chapters/0273.json"
+    },
+    {
+      "id": 274,
+      "title": "Chapter 274 - Beyonder Weapon",
+      "url": "chapters/0274.json"
+    },
+    {
+      "id": 275,
+      "title": "Chapter 275 - Pound Family",
+      "url": "chapters/0275.json"
+    },
+    {
+      "id": 276,
+      "title": "Chapter 276 - Rafter Pound",
+      "url": "chapters/0276.json"
+    },
+    {
+      "id": 277,
+      "title": "Chapter 277 - Finalizing a Plan",
+      "url": "chapters/0277.json"
+    },
+    {
+      "id": 278,
+      "title": "Chapter 278 - Free?",
+      "url": "chapters/0278.json"
+    },
+    {
+      "id": 279,
+      "title": "Chapter 279 - Extreme Joy Begets Sorrow",
+      "url": "chapters/0279.json"
+    },
+    {
+      "id": 280,
+      "title": "Chapter 280 - The First Step",
+      "url": "chapters/0280.json"
+    },
+    {
+      "id": 281,
+      "title": "Chapter 281 - Clue",
+      "url": "chapters/0281.json"
+    },
+    {
+      "id": 282,
+      "title": "Chapter 282 - This is East Borough",
+      "url": "chapters/0282.json"
+    },
+    {
+      "id": 283,
+      "title": "Chapter 283 - Dock Union",
+      "url": "chapters/0283.json"
+    },
+    {
+      "id": 284,
+      "title": "Chapter 284 - Instinctive Trembling",
+      "url": "chapters/0284.json"
+    },
+    {
+      "id": 285,
+      "title": "Chapter 285 - Midnight Bell Tower",
+      "url": "chapters/0285.json"
+    },
+    {
+      "id": 286,
+      "title": "Chapter 286 - A Taunting Smile",
+      "url": "chapters/0286.json"
+    },
+    {
+      "id": 287,
+      "title": "Chapter 287 - Death Battle",
+      "url": "chapters/0287.json"
+    },
+    {
+      "id": 288,
+      "title": "Chapter 288 - A Scene Filled with Symbolism",
+      "url": "chapters/0288.json"
+    },
+    {
+      "id": 289,
+      "title": "Chapter 289 - Conjecture and Investigation",
+      "url": "chapters/0289.json"
+    },
+    {
+      "id": 290,
+      "title": "Chapter 290 - Effecting Change Indirectly",
+      "url": "chapters/0290.json"
+    },
+    {
+      "id": 291,
+      "title": "Chapter 291 - Seller and Notary In One",
+      "url": "chapters/0291.json"
+    },
+    {
+      "id": 292,
+      "title": "Chapter 292 - Exchanging News",
+      "url": "chapters/0292.json"
+    },
+    {
+      "id": 293,
+      "title": "Chapter 293 - Derricks Worry",
+      "url": "chapters/0293.json"
+    },
+    {
+      "id": 294,
+      "title": "Chapter 294 - Admiral of Stars",
+      "url": "chapters/0294.json"
+    },
+    {
+      "id": 295,
+      "title": "Chapter 295 - All Ingredients Gathered",
+      "url": "chapters/0295.json"
+    },
+    {
+      "id": 296,
+      "title": "Chapter 296 - Magician",
+      "url": "chapters/0296.json"
+    },
+    {
+      "id": 297,
+      "title": "Chapter 297 - The Full Moons Ravings",
+      "url": "chapters/0297.json"
+    },
+    {
+      "id": 298,
+      "title": "Chapter 298 - Together Again",
+      "url": "chapters/0298.json"
+    },
+    {
+      "id": 299,
+      "title": "Chapter 299 - Snapping Fingers",
+      "url": "chapters/0299.json"
+    },
+    {
+      "id": 300,
+      "title": "Chapter 300 - Spirit Dance",
+      "url": "chapters/0300.json"
+    },
+    {
+      "id": 301,
+      "title": "Chapter 301 - Awakening",
+      "url": "chapters/0301.json"
+    },
+    {
+      "id": 302,
+      "title": "Chapter 302 - A Clue",
+      "url": "chapters/0302.json"
+    },
+    {
+      "id": 303,
+      "title": "Chapter 303 - Rookie",
+      "url": "chapters/0303.json"
+    },
+    {
+      "id": 304,
+      "title": "Chapter 304 - Feathers",
+      "url": "chapters/0304.json"
+    },
+    {
+      "id": 305,
+      "title": "Chapter 305 - The Detective Exchange",
+      "url": "chapters/0305.json"
+    },
+    {
+      "id": 306,
+      "title": "Chapter 306 - Giant Bishop",
+      "url": "chapters/0306.json"
+    },
+    {
+      "id": 307,
+      "title": "Chapter 307 - Dawn Paladin",
+      "url": "chapters/0307.json"
+    },
+    {
+      "id": 308,
+      "title": "Chapter 308 - A Prepared Magician",
+      "url": "chapters/0308.json"
+    },
+    {
+      "id": 309,
+      "title": "Chapter 309 - Choosing One Out Of Two",
+      "url": "chapters/0309.json"
+    },
+    {
+      "id": 310,
+      "title": "Chapter 310 - National Atmospheric Pollution Council",
+      "url": "chapters/0310.json"
+    },
+    {
+      "id": 311,
+      "title": "Chapter 311 - Observing Each Other",
+      "url": "chapters/0311.json"
+    },
+    {
+      "id": 312,
+      "title": "Chapter 312 - A Failed Disguise",
+      "url": "chapters/0312.json"
+    },
+    {
+      "id": 313,
+      "title": "Chapter 313 - The Ancient Deities",
+      "url": "chapters/0313.json"
+    },
+    {
+      "id": 314,
+      "title": "Chapter 314 - Possible",
+      "url": "chapters/0314.json"
+    },
+    {
+      "id": 315,
+      "title": "Chapter 315 - Return to Harvest Church",
+      "url": "chapters/0315.json"
+    },
+    {
+      "id": 316,
+      "title": "Chapter 316 - Never Perform Unprepared",
+      "url": "chapters/0316.json"
+    },
+    {
+      "id": 317,
+      "title": "Chapter 317 - Roselle Memorial Exhibition",
+      "url": "chapters/0317.json"
+    },
+    {
+      "id": 318,
+      "title": "Chapter 318 - Verification",
+      "url": "chapters/0318.json"
+    },
+    {
+      "id": 319,
+      "title": "Chapter 319 - Audreys Adventure",
+      "url": "chapters/0319.json"
+    },
+    {
+      "id": 320,
+      "title": "Chapter 320 - Action",
+      "url": "chapters/0320.json"
+    },
+    {
+      "id": 321,
+      "title": "Chapter 321 - A Living Person Appears",
+      "url": "chapters/0321.json"
+    },
+    {
+      "id": 322,
+      "title": "Chapter 322 - The Thrilling Night",
+      "url": "chapters/0322.json"
+    },
+    {
+      "id": 323,
+      "title": "Chapter 323 - The Opening Incantation",
+      "url": "chapters/0323.json"
+    },
+    {
+      "id": 324,
+      "title": "Chapter 324 - Imagined and Real “Adorer”",
+      "url": "chapters/0324.json"
+    },
+    {
+      "id": 325,
+      "title": "Chapter 325 - The Equestrian Teachers Problem",
+      "url": "chapters/0325.json"
+    },
+    {
+      "id": 326,
+      "title": "Chapter 326 - “Professional” Suggestion",
+      "url": "chapters/0326.json"
+    },
+    {
+      "id": 327,
+      "title": "Chapter 327 - Encounter on the Road",
+      "url": "chapters/0327.json"
+    },
+    {
+      "id": 328,
+      "title": "Chapter 328 - He That Touches Pitch Shall Be Defiled",
+      "url": "chapters/0328.json"
+    },
+    {
+      "id": 329,
+      "title": "Chapter 329 - Claw Marks",
+      "url": "chapters/0329.json"
+    },
+    {
+      "id": 330,
+      "title": "Chapter 330 - Sharron and Maric’s Philosophy",
+      "url": "chapters/0330.json"
+    },
+    {
+      "id": 331,
+      "title": "Chapter 331 - The Accursed",
+      "url": "chapters/0331.json"
+    },
+    {
+      "id": 332,
+      "title": "Chapter 332 - Notary Certificate",
+      "url": "chapters/0332.json"
+    },
+    {
+      "id": 333,
+      "title": "Chapter 333 - The Tracker",
+      "url": "chapters/0333.json"
+    },
+    {
+      "id": 334,
+      "title": "Chapter 334 - Bullets",
+      "url": "chapters/0334.json"
+    },
+    {
+      "id": 335,
+      "title": "Chapter 335 - Exploring Verdi Street",
+      "url": "chapters/0335.json"
+    },
+    {
+      "id": 336,
+      "title": "Chapter 336 - The Abraham Family",
+      "url": "chapters/0336.json"
+    },
+    {
+      "id": 337,
+      "title": "Chapter 337 - The Search For A Missing Person",
+      "url": "chapters/0337.json"
+    },
+    {
+      "id": 338,
+      "title": "Chapter 338 - The Experienced Klein",
+      "url": "chapters/0338.json"
+    },
+    {
+      "id": 339,
+      "title": "Chapter 339 - Psychiatrist",
+      "url": "chapters/0339.json"
+    },
+    {
+      "id": 340,
+      "title": "Chapter 340 - Past",
+      "url": "chapters/0340.json"
+    },
+    {
+      "id": 341,
+      "title": "Chapter 341 - Private Communication",
+      "url": "chapters/0341.json"
+    },
+    {
+      "id": 342,
+      "title": "Chapter 342 - The Old Fox Alger",
+      "url": "chapters/0342.json"
+    },
+    {
+      "id": 343,
+      "title": "Chapter 343 - By Oneself",
+      "url": "chapters/0343.json"
+    },
+    {
+      "id": 344,
+      "title": "Chapter 344 - Spending Lavishly",
+      "url": "chapters/0344.json"
+    },
+    {
+      "id": 345,
+      "title": "Chapter 345 - Sun Brooch",
+      "url": "chapters/0345.json"
+    },
+    {
+      "id": 346,
+      "title": "Chapter 346 - A Magician Before Going Onstage",
+      "url": "chapters/0346.json"
+    },
+    {
+      "id": 347,
+      "title": "Chapter 347 - Zombie and Werewolf",
+      "url": "chapters/0347.json"
+    },
+    {
+      "id": 348,
+      "title": "Chapter 348 - Terrifying Wraith",
+      "url": "chapters/0348.json"
+    },
+    {
+      "id": 349,
+      "title": "Chapter 349 - Poison Bottle",
+      "url": "chapters/0349.json"
+    },
+    {
+      "id": 350,
+      "title": "Chapter 350 - Splendid Fireworks",
+      "url": "chapters/0350.json"
+    },
+    {
+      "id": 351,
+      "title": "Chapter 351 - “Game” of Question and Answer",
+      "url": "chapters/0351.json"
+    },
+    {
+      "id": 352,
+      "title": "Chapter 352 - Breakfast",
+      "url": "chapters/0352.json"
+    },
+    {
+      "id": 353,
+      "title": "Chapter 353 - Today Is Quite Different From Yesterday",
+      "url": "chapters/0353.json"
+    },
+    {
+      "id": 354,
+      "title": "Chapter 354 - Tales of an Adventure in East Borough",
+      "url": "chapters/0354.json"
+    },
+    {
+      "id": 355,
+      "title": "Chapter 355 - Outsider",
+      "url": "chapters/0355.json"
+    },
+    {
+      "id": 356,
+      "title": "Chapter 356 - Informant Fee",
+      "url": "chapters/0356.json"
+    },
+    {
+      "id": 357,
+      "title": "Chapter 357 - Happenings at the Banquet",
+      "url": "chapters/0357.json"
+    },
+    {
+      "id": 358,
+      "title": "Chapter 358 - The Sun’s Worry",
+      "url": "chapters/0358.json"
+    },
+    {
+      "id": 359,
+      "title": "Chapter 359 - The Blasphemer",
+      "url": "chapters/0359.json"
+    },
+    {
+      "id": 360,
+      "title": "Chapter 360 - A Difficult Conundrum",
+      "url": "chapters/0360.json"
+    },
+    {
+      "id": 361,
+      "title": "Chapter 361 - Translucent Worm",
+      "url": "chapters/0361.json"
+    },
+    {
+      "id": 362,
+      "title": "Chapter 362 - The Secret Deed Ritual",
+      "url": "chapters/0362.json"
+    },
+    {
+      "id": 363,
+      "title": "Chapter 363 - High-level Authority",
+      "url": "chapters/0363.json"
+    },
+    {
+      "id": 364,
+      "title": "Chapter 364 - Cathedral of Serenity",
+      "url": "chapters/0364.json"
+    },
+    {
+      "id": 365,
+      "title": "Chapter 365 - Vampire With A Unique Hobby",
+      "url": "chapters/0365.json"
+    },
+    {
+      "id": 366,
+      "title": "Chapter 366 - The Hanged Man’s Ambition",
+      "url": "chapters/0366.json"
+    },
+    {
+      "id": 367,
+      "title": "Chapter 367 - Threatening Letter",
+      "url": "chapters/0367.json"
+    },
+    {
+      "id": 368,
+      "title": "Chapter 368 - Taking Him By Surprise",
+      "url": "chapters/0368.json"
+    },
+    {
+      "id": 369,
+      "title": "Chapter 369 - Inception",
+      "url": "chapters/0369.json"
+    },
+    {
+      "id": 370,
+      "title": "Chapter 370 - The Audience’s Applause",
+      "url": "chapters/0370.json"
+    },
+    {
+      "id": 371,
+      "title": "Chapter 371 - Detective Moriarty’s First Fan",
+      "url": "chapters/0371.json"
+    },
+    {
+      "id": 372,
+      "title": "Chapter 372 - Missing Case",
+      "url": "chapters/0372.json"
+    },
+    {
+      "id": 373,
+      "title": "Chapter 373 - Search",
+      "url": "chapters/0373.json"
+    },
+    {
+      "id": 374,
+      "title": "Chapter 374 - Artificial Sleepwalking",
+      "url": "chapters/0374.json"
+    },
+    {
+      "id": 375,
+      "title": "Chapter 375 - An “Evil God’s” Impressive Act",
+      "url": "chapters/0375.json"
+    },
+    {
+      "id": 376,
+      "title": "Chapter 376 - Mr. Harras",
+      "url": "chapters/0376.json"
+    },
+    {
+      "id": 377,
+      "title": "Chapter 377 - Capim’s Dinner",
+      "url": "chapters/0377.json"
+    },
+    {
+      "id": 378,
+      "title": "Chapter 378 - The Show Begins",
+      "url": "chapters/0378.json"
+    },
+    {
+      "id": 379,
+      "title": "Chapter 379 - Magic’s Key Segment",
+      "url": "chapters/0379.json"
+    },
+    {
+      "id": 380,
+      "title": "Chapter 380 - Curtain Call",
+      "url": "chapters/0380.json"
+    },
+    {
+      "id": 381,
+      "title": "Chapter 381 - Conjectures",
+      "url": "chapters/0381.json"
+    },
+    {
+      "id": 382,
+      "title": "Chapter 382 - Hero Bandit",
+      "url": "chapters/0382.json"
+    },
+    {
+      "id": 383,
+      "title": "Chapter 383 - Returning Home",
+      "url": "chapters/0383.json"
+    },
+    {
+      "id": 384,
+      "title": "Chapter 384 - On Your Own You Check Yourself",
+      "url": "chapters/0384.json"
+    },
+    {
+      "id": 385,
+      "title": "Chapter 385 - A Story About Love",
+      "url": "chapters/0385.json"
+    },
+    {
+      "id": 386,
+      "title": "Chapter 386 - A Nightmare",
+      "url": "chapters/0386.json"
+    },
+    {
+      "id": 387,
+      "title": "Chapter 387 - The Uniqueness of a Spirit World",
+      "url": "chapters/0387.json"
+    },
+    {
+      "id": 388,
+      "title": "Chapter 388 - Exploring the Dreamland",
+      "url": "chapters/0388.json"
+    },
+    {
+      "id": 389,
+      "title": "Chapter 389 - Nighthawk",
+      "url": "chapters/0389.json"
+    },
+    {
+      "id": 390,
+      "title": "Chapter 390 - Anticipation!",
+      "url": "chapters/0390.json"
+    },
+    {
+      "id": 391,
+      "title": "Chapter 391 - The Great Seafarer Roselle",
+      "url": "chapters/0391.json"
+    },
+    {
+      "id": 392,
+      "title": "Chapter 392 - Listening to Little Sun’s Story",
+      "url": "chapters/0392.json"
+    },
+    {
+      "id": 393,
+      "title": "Chapter 393 - The Worm of Time",
+      "url": "chapters/0393.json"
+    },
+    {
+      "id": 394,
+      "title": "Chapter 394 - Sights in the Spirit World",
+      "url": "chapters/0394.json"
+    },
+    {
+      "id": 395,
+      "title": "Chapter 395 - The Sheriff Beyonder Characteristics",
+      "url": "chapters/0395.json"
+    },
+    {
+      "id": 396,
+      "title": "Chapter 396 - Pure Light Brotherhood",
+      "url": "chapters/0396.json"
+    },
+    {
+      "id": 397,
+      "title": "Chapter 397 - Apocalyptic Prophecy",
+      "url": "chapters/0397.json"
+    },
+    {
+      "id": 398,
+      "title": "Chapter 398 - Alluring Mushrooms",
+      "url": "chapters/0398.json"
+    },
+    {
+      "id": 399,
+      "title": "Chapter 399 - The Corrupted",
+      "url": "chapters/0399.json"
+    },
+    {
+      "id": 400,
+      "title": "Chapter 400 - The Growth of the “Rookie”",
+      "url": "chapters/0400.json"
+    },
+    {
+      "id": 401,
+      "title": "Chapter 401 - Divine Epiphany",
+      "url": "chapters/0401.json"
+    },
+    {
+      "id": 402,
+      "title": "Chapter 402 - Digging",
+      "url": "chapters/0402.json"
+    },
+    {
+      "id": 403,
+      "title": "Chapter 403 - The Fate of a Private Detective",
+      "url": "chapters/0403.json"
+    },
+    {
+      "id": 404,
+      "title": "Chapter 404 - Entrust",
+      "url": "chapters/0404.json"
+    },
+    {
+      "id": 405,
+      "title": "Chapter 405 - Cult",
+      "url": "chapters/0405.json"
+    },
+    {
+      "id": 406,
+      "title": "Chapter 406 - A Joyous But Extremely Helpless Reality",
+      "url": "chapters/0406.json"
+    },
+    {
+      "id": 407,
+      "title": "Chapter 407 - The True Adorer",
+      "url": "chapters/0407.json"
+    },
+    {
+      "id": 408,
+      "title": "Chapter 408 - A Bold Assumption",
+      "url": "chapters/0408.json"
+    },
+    {
+      "id": 409,
+      "title": "Chapter 409 - December",
+      "url": "chapters/0409.json"
+    },
+    {
+      "id": 410,
+      "title": "Chapter 410 - Framis Cage",
+      "url": "chapters/0410.json"
+    },
+    {
+      "id": 411,
+      "title": "Chapter 411 - Coming In Throngs",
+      "url": "chapters/0411.json"
+    },
+    {
+      "id": 412,
+      "title": "Chapter 412 - Letter",
+      "url": "chapters/0412.json"
+    },
+    {
+      "id": 413,
+      "title": "Chapter 413 - Visitors",
+      "url": "chapters/0413.json"
+    },
+    {
+      "id": 414,
+      "title": "Chapter 414 - Desire Apostle",
+      "url": "chapters/0414.json"
+    },
+    {
+      "id": 415,
+      "title": "Chapter 415 - The Ring",
+      "url": "chapters/0415.json"
+    },
+    {
+      "id": 416,
+      "title": "Chapter 416 - Two Rights Make A Wrong",
+      "url": "chapters/0416.json"
+    },
+    {
+      "id": 417,
+      "title": "Chapter 417 - Chapter 417:",
+      "url": "chapters/0417.json"
+    },
+    {
+      "id": 418,
+      "title": "Chapter 418 - The Power of the Mind",
+      "url": "chapters/0418.json"
+    },
+    {
+      "id": 419,
+      "title": "Chapter 419 - Wishing",
+      "url": "chapters/0419.json"
+    },
+    {
+      "id": 420,
+      "title": "Chapter 420 - Devil Family",
+      "url": "chapters/0420.json"
+    },
+    {
+      "id": 421,
+      "title": "Chapter 421 - Expensive Materials",
+      "url": "chapters/0421.json"
+    },
+    {
+      "id": 422,
+      "title": "Chapter 422 - The True Jason",
+      "url": "chapters/0422.json"
+    },
+    {
+      "id": 423,
+      "title": "Chapter 423 - Winds Arise",
+      "url": "chapters/0423.json"
+    },
+    {
+      "id": 424,
+      "title": "Chapter 424 - The Problem of Change",
+      "url": "chapters/0424.json"
+    },
+    {
+      "id": 425,
+      "title": "Chapter 425 - Under the Roses",
+      "url": "chapters/0425.json"
+    },
+    {
+      "id": 426,
+      "title": "Chapter 426 - 1-42",
+      "url": "chapters/0426.json"
+    },
+    {
+      "id": 427,
+      "title": "Chapter 427 - The Choice of The Times",
+      "url": "chapters/0427.json"
+    },
+    {
+      "id": 428,
+      "title": "Chapter 428 - The Scapegoat",
+      "url": "chapters/0428.json"
+    },
+    {
+      "id": 429,
+      "title": "Chapter 429 - Various Parties",
+      "url": "chapters/0429.json"
+    },
+    {
+      "id": 430,
+      "title": "Chapter 430 - A Brand New Day",
+      "url": "chapters/0430.json"
+    },
+    {
+      "id": 431,
+      "title": "Chapter 431 - A Drowning Man Shouldn’t Desperately Clutch at Straws",
+      "url": "chapters/0431.json"
+    },
+    {
+      "id": 432,
+      "title": "Chapter 432 - Contracted Creatures",
+      "url": "chapters/0432.json"
+    },
+    {
+      "id": 433,
+      "title": "Chapter 433 - Intelligence Peddler",
+      "url": "chapters/0433.json"
+    },
+    {
+      "id": 434,
+      "title": "Chapter 434 - Tomb and Bounty",
+      "url": "chapters/0434.json"
+    },
+    {
+      "id": 435,
+      "title": "Chapter 435 - Aggregation Effect",
+      "url": "chapters/0435.json"
+    },
+    {
+      "id": 436,
+      "title": "Chapter 436 - Klein’s Request",
+      "url": "chapters/0436.json"
+    },
+    {
+      "id": 437,
+      "title": "Chapter 437 - Obituary",
+      "url": "chapters/0437.json"
+    },
+    {
+      "id": 438,
+      "title": "Chapter 438 - Invitation",
+      "url": "chapters/0438.json"
+    },
+    {
+      "id": 439,
+      "title": "Chapter 439 - The Generous Prince",
+      "url": "chapters/0439.json"
+    },
+    {
+      "id": 440,
+      "title": "Chapter 440 - Angel Family",
+      "url": "chapters/0440.json"
+    },
+    {
+      "id": 441,
+      "title": "Chapter 441 - Channels Increase",
+      "url": "chapters/0441.json"
+    },
+    {
+      "id": 442,
+      "title": "Chapter 442 - Exploration Mission",
+      "url": "chapters/0442.json"
+    },
+    {
+      "id": 443,
+      "title": "Chapter 443 - A One-man Performance",
+      "url": "chapters/0443.json"
+    },
+    {
+      "id": 444,
+      "title": "Chapter 444 - Confession",
+      "url": "chapters/0444.json"
+    },
+    {
+      "id": 445,
+      "title": "Chapter 445 - Live Broadcast",
+      "url": "chapters/0445.json"
+    },
+    {
+      "id": 446,
+      "title": "Chapter 446 - Machinery Hivemind’s Combat Style",
+      "url": "chapters/0446.json"
+    },
+    {
+      "id": 447,
+      "title": "Chapter 447 - Portrait",
+      "url": "chapters/0447.json"
+    },
+    {
+      "id": 448,
+      "title": "Chapter 448 - Amon’s Possible Origins",
+      "url": "chapters/0448.json"
+    },
+    {
+      "id": 449,
+      "title": "Chapter 449 - Better Choice",
+      "url": "chapters/0449.json"
+    },
+    {
+      "id": 450,
+      "title": "Chapter 450 - Distribution of Money",
+      "url": "chapters/0450.json"
+    },
+    {
+      "id": 451,
+      "title": "Chapter 451 - Faceless",
+      "url": "chapters/0451.json"
+    },
+    {
+      "id": 452,
+      "title": "Chapter 452 - Benson’s Decision",
+      "url": "chapters/0452.json"
+    },
+    {
+      "id": 453,
+      "title": "Chapter 453 - Stairs",
+      "url": "chapters/0453.json"
+    },
+    {
+      "id": 454,
+      "title": "Chapter 454 - Who Am I?",
+      "url": "chapters/0454.json"
+    },
+    {
+      "id": 455,
+      "title": "Chapter 455 - Help Seeker",
+      "url": "chapters/0455.json"
+    },
+    {
+      "id": 456,
+      "title": "Chapter 456 - Playing Ghosts",
+      "url": "chapters/0456.json"
+    },
+    {
+      "id": 457,
+      "title": "Chapter 457 - Information Provided by the Evil Spirit",
+      "url": "chapters/0457.json"
+    },
+    {
+      "id": 458,
+      "title": "Chapter 458 - An Ancient Sanguine",
+      "url": "chapters/0458.json"
+    },
+    {
+      "id": 459,
+      "title": "Chapter 459 - Letting A Chance Slip",
+      "url": "chapters/0459.json"
+    },
+    {
+      "id": 460,
+      "title": "Chapter 460 - Cyclic Explorations",
+      "url": "chapters/0460.json"
+    },
+    {
+      "id": 461,
+      "title": "Chapter 461 - The Kind and Enthusiastic Hanged Man",
+      "url": "chapters/0461.json"
+    },
+    {
+      "id": 462,
+      "title": "Chapter 462 - What is a Miracle?",
+      "url": "chapters/0462.json"
+    },
+    {
+      "id": 463,
+      "title": "Chapter 463 - Answering His Own Questions",
+      "url": "chapters/0463.json"
+    },
+    {
+      "id": 464,
+      "title": "Chapter 464 - Consultation",
+      "url": "chapters/0464.json"
+    },
+    {
+      "id": 465,
+      "title": "Chapter 465 - Emlyn’s Determination",
+      "url": "chapters/0465.json"
+    },
+    {
+      "id": 466,
+      "title": "Chapter 466 - Tail-devourer",
+      "url": "chapters/0466.json"
+    },
+    {
+      "id": 467,
+      "title": "Chapter 467 - The Delayed Response",
+      "url": "chapters/0467.json"
+    },
+    {
+      "id": 468,
+      "title": "Chapter 468 - The Moon",
+      "url": "chapters/0468.json"
+    },
+    {
+      "id": 469,
+      "title": "Chapter 469 - Vampire Queen",
+      "url": "chapters/0469.json"
+    },
+    {
+      "id": 470,
+      "title": "Chapter 470 - Name",
+      "url": "chapters/0470.json"
+    },
+    {
+      "id": 471,
+      "title": "Chapter 471 - Klein’s Preparations",
+      "url": "chapters/0471.json"
+    },
+    {
+      "id": 472,
+      "title": "Chapter 472 - Latent Danger",
+      "url": "chapters/0472.json"
+    },
+    {
+      "id": 473,
+      "title": "Chapter 473 - Faceless",
+      "url": "chapters/0473.json"
+    },
+    {
+      "id": 474,
+      "title": "Chapter 474 - Edessak’s Story",
+      "url": "chapters/0474.json"
+    },
+    {
+      "id": 475,
+      "title": "Chapter 475 - Lady Despair",
+      "url": "chapters/0475.json"
+    },
+    {
+      "id": 476,
+      "title": "Chapter 476 - The Straw Men",
+      "url": "chapters/0476.json"
+    },
+    {
+      "id": 477,
+      "title": "Chapter 477 - The Many Considerations of The Fool",
+      "url": "chapters/0477.json"
+    },
+    {
+      "id": 478,
+      "title": "Chapter 478 - Grade 0 Sealed Artifact in Operation",
+      "url": "chapters/0478.json"
+    },
+    {
+      "id": 479,
+      "title": "Chapter 479 - The Inexplicable Smile",
+      "url": "chapters/0479.json"
+    },
+    {
+      "id": 480,
+      "title": "Chapter 480 - Honest Rewards",
+      "url": "chapters/0480.json"
+    },
+    {
+      "id": 481,
+      "title": "Chapter 481 - Statistics and People",
+      "url": "chapters/0481.json"
+    },
+    {
+      "id": 482,
+      "title": "Chapter 482 - Ring out the Old, Ring in the New",
+      "url": "chapters/0482.json"
+    },
+    {
+      "id": 483,
+      "title": "Chapter 483 - New Identity",
+      "url": "chapters/0483.json"
+    },
+    {
+      "id": 484,
+      "title": "Chapter 484 - Asymmetrical",
+      "url": "chapters/0484.json"
+    },
+    {
+      "id": 485,
+      "title": "Chapter 485 - Rich Information",
+      "url": "chapters/0485.json"
+    },
+    {
+      "id": 486,
+      "title": "Chapter 486 - Klein’s Conjectures",
+      "url": "chapters/0486.json"
+    },
+    {
+      "id": 487,
+      "title": "Chapter 487 - The Growing Tarot Club",
+      "url": "chapters/0487.json"
+    },
+    {
+      "id": 488,
+      "title": "Chapter 488 - Living Expenses",
+      "url": "chapters/0488.json"
+    },
+    {
+      "id": 489,
+      "title": "Chapter 489 - Held Up Suggestion",
+      "url": "chapters/0489.json"
+    },
+    {
+      "id": 490,
+      "title": "Chapter 490 - Warning of a Former Sailor",
+      "url": "chapters/0490.json"
+    },
+    {
+      "id": 491,
+      "title": "Chapter 491 - The Sherlock Moriarty in the Investigation Report",
+      "url": "chapters/0491.json"
+    },
+    {
+      "id": 492,
+      "title": "Chapter 492 - Adventurer",
+      "url": "chapters/0492.json"
+    },
+    {
+      "id": 493,
+      "title": "Chapter 493 - Hunting",
+      "url": "chapters/0493.json"
+    },
+    {
+      "id": 494,
+      "title": "Chapter 494 - A Bite of Murloc",
+      "url": "chapters/0494.json"
+    },
+    {
+      "id": 495,
+      "title": "Chapter 495 - Legend of Treasure",
+      "url": "chapters/0495.json"
+    },
+    {
+      "id": 496,
+      "title": "Chapter 496 - The Promising Sea",
+      "url": "chapters/0496.json"
+    },
+    {
+      "id": 497,
+      "title": "Chapter 497 - The Wall of Rewards",
+      "url": "chapters/0497.json"
+    },
+    {
+      "id": 498,
+      "title": "Chapter 498 - Character Setting",
+      "url": "chapters/0498.json"
+    },
+    {
+      "id": 499,
+      "title": "Chapter 499 - Solicitation",
+      "url": "chapters/0499.json"
+    },
+    {
+      "id": 500,
+      "title": "Chapter 500 - Interrogating White Shark",
+      "url": "chapters/0500.json"
+    },
+    {
+      "id": 501,
+      "title": "Chapter 501 - Bait",
+      "url": "chapters/0501.json"
+    },
+    {
+      "id": 502,
+      "title": "Chapter 502 - The Scene in Azik’s Memories",
+      "url": "chapters/0502.json"
+    },
+    {
+      "id": 503,
+      "title": "Chapter 503 - Hostage",
+      "url": "chapters/0503.json"
+    },
+    {
+      "id": 504,
+      "title": "Chapter 504 - Red Skull Pirate Crew",
+      "url": "chapters/0504.json"
+    },
+    {
+      "id": 505,
+      "title": "Chapter 505 - A Servant Worth 3,000 Pounds",
+      "url": "chapters/0505.json"
+    },
+    {
+      "id": 506,
+      "title": "Chapter 506 - The Weather Museum",
+      "url": "chapters/0506.json"
+    },
+    {
+      "id": 507,
+      "title": "Chapter 507 - Bansy Harbor in the Wind",
+      "url": "chapters/0507.json"
+    },
+    {
+      "id": 508,
+      "title": "Chapter 508 - Don’t Go Out",
+      "url": "chapters/0508.json"
+    },
+    {
+      "id": 509,
+      "title": "Chapter 509 - Request",
+      "url": "chapters/0509.json"
+    },
+    {
+      "id": 510,
+      "title": "Chapter 510 - The Returning Bishop",
+      "url": "chapters/0510.json"
+    },
+    {
+      "id": 511,
+      "title": "Chapter 511 - Snitch Halo",
+      "url": "chapters/0511.json"
+    },
+    {
+      "id": 512,
+      "title": "Chapter 512 - The End of Things?",
+      "url": "chapters/0512.json"
+    },
+    {
+      "id": 513,
+      "title": "Chapter 513 - Intimidation",
+      "url": "chapters/0513.json"
+    },
+    {
+      "id": 514,
+      "title": "Chapter 514 - Legends of Ancient Gods",
+      "url": "chapters/0514.json"
+    },
+    {
+      "id": 515,
+      "title": "Chapter 515 - Harvests for Everyone",
+      "url": "chapters/0515.json"
+    },
+    {
+      "id": 516,
+      "title": "Chapter 516 - The Hanged Man’s Guess",
+      "url": "chapters/0516.json"
+    },
+    {
+      "id": 517,
+      "title": "Chapter 517 - City of Generosity",
+      "url": "chapters/0517.json"
+    },
+    {
+      "id": 518,
+      "title": "Chapter 518 - On the Brink of Death",
+      "url": "chapters/0518.json"
+    },
+    {
+      "id": 519,
+      "title": "Chapter 519 - Naming",
+      "url": "chapters/0519.json"
+    },
+    {
+      "id": 520,
+      "title": "Chapter 520 - Admiral of Blood",
+      "url": "chapters/0520.json"
+    },
+    {
+      "id": 521,
+      "title": "Chapter 521 - Bold Assumption",
+      "url": "chapters/0521.json"
+    },
+    {
+      "id": 522,
+      "title": "Chapter 522 - Colony",
+      "url": "chapters/0522.json"
+    },
+    {
+      "id": 523,
+      "title": "Chapter 523 - Cooperation",
+      "url": "chapters/0523.json"
+    },
+    {
+      "id": 524,
+      "title": "Chapter 524 - Meeting",
+      "url": "chapters/0524.json"
+    },
+    {
+      "id": 525,
+      "title": "Chapter 525 - The Calm Squall",
+      "url": "chapters/0525.json"
+    },
+    {
+      "id": 526,
+      "title": "Chapter 526 - Dream of Eternity",
+      "url": "chapters/0526.json"
+    },
+    {
+      "id": 527,
+      "title": "Chapter 527 - A Quick Battle",
+      "url": "chapters/0527.json"
+    },
+    {
+      "id": 528,
+      "title": "Chapter 528 - Grazing",
+      "url": "chapters/0528.json"
+    },
+    {
+      "id": 529,
+      "title": "Chapter 529 - Tacitness",
+      "url": "chapters/0529.json"
+    },
+    {
+      "id": 530,
+      "title": "Chapter 530 - Chronicles",
+      "url": "chapters/0530.json"
+    },
+    {
+      "id": 531,
+      "title": "Chapter 531 - Great Acting",
+      "url": "chapters/0531.json"
+    },
+    {
+      "id": 532,
+      "title": "Chapter 532 - Lord “Caucasian”",
+      "url": "chapters/0532.json"
+    },
+    {
+      "id": 533,
+      "title": "Chapter 533 - Mr. 4,200 Pounds",
+      "url": "chapters/0533.json"
+    },
+    {
+      "id": 534,
+      "title": "Chapter 534 - A Dream Lesson",
+      "url": "chapters/0534.json"
+    },
+    {
+      "id": 535,
+      "title": "Chapter 535 - Fond of Teaching",
+      "url": "chapters/0535.json"
+    },
+    {
+      "id": 536,
+      "title": "Chapter 536 - Local Faith",
+      "url": "chapters/0536.json"
+    },
+    {
+      "id": 537,
+      "title": "Chapter 537 - Excessive Spiritual Perception",
+      "url": "chapters/0537.json"
+    },
+    {
+      "id": 538,
+      "title": "Chapter 538 - Dispel",
+      "url": "chapters/0538.json"
+    },
+    {
+      "id": 539,
+      "title": "Chapter 539 - Late-night Operations",
+      "url": "chapters/0539.json"
+    },
+    {
+      "id": 540,
+      "title": "Chapter 540 - Suppression",
+      "url": "chapters/0540.json"
+    },
+    {
+      "id": 541,
+      "title": "Chapter 541 - Visitor",
+      "url": "chapters/0541.json"
+    },
+    {
+      "id": 542,
+      "title": "Chapter 542 - Bayam Under Curfew",
+      "url": "chapters/0542.json"
+    },
+    {
+      "id": 543,
+      "title": "Chapter 543 - The Reality That Exceeds Expectations",
+      "url": "chapters/0543.json"
+    },
+    {
+      "id": 544,
+      "title": "Chapter 544 - Expert",
+      "url": "chapters/0544.json"
+    },
+    {
+      "id": 545,
+      "title": "Chapter 545 - The Enraged Kalvetua",
+      "url": "chapters/0545.json"
+    },
+    {
+      "id": 546,
+      "title": "Chapter 546 - Spirit World",
+      "url": "chapters/0546.json"
+    },
+    {
+      "id": 547,
+      "title": "Chapter 547 - Priest",
+      "url": "chapters/0547.json"
+    },
+    {
+      "id": 548,
+      "title": "Chapter 548 - Trick to Dealing with Large Creatures",
+      "url": "chapters/0548.json"
+    },
+    {
+      "id": 549,
+      "title": "Chapter 549 - High Elf",
+      "url": "chapters/0549.json"
+    },
+    {
+      "id": 550,
+      "title": "Chapter 550 - The Negative Effects of the Sealed Artifact",
+      "url": "chapters/0550.json"
+    },
+    {
+      "id": 551,
+      "title": "Chapter 551 - The Ten Commandments",
+      "url": "chapters/0551.json"
+    },
+    {
+      "id": 552,
+      "title": "Chapter 552 - Pomp",
+      "url": "chapters/0552.json"
+    },
+    {
+      "id": 553,
+      "title": "Chapter 553 - Danitz’s Hard Work",
+      "url": "chapters/0553.json"
+    },
+    {
+      "id": 554,
+      "title": "Chapter 554 - Acting as God",
+      "url": "chapters/0554.json"
+    },
+    {
+      "id": 555,
+      "title": "Chapter 555 - The Message Late at Night",
+      "url": "chapters/0555.json"
+    },
+    {
+      "id": 556,
+      "title": "Chapter 556 - Discriminatory Treatment",
+      "url": "chapters/0556.json"
+    },
+    {
+      "id": 557,
+      "title": "Chapter 557 - Planting a Cue on Herself",
+      "url": "chapters/0557.json"
+    },
+    {
+      "id": 558,
+      "title": "Chapter 558 - Search for Abnormalities",
+      "url": "chapters/0558.json"
+    },
+    {
+      "id": 559,
+      "title": "Chapter 559 - Meeting on the Way",
+      "url": "chapters/0559.json"
+    },
+    {
+      "id": 560,
+      "title": "Chapter 560 - The Hanged Man Gets Fleeced",
+      "url": "chapters/0560.json"
+    },
+    {
+      "id": 561,
+      "title": "Chapter 561 - Recruitment Fair",
+      "url": "chapters/0561.json"
+    },
+    {
+      "id": 562,
+      "title": "Chapter 562 - Helene",
+      "url": "chapters/0562.json"
+    },
+    {
+      "id": 563,
+      "title": "Chapter 563 - The Fool’s “Blessing”",
+      "url": "chapters/0563.json"
+    },
+    {
+      "id": 564,
+      "title": "Chapter 564 - Knowledge Pursuer",
+      "url": "chapters/0564.json"
+    },
+    {
+      "id": 565,
+      "title": "Chapter 565 - Eye of Mystery Prying",
+      "url": "chapters/0565.json"
+    },
+    {
+      "id": 566,
+      "title": "Chapter 566 - The Details of Clothes",
+      "url": "chapters/0566.json"
+    },
+    {
+      "id": 567,
+      "title": "Chapter 567 - Source of the Matter",
+      "url": "chapters/0567.json"
+    },
+    {
+      "id": 568,
+      "title": "Chapter 568 - Subsidiary “Gods”",
+      "url": "chapters/0568.json"
+    },
+    {
+      "id": 569,
+      "title": "Chapter 569: A Straw Will Show Which Way the Wind Blows",
+      "url": "chapters/0569.json"
+    },
+    {
+      "id": 570,
+      "title": "Chapter 570 - Not Admitting or Denying",
+      "url": "chapters/0570.json"
+    },
+    {
+      "id": 571,
+      "title": "Chapter 571 - Huge Pressure",
+      "url": "chapters/0571.json"
+    },
+    {
+      "id": 572,
+      "title": "Chapter 572 - Recite My Name",
+      "url": "chapters/0572.json"
+    },
+    {
+      "id": 573,
+      "title": "Chapter 573 - Teaching a Lesson in Reality",
+      "url": "chapters/0573.json"
+    },
+    {
+      "id": 574,
+      "title": "Chapter 574 - Fail to Accomplish",
+      "url": "chapters/0574.json"
+    },
+    {
+      "id": 575,
+      "title": "Chapter 575 - Golden Dream",
+      "url": "chapters/0575.json"
+    },
+    {
+      "id": 576,
+      "title": "Chapter 576 - Vice Admiral Iceberg’s Collector’s Room",
+      "url": "chapters/0576.json"
+    },
+    {
+      "id": 577,
+      "title": "Chapter 577 - Book from More Than 3,000 Years Ago",
+      "url": "chapters/0577.json"
+    },
+    {
+      "id": 578,
+      "title": "Chapter 578 - “Abduction”",
+      "url": "chapters/0578.json"
+    },
+    {
+      "id": 579,
+      "title": "Chapter 579 - Academic Question",
+      "url": "chapters/0579.json"
+    },
+    {
+      "id": 580,
+      "title": "Chapter 580 - Wormtongue",
+      "url": "chapters/0580.json"
+    },
+    {
+      "id": 581,
+      "title": "Chapter 581 - Both Getting into Character and Detachment",
+      "url": "chapters/0581.json"
+    },
+    {
+      "id": 582,
+      "title": "Chapter 582 - Provocation",
+      "url": "chapters/0582.json"
+    },
+    {
+      "id": 583,
+      "title": "Chapter 583 - Contingency Plan",
+      "url": "chapters/0583.json"
+    },
+    {
+      "id": 584,
+      "title": "Chapter 584 - Scapegoat",
+      "url": "chapters/0584.json"
+    },
+    {
+      "id": 585,
+      "title": "Chapter 585 - Buying Medicine",
+      "url": "chapters/0585.json"
+    },
+    {
+      "id": 586,
+      "title": "Chapter 586 - Farewell and Goodbye",
+      "url": "chapters/0586.json"
+    },
+    {
+      "id": 587,
+      "title": "Chapter 587 - Confusing",
+      "url": "chapters/0587.json"
+    },
+    {
+      "id": 588,
+      "title": "Chapter 588 - Old Acquaintance",
+      "url": "chapters/0588.json"
+    },
+    {
+      "id": 589,
+      "title": "Chapter 589 - “Sowing Discord”",
+      "url": "chapters/0589.json"
+    },
+    {
+      "id": 590,
+      "title": "Chapter 590 - Arrodes’s Bottom Line",
+      "url": "chapters/0590.json"
+    },
+    {
+      "id": 591,
+      "title": "Chapter 591 - Making Good Use of Things",
+      "url": "chapters/0591.json"
+    },
+    {
+      "id": 592,
+      "title": "Chapter 592 - Three Advancements in a Week",
+      "url": "chapters/0592.json"
+    },
+    {
+      "id": 593,
+      "title": "Chapter 593 - Solution",
+      "url": "chapters/0593.json"
+    },
+    {
+      "id": 594,
+      "title": "Chapter 594 - The World’s Commission",
+      "url": "chapters/0594.json"
+    },
+    {
+      "id": 595,
+      "title": "Chapter 595 - Domain",
+      "url": "chapters/0595.json"
+    },
+    {
+      "id": 596,
+      "title": "Chapter 596 - Clue",
+      "url": "chapters/0596.json"
+    },
+    {
+      "id": 597,
+      "title": "Chapter 597 - Kleins Plan",
+      "url": "chapters/0597.json"
+    },
+    {
+      "id": 598,
+      "title": "Chapter 598 - Windfall",
+      "url": "chapters/0598.json"
+    },
+    {
+      "id": 599,
+      "title": "Chapter 599 - Dragon Might",
+      "url": "chapters/0599.json"
+    },
+    {
+      "id": 600,
+      "title": "Chapter 600 - Clearing the Place",
+      "url": "chapters/0600.json"
+    },
+    {
+      "id": 601,
+      "title": "Chapter 601 - Scaring Oneself",
+      "url": "chapters/0601.json"
+    },
+    {
+      "id": 602,
+      "title": "Chapter 602 - Becoming Famous",
+      "url": "chapters/0602.json"
+    },
+    {
+      "id": 603,
+      "title": "Chapter 603 - Conditions",
+      "url": "chapters/0603.json"
+    },
+    {
+      "id": 604,
+      "title": "Chapter 604 - A Different Enemy",
+      "url": "chapters/0604.json"
+    },
+    {
+      "id": 605,
+      "title": "Chapter 605 - “Judgment”",
+      "url": "chapters/0605.json"
+    },
+    {
+      "id": 606,
+      "title": "Chapter 606 - Intimidation",
+      "url": "chapters/0606.json"
+    },
+    {
+      "id": 607,
+      "title": "Chapter 607 - Discovering an Abnormality",
+      "url": "chapters/0607.json"
+    },
+    {
+      "id": 608,
+      "title": "Chapter 608 - Professional",
+      "url": "chapters/0608.json"
+    },
+    {
+      "id": 609,
+      "title": "Chapter 609 - Paying a Visit",
+      "url": "chapters/0609.json"
+    },
+    {
+      "id": 610,
+      "title": "Chapter 610 - Throwing the Die",
+      "url": "chapters/0610.json"
+    },
+    {
+      "id": 611,
+      "title": "Chapter 611 - Fate Councilor",
+      "url": "chapters/0611.json"
+    },
+    {
+      "id": 612,
+      "title": "Chapter 612 - In Hand",
+      "url": "chapters/0612.json"
+    },
+    {
+      "id": 613,
+      "title": "Chapter 613 - Leonard’s Investigation",
+      "url": "chapters/0613.json"
+    },
+    {
+      "id": 614,
+      "title": "Chapter 614 - Adventurer Association",
+      "url": "chapters/0614.json"
+    },
+    {
+      "id": 615,
+      "title": "Chapter 615 - Grayish-white Fog",
+      "url": "chapters/0615.json"
+    },
+    {
+      "id": 616,
+      "title": "Chapter 616 - Silver Lining",
+      "url": "chapters/0616.json"
+    },
+    {
+      "id": 617,
+      "title": "Chapter 617 - The Mysterious Adam",
+      "url": "chapters/0617.json"
+    },
+    {
+      "id": 618,
+      "title": "Chapter 618 - Volunteer Work",
+      "url": "chapters/0618.json"
+    },
+    {
+      "id": 619,
+      "title": "Chapter 619 - Unable to Speak",
+      "url": "chapters/0619.json"
+    },
+    {
+      "id": 620,
+      "title": "Chapter 620 - Stand-in Mission",
+      "url": "chapters/0620.json"
+    },
+    {
+      "id": 621,
+      "title": "Chapter 621 - Governor-general’s Office Banquet",
+      "url": "chapters/0621.json"
+    },
+    {
+      "id": 622,
+      "title": "Chapter 622 - Temporary Contract",
+      "url": "chapters/0622.json"
+    },
+    {
+      "id": 623,
+      "title": "Chapter 623 - First Night",
+      "url": "chapters/0623.json"
+    },
+    {
+      "id": 624,
+      "title": "Chapter 624 - Warning",
+      "url": "chapters/0624.json"
+    },
+    {
+      "id": 625,
+      "title": "Chapter 625 - Successful First Day",
+      "url": "chapters/0625.json"
+    },
+    {
+      "id": 626,
+      "title": "Chapter 626 - Amyrius’s Decision",
+      "url": "chapters/0626.json"
+    },
+    {
+      "id": 627,
+      "title": "Chapter 627 - Late into the Night",
+      "url": "chapters/0627.json"
+    },
+    {
+      "id": 628,
+      "title": "Chapter 628 - Prohibition",
+      "url": "chapters/0628.json"
+    },
+    {
+      "id": 629,
+      "title": "Chapter 629 - Heavenly Body Sect",
+      "url": "chapters/0629.json"
+    },
+    {
+      "id": 630,
+      "title": "Chapter 630 - Timeline",
+      "url": "chapters/0630.json"
+    },
+    {
+      "id": 631,
+      "title": "Chapter 631 - Three Days of Absence",
+      "url": "chapters/0631.json"
+    },
+    {
+      "id": 632,
+      "title": "Chapter 632 - Finishing Up",
+      "url": "chapters/0632.json"
+    },
+    {
+      "id": 633,
+      "title": "Chapter 633 - Two Types of Parasitizing",
+      "url": "chapters/0633.json"
+    },
+    {
+      "id": 634,
+      "title": "Chapter 634 - City of White",
+      "url": "chapters/0634.json"
+    },
+    {
+      "id": 635,
+      "title": "Chapter 635 - Meeting",
+      "url": "chapters/0635.json"
+    },
+    {
+      "id": 636,
+      "title": "Chapter 636 - Slaughterer",
+      "url": "chapters/0636.json"
+    },
+    {
+      "id": 637,
+      "title": "Chapter 637 - The Future",
+      "url": "chapters/0637.json"
+    },
+    {
+      "id": 638,
+      "title": "Chapter 638 - Poison Expert",
+      "url": "chapters/0638.json"
+    },
+    {
+      "id": 639,
+      "title": "Chapter 639 - Name List",
+      "url": "chapters/0639.json"
+    },
+    {
+      "id": 640,
+      "title": "Chapter 640 - Female Pirate",
+      "url": "chapters/0640.json"
+    },
+    {
+      "id": 641,
+      "title": "Chapter 641 - A Well Mouth That Humans Can’t Pass",
+      "url": "chapters/0641.json"
+    },
+    {
+      "id": 642,
+      "title": "Chapter 642 - Killing Three Birds With One Stone",
+      "url": "chapters/0642.json"
+    },
+    {
+      "id": 643,
+      "title": "Chapter 643 - Klein’s Version of “Magic Mirror Divination”",
+      "url": "chapters/0643.json"
+    },
+    {
+      "id": 644,
+      "title": "Chapter 644 - Laughter",
+      "url": "chapters/0644.json"
+    },
+    {
+      "id": 645,
+      "title": "Chapter 645 - Calming Method",
+      "url": "chapters/0645.json"
+    },
+    {
+      "id": 646,
+      "title": "Chapter 646 - Leymano’s Spellbook",
+      "url": "chapters/0646.json"
+    },
+    {
+      "id": 647,
+      "title": "Chapter 647 - Sea of Ruins",
+      "url": "chapters/0647.json"
+    },
+    {
+      "id": 648,
+      "title": "Chapter 648 - Noon and Night",
+      "url": "chapters/0648.json"
+    },
+    {
+      "id": 649,
+      "title": "Chapter 649 - Black Cloister",
+      "url": "chapters/0649.json"
+    },
+    {
+      "id": 650,
+      "title": "Chapter 650 - The Unlucky Anderson",
+      "url": "chapters/0650.json"
+    },
+    {
+      "id": 651,
+      "title": "Chapter 651 - Meeting Again",
+      "url": "chapters/0651.json"
+    },
+    {
+      "id": 652,
+      "title": "Chapter 652 - Mermaid Clues",
+      "url": "chapters/0652.json"
+    },
+    {
+      "id": 653,
+      "title": "Chapter 653 - Black-faced, Black-handed",
+      "url": "chapters/0653.json"
+    },
+    {
+      "id": 654,
+      "title": "Chapter 654 - Prisoner and Guard",
+      "url": "chapters/0654.json"
+    },
+    {
+      "id": 655,
+      "title": "Chapter 655 - Dream Analysis",
+      "url": "chapters/0655.json"
+    },
+    {
+      "id": 656,
+      "title": "Chapter 656 - Crazy Mutations",
+      "url": "chapters/0656.json"
+    },
+    {
+      "id": 657,
+      "title": "Chapter 657 - Terrifying Vitality",
+      "url": "chapters/0657.json"
+    },
+    {
+      "id": 658,
+      "title": "Chapter 658 - 55,000 Pounds",
+      "url": "chapters/0658.json"
+    },
+    {
+      "id": 659,
+      "title": "Chapter 659 - This Beyonder Power is Very Powerful",
+      "url": "chapters/0659.json"
+    },
+    {
+      "id": 660,
+      "title": "Chapter 660 - Behind the Mask",
+      "url": "chapters/0660.json"
+    },
+    {
+      "id": 661,
+      "title": "Chapter 661 - Approaching",
+      "url": "chapters/0661.json"
+    },
+    {
+      "id": 662,
+      "title": "Chapter 662 - Powerful Aura",
+      "url": "chapters/0662.json"
+    },
+    {
+      "id": 663,
+      "title": "Chapter 663 - False Alarm",
+      "url": "chapters/0663.json"
+    },
+    {
+      "id": 664,
+      "title": "Chapter 664 - Every Second Counts",
+      "url": "chapters/0664.json"
+    },
+    {
+      "id": 665,
+      "title": "Chapter 665 - Spirit Body Threads",
+      "url": "chapters/0665.json"
+    },
+    {
+      "id": 666,
+      "title": "Chapter 666 - Afternoon Town",
+      "url": "chapters/0666.json"
+    },
+    {
+      "id": 667,
+      "title": "Chapter 667 - Prayer",
+      "url": "chapters/0667.json"
+    },
+    {
+      "id": 668,
+      "title": "Chapter 668 - Confidence Might Also Be a Weakness",
+      "url": "chapters/0668.json"
+    },
+    {
+      "id": 669,
+      "title": "Chapter 669 - Exchange of Information",
+      "url": "chapters/0669.json"
+    },
+    {
+      "id": 670,
+      "title": "Chapter 670 - Repenter",
+      "url": "chapters/0670.json"
+    },
+    {
+      "id": 671,
+      "title": "Chapter 671 - The Fourth Name",
+      "url": "chapters/0671.json"
+    },
+    {
+      "id": 672,
+      "title": "Chapter 672 - Bystander",
+      "url": "chapters/0672.json"
+    },
+    {
+      "id": 673,
+      "title": "Chapter 673 - Blood Text",
+      "url": "chapters/0673.json"
+    },
+    {
+      "id": 674,
+      "title": "Chapter 674 - Leaving the Ship",
+      "url": "chapters/0674.json"
+    },
+    {
+      "id": 675,
+      "title": "Chapter 675 - Building Ties",
+      "url": "chapters/0675.json"
+    },
+    {
+      "id": 676,
+      "title": "Chapter 676 - Tripartite Transaction",
+      "url": "chapters/0676.json"
+    },
+    {
+      "id": 677,
+      "title": "Chapter 677 - Falling to the Ground",
+      "url": "chapters/0677.json"
+    },
+    {
+      "id": 678,
+      "title": "Chapter 678 - Punishment",
+      "url": "chapters/0678.json"
+    },
+    {
+      "id": 679,
+      "title": "Chapter 679 - Murder Request",
+      "url": "chapters/0679.json"
+    },
+    {
+      "id": 680,
+      "title": "Chapter 680 - New Thoughts",
+      "url": "chapters/0680.json"
+    },
+    {
+      "id": 681,
+      "title": "Chapter 681 - Indirect Answer",
+      "url": "chapters/0681.json"
+    },
+    {
+      "id": 682,
+      "title": "Chapter 682 - Seeking “Food”",
+      "url": "chapters/0682.json"
+    },
+    {
+      "id": 683,
+      "title": "Chapter 683 - So You Are Here as Well",
+      "url": "chapters/0683.json"
+    },
+    {
+      "id": 684,
+      "title": "Chapter 684 - Battle Encounter",
+      "url": "chapters/0684.json"
+    },
+    {
+      "id": 685,
+      "title": "Chapter 685 - From A Delay to Disconnection",
+      "url": "chapters/0685.json"
+    },
+    {
+      "id": 686,
+      "title": "Chapter 686 - A Hard-to-complete Ritual",
+      "url": "chapters/0686.json"
+    },
+    {
+      "id": 687,
+      "title": "Chapter 687 - Blatherer",
+      "url": "chapters/0687.json"
+    },
+    {
+      "id": 688,
+      "title": "Chapter 688 - Fruitless Wait",
+      "url": "chapters/0688.json"
+    },
+    {
+      "id": 689,
+      "title": "Chapter 689 - That’s It?",
+      "url": "chapters/0689.json"
+    },
+    {
+      "id": 690,
+      "title": "Chapter 690 - Miss Messenger",
+      "url": "chapters/0690.json"
+    },
+    {
+      "id": 691,
+      "title": "Chapter 691 - Meeting",
+      "url": "chapters/0691.json"
+    },
+    {
+      "id": 692,
+      "title": "Chapter 692 - Suspect",
+      "url": "chapters/0692.json"
+    },
+    {
+      "id": 693,
+      "title": "Chapter 693 - Attempt",
+      "url": "chapters/0693.json"
+    },
+    {
+      "id": 694,
+      "title": "Chapter 694 - Burn Upon Chanting",
+      "url": "chapters/0694.json"
+    },
+    {
+      "id": 695,
+      "title": "Chapter 695 - Stark Contrast",
+      "url": "chapters/0695.json"
+    },
+    {
+      "id": 696,
+      "title": "Chapter 696 - Giant Guardian",
+      "url": "chapters/0696.json"
+    },
+    {
+      "id": 697,
+      "title": "Chapter 697 - Story’s Progress",
+      "url": "chapters/0697.json"
+    },
+    {
+      "id": 698,
+      "title": "Chapter 698 - Fifth King of Angels",
+      "url": "chapters/0698.json"
+    },
+    {
+      "id": 699,
+      "title": "Chapter 699 - Boss Fight",
+      "url": "chapters/0699.json"
+    },
+    {
+      "id": 700,
+      "title": "Chapter 700 - Excellent Teamwork",
+      "url": "chapters/0700.json"
+    },
+    {
+      "id": 701,
+      "title": "Chapter 701 - Giants Never Retreat",
+      "url": "chapters/0701.json"
+    },
+    {
+      "id": 702,
+      "title": "Chapter 702 - Epilogue",
+      "url": "chapters/0702.json"
+    },
+    {
+      "id": 703,
+      "title": "Chapter 703 - Thank-you Present",
+      "url": "chapters/0703.json"
+    },
+    {
+      "id": 704,
+      "title": "Chapter 704 - Origins",
+      "url": "chapters/0704.json"
+    },
+    {
+      "id": 705,
+      "title": "Chapter 705 - Mythical Creature",
+      "url": "chapters/0705.json"
+    },
+    {
+      "id": 706,
+      "title": "Chapter 706 - That Man",
+      "url": "chapters/0706.json"
+    },
+    {
+      "id": 707,
+      "title": "Chapter 707 - Danitz’s Request",
+      "url": "chapters/0707.json"
+    },
+    {
+      "id": 708,
+      "title": "Chapter 708 - Revolver Worth 9,000 Pounds",
+      "url": "chapters/0708.json"
+    },
+    {
+      "id": 709,
+      "title": "Chapter 709 - Elland’s Warning",
+      "url": "chapters/0709.json"
+    },
+    {
+      "id": 710,
+      "title": "Chapter 710 - Plan",
+      "url": "chapters/0710.json"
+    },
+    {
+      "id": 711,
+      "title": "Chapter 711 - The Storm Attacks",
+      "url": "chapters/0711.json"
+    },
+    {
+      "id": 712,
+      "title": "Chapter 712 - The Loyal Alger",
+      "url": "chapters/0712.json"
+    },
+    {
+      "id": 713,
+      "title": "Chapter 713 - Three Questions",
+      "url": "chapters/0713.json"
+    },
+    {
+      "id": 714,
+      "title": "Chapter 714 - New Diary Pages",
+      "url": "chapters/0714.json"
+    },
+    {
+      "id": 715,
+      "title": "Chapter 715 - Madness in His Later Years",
+      "url": "chapters/0715.json"
+    },
+    {
+      "id": 716,
+      "title": "Chapter 716 - Island and Ruins",
+      "url": "chapters/0716.json"
+    },
+    {
+      "id": 717,
+      "title": "Chapter 717 - The World and Hero Bandit",
+      "url": "chapters/0717.json"
+    },
+    {
+      "id": 718,
+      "title": "Chapter 718 - Characters in the Book",
+      "url": "chapters/0718.json"
+    },
+    {
+      "id": 719,
+      "title": "Chapter 719 - Dream Tour",
+      "url": "chapters/0719.json"
+    },
+    {
+      "id": 720,
+      "title": "Chapter 720 - Philosopher",
+      "url": "chapters/0720.json"
+    },
+    {
+      "id": 721,
+      "title": "Chapter 721 - Klein’s Guidance",
+      "url": "chapters/0721.json"
+    },
+    {
+      "id": 722,
+      "title": "Chapter 722 - An Unpeaceful Night",
+      "url": "chapters/0722.json"
+    },
+    {
+      "id": 723,
+      "title": "Chapter 723 - Another Good Deed Today",
+      "url": "chapters/0723.json"
+    },
+    {
+      "id": 724,
+      "title": "Chapter 724 - The True Meaning Behind the Warning",
+      "url": "chapters/0724.json"
+    },
+    {
+      "id": 725,
+      "title": "Chapter 725 - Morning",
+      "url": "chapters/0725.json"
+    },
+    {
+      "id": 726,
+      "title": "Chapter 726 - Preparations Are Very Important",
+      "url": "chapters/0726.json"
+    },
+    {
+      "id": 727,
+      "title": "Chapter 727 - Lucky One",
+      "url": "chapters/0727.json"
+    },
+    {
+      "id": 728,
+      "title": "Chapter 728 - Triple Combo",
+      "url": "chapters/0728.json"
+    },
+    {
+      "id": 729,
+      "title": "Chapter 729 - Chaos",
+      "url": "chapters/0729.json"
+    },
+    {
+      "id": 730,
+      "title": "Chapter 730 - andling the Latent Risk",
+      "url": "chapters/0730.json"
+    },
+    {
+      "id": 731,
+      "title": "Chapter 731 - Gains",
+      "url": "chapters/0731.json"
+    },
+    {
+      "id": 732,
+      "title": "Chapter 732 - Destination",
+      "url": "chapters/0732.json"
+    },
+    {
+      "id": 733,
+      "title": "Chapter 733 - The Return",
+      "url": "chapters/0733.json"
+    },
+    {
+      "id": 879,
+      "title": "Chapter 879 - Dual Purpose",
+      "url": "chapters/0879.json"
+    },
+    {
+      "id": 880,
+      "title": "Chapter 880 - The Silent One",
+      "url": "chapters/0880.json"
+    },
+    {
+      "id": 881,
+      "title": "Chapter 881 - A Play",
+      "url": "chapters/0881.json"
+    },
+    {
+      "id": 882,
+      "title": "Chapter 882 - Core of Mischief",
+      "url": "chapters/0882.json"
+    },
+    {
+      "id": 883,
+      "title": "Chapter 883 - Demigod’s Appraisal",
+      "url": "chapters/0883.json"
+    },
+    {
+      "id": 884,
+      "title": "Chapter 884 - Destined Encounter",
+      "url": "chapters/0884.json"
+    },
+    {
+      "id": 885,
+      "title": "Chapter 885 - Two Letters",
+      "url": "chapters/0885.json"
+    },
+    {
+      "id": 886,
+      "title": "Chapter 886 - Preparations Before Leaving",
+      "url": "chapters/0886.json"
+    },
+    {
+      "id": 887,
+      "title": "Chapter 887 - Familiar Figure",
+      "url": "chapters/0887.json"
+    },
+    {
+      "id": 888,
+      "title": "Chapter 888 - A Shocking Glance",
+      "url": "chapters/0888.json"
+    },
+    {
+      "id": 889,
+      "title": "Chapter 889 - Warning to Everyone",
+      "url": "chapters/0889.json"
+    },
+    {
+      "id": 890,
+      "title": "Chapter 890 - Ignore “Him”",
+      "url": "chapters/0890.json"
+    },
+    {
+      "id": 891,
+      "title": "Chapter 891 - Strange Chapel",
+      "url": "chapters/0891.json"
+    },
+    {
+      "id": 892,
+      "title": "Chapter 892 - Individual “Comprehension”",
+      "url": "chapters/0892.json"
+    },
+    {
+      "id": 893,
+      "title": "Chapter 893 - Hair-Resembling Plants",
+      "url": "chapters/0893.json"
+    },
+    {
+      "id": 894,
+      "title": "Chapter 894 - Meeting",
+      "url": "chapters/0894.json"
+    },
+    {
+      "id": 895,
+      "title": "Chapter 895 - Finally At Ease",
+      "url": "chapters/0895.json"
+    },
+    {
+      "id": 896,
+      "title": "Chapter 896 - Daly’s Probe",
+      "url": "chapters/0896.json"
+    },
+    {
+      "id": 897,
+      "title": "Chapter 897 - The Chief’s Hint",
+      "url": "chapters/0897.json"
+    },
+    {
+      "id": 898,
+      "title": "Chapter 898 - Response",
+      "url": "chapters/0898.json"
+    },
+    {
+      "id": 899,
+      "title": "Chapter 899 - Berserk Sea’s Spirit World",
+      "url": "chapters/0899.json"
+    },
+    {
+      "id": 900,
+      "title": "Chapter 900 - Self-Recommendation",
+      "url": "chapters/0900.json"
+    },
+    {
+      "id": 901,
+      "title": "Chapter 901 - The Mutated Paper Figurine",
+      "url": "chapters/0901.json"
+    },
+    {
+      "id": 902,
+      "title": "Chapter 902 - Shadow",
+      "url": "chapters/0902.json"
+    },
+    {
+      "id": 903,
+      "title": "Chapter 903 - Scholar-type Bishop",
+      "url": "chapters/0903.json"
+    },
+    {
+      "id": 904,
+      "title": "Chapter 904 - Analysis",
+      "url": "chapters/0904.json"
+    },
+    {
+      "id": 905,
+      "title": "Chapter 905 - Psychological Blind Spot",
+      "url": "chapters/0905.json"
+    },
+    {
+      "id": 906,
+      "title": "Chapter 906 - Leonard’s Warning",
+      "url": "chapters/0906.json"
+    },
+    {
+      "id": 907,
+      "title": "Chapter 907 - The Power of Mysticism",
+      "url": "chapters/0907.json"
+    },
+    {
+      "id": 908,
+      "title": "Chapter 908 - Not Leaving Any Problems",
+      "url": "chapters/0908.json"
+    },
+    {
+      "id": 909,
+      "title": "Chapter 909 - Serving Good Luck",
+      "url": "chapters/0909.json"
+    },
+    {
+      "id": 910,
+      "title": "Chapter 910 - Monster Pathway",
+      "url": "chapters/0910.json"
+    },
+    {
+      "id": 911,
+      "title": "Chapter 911 - Strange Scene",
+      "url": "chapters/0911.json"
+    },
+    {
+      "id": 912,
+      "title": "Chapter 912 - Origins of the Artisan",
+      "url": "chapters/0912.json"
+    },
+    {
+      "id": 913,
+      "title": "Chapter 913 - Klein’s Preparatory Work",
+      "url": "chapters/0913.json"
+    },
+    {
+      "id": 914,
+      "title": "Chapter 914 - The Calling Deep Inside the Mausoleum",
+      "url": "chapters/0914.json"
+    },
+    {
+      "id": 915,
+      "title": "Chapter 915 - Another “Me”",
+      "url": "chapters/0915.json"
+    },
+    {
+      "id": 916,
+      "title": "Chapter 916 - Irresistible Approach",
+      "url": "chapters/0916.json"
+    },
+    {
+      "id": 917,
+      "title": "Chapter 917 - Three Choices",
+      "url": "chapters/0917.json"
+    },
+    {
+      "id": 918,
+      "title": "Chapter 918 - Guesses and Ideas",
+      "url": "chapters/0918.json"
+    },
+    {
+      "id": 919,
+      "title": "Chapter 919 - “Perfect” Inference",
+      "url": "chapters/0919.json"
+    },
+    {
+      "id": 920,
+      "title": "Chapter 920 - Calderón’s Origins",
+      "url": "chapters/0920.json"
+    },
+    {
+      "id": 921,
+      "title": "Chapter 921 - Politeness First",
+      "url": "chapters/0921.json"
+    },
+    {
+      "id": 922,
+      "title": "Chapter 922 - Mushrooms and Fish",
+      "url": "chapters/0922.json"
+    },
+    {
+      "id": 923,
+      "title": "Chapter 923 - After Effects",
+      "url": "chapters/0923.json"
+    },
+    {
+      "id": 924,
+      "title": "Chapter 924 - First Key Factor at Carrying out Risky Operations",
+      "url": "chapters/0924.json"
+    },
+    {
+      "id": 925,
+      "title": "Chapter 925 - Choosing “Clothes”",
+      "url": "chapters/0925.json"
+    },
+    {
+      "id": 926,
+      "title": "Chapter 926 - Spiraling City",
+      "url": "chapters/0926.json"
+    },
+    {
+      "id": 927,
+      "title": "Chapter 927 - Tyrant’s Might",
+      "url": "chapters/0927.json"
+    },
+    {
+      "id": 928,
+      "title": "Chapter 928 - Misdirection",
+      "url": "chapters/0928.json"
+    },
+    {
+      "id": 929,
+      "title": "Chapter 929 - True Soul Body",
+      "url": "chapters/0929.json"
+    },
+    {
+      "id": 930,
+      "title": "Chapter 930 - Former Organization",
+      "url": "chapters/0930.json"
+    },
+    {
+      "id": 931,
+      "title": "Chapter 931 - New Method to Acquiring Intel",
+      "url": "chapters/0931.json"
+    },
+    {
+      "id": 932,
+      "title": "Chapter 932 - Thin-Skinned",
+      "url": "chapters/0932.json"
+    },
+    {
+      "id": 933,
+      "title": "Chapter 933 - Evil Spirits’ Common Trait",
+      "url": "chapters/0933.json"
+    },
+    {
+      "id": 934,
+      "title": "Chapter 934 - 1 + 1 > 2",
+      "url": "chapters/0934.json"
+    },
+    {
+      "id": 935,
+      "title": "Chapter 935 - “Meeting Up”",
+      "url": "chapters/0935.json"
+    },
+    {
+      "id": 936,
+      "title": "Chapter 936 - Don’t Want to Miss Out",
+      "url": "chapters/0936.json"
+    },
+    {
+      "id": 937,
+      "title": "Chapter 937 - Several Days Later",
+      "url": "chapters/0937.json"
+    },
+    {
+      "id": 938,
+      "title": "Chapter 938 - Writing",
+      "url": "chapters/0938.json"
+    },
+    {
+      "id": 939,
+      "title": "Chapter 939 - Bait",
+      "url": "chapters/0939.json"
+    },
+    {
+      "id": 940,
+      "title": "Chapter 940 - A Story",
+      "url": "chapters/0940.json"
+    },
+    {
+      "id": 941,
+      "title": "Chapter 941 - Development That Adheres to Logic",
+      "url": "chapters/0941.json"
+    },
+    {
+      "id": 942,
+      "title": "Chapter 942 - Deity’s Curse",
+      "url": "chapters/0942.json"
+    },
+    {
+      "id": 943,
+      "title": "Chapter 943 - The Third Act",
+      "url": "chapters/0943.json"
+    },
+    {
+      "id": 944,
+      "title": "Chapter 944 - The Fourth Act",
+      "url": "chapters/0944.json"
+    },
+    {
+      "id": 945,
+      "title": "Chapter 945 - The Story’s Ending",
+      "url": "chapters/0945.json"
+    },
+    {
+      "id": 946,
+      "title": "Chapter 946 - A Bestowment Or A Curse",
+      "url": "chapters/0946.json"
+    },
+    {
+      "id": 947,
+      "title": "Chapter 947 - House Call",
+      "url": "chapters/0947.json"
+    },
+    {
+      "id": 948,
+      "title": "Chapter 948 - 948 Meaning of Existence",
+      "url": "chapters/0948.json"
+    },
+    {
+      "id": 949,
+      "title": "Chapter 949 - Direction of Investigations",
+      "url": "chapters/0949.json"
+    },
+    {
+      "id": 950,
+      "title": "Chapter 950 - Keeping Secrets",
+      "url": "chapters/0950.json"
+    },
+    {
+      "id": 951,
+      "title": "Chapter 951 - Drawing A Card",
+      "url": "chapters/0951.json"
+    },
+    {
+      "id": 952,
+      "title": "Chapter 952 - What a Small World",
+      "url": "chapters/0952.json"
+    },
+    {
+      "id": 953,
+      "title": "Chapter 953 - Prophecy",
+      "url": "chapters/0953.json"
+    },
+    {
+      "id": 954,
+      "title": "Chapter 954 - Strange Ancient Castle",
+      "url": "chapters/0954.json"
+    },
+    {
+      "id": 955,
+      "title": "Chapter 955 - Ancient Wraith",
+      "url": "chapters/0955.json"
+    },
+    {
+      "id": 956,
+      "title": "Chapter 956 - The Things Behind the Door",
+      "url": "chapters/0956.json"
+    },
+    {
+      "id": 957,
+      "title": "Chapter 957 - Getting to Know Each Other",
+      "url": "chapters/0957.json"
+    },
+    {
+      "id": 958,
+      "title": "Chapter 958 - Labeling",
+      "url": "chapters/0958.json"
+    },
+    {
+      "id": 959,
+      "title": "Chapter 959 - Even Newcomers Are Different Amongst themselves",
+      "url": "chapters/0959.json"
+    },
+    {
+      "id": 960,
+      "title": "Chapter 960 - The Fool’s Sigh",
+      "url": "chapters/0960.json"
+    },
+    {
+      "id": 961,
+      "title": "Chapter 961 - Warning By Informing",
+      "url": "chapters/0961.json"
+    },
+    {
+      "id": 962,
+      "title": "Chapter 962 - Being Known",
+      "url": "chapters/0962.json"
+    },
+    {
+      "id": 963,
+      "title": "Chapter 963 - Problem with Intelligence",
+      "url": "chapters/0963.json"
+    },
+    {
+      "id": 964,
+      "title": "Chapter 964 - Medici’s Cause of Death",
+      "url": "chapters/0964.json"
+    },
+    {
+      "id": 965,
+      "title": "Chapter 965 - Brief Crisis",
+      "url": "chapters/0965.json"
+    },
+    {
+      "id": 966,
+      "title": "Chapter 966 - Train",
+      "url": "chapters/0966.json"
+    },
+    {
+      "id": 967,
+      "title": "Chapter 967 - Revelation",
+      "url": "chapters/0967.json"
+    },
+    {
+      "id": 968,
+      "title": "Chapter 968 - Descending” Saint",
+      "url": "chapters/0968.json"
+    },
+    {
+      "id": 969,
+      "title": "Chapter 969 - Duke",
+      "url": "chapters/0969.json"
+    },
+    {
+      "id": 970,
+      "title": "Chapter 970 - Talent at Soliciting Donations",
+      "url": "chapters/0970.json"
+    },
+    {
+      "id": 971,
+      "title": "Chapter 971 - Restraint",
+      "url": "chapters/0971.json"
+    },
+    {
+      "id": 972,
+      "title": "Chapter 972 - Nast’s Memories",
+      "url": "chapters/0972.json"
+    },
+    {
+      "id": 973,
+      "title": "Chapter 973 - New “Angel”",
+      "url": "chapters/0973.json"
+    },
+    {
+      "id": 974,
+      "title": "Chapter 974 - Mind World",
+      "url": "chapters/0974.json"
+    },
+    {
+      "id": 975,
+      "title": "Chapter 975 - A Familiar Feeling",
+      "url": "chapters/0975.json"
+    },
+    {
+      "id": 976,
+      "title": "Chapter 976 - Zealot",
+      "url": "chapters/0976.json"
+    },
+    {
+      "id": 977,
+      "title": "Chapter 977 - First Sermon",
+      "url": "chapters/0977.json"
+    },
+    {
+      "id": 978,
+      "title": "Chapter 978 - Gift",
+      "url": "chapters/0978.json"
+    },
+    {
+      "id": 979,
+      "title": "Chapter 979 - Joy of Life",
+      "url": "chapters/0979.json"
+    },
+    {
+      "id": 980,
+      "title": "Chapter 980 - Choice of Parasitic Target",
+      "url": "chapters/0980.json"
+    },
+    {
+      "id": 981,
+      "title": "Chapter 981 - Hazel’s Decision",
+      "url": "chapters/0981.json"
+    },
+    {
+      "id": 982,
+      "title": "Chapter 982 - Bizarro Sorcerer vs Parasite",
+      "url": "chapters/0982.json"
+    },
+    {
+      "id": 983,
+      "title": "Chapter 983 - In Your Name",
+      "url": "chapters/0983.json"
+    },
+    {
+      "id": 984,
+      "title": "Chapter 984 - Active Response",
+      "url": "chapters/0984.json"
+    },
+    {
+      "id": 985,
+      "title": "Chapter 985 - Blessed of Concealment",
+      "url": "chapters/0985.json"
+    },
+    {
+      "id": 986,
+      "title": "Chapter 986 - The “Infectiousness” of Parasitizing",
+      "url": "chapters/0986.json"
+    },
+    {
+      "id": 987,
+      "title": "Chapter 987 - Warehouse Clearance",
+      "url": "chapters/0987.json"
+    },
+    {
+      "id": 988,
+      "title": "Chapter 988 - Joint Operation",
+      "url": "chapters/0988.json"
+    },
+    {
+      "id": 989,
+      "title": "Chapter 989 - Mentor Alger",
+      "url": "chapters/0989.json"
+    },
+    {
+      "id": 990,
+      "title": "Chapter 990 - Inner Fears",
+      "url": "chapters/0990.json"
+    },
+    {
+      "id": 991,
+      "title": "Chapter 991 - A Ritual Without A “Reply”",
+      "url": "chapters/0991.json"
+    },
+    {
+      "id": 992,
+      "title": "Chapter 992 - Arrodes’s Congratulations",
+      "url": "chapters/0992.json"
+    },
+    {
+      "id": 993,
+      "title": "Chapter 993 - Another Possibility",
+      "url": "chapters/0993.json"
+    },
+    {
+      "id": 994,
+      "title": "Chapter 994 - Prelude",
+      "url": "chapters/0994.json"
+    },
+    {
+      "id": 995,
+      "title": "Chapter 995 - “Conjoined Person”",
+      "url": "chapters/0995.json"
+    },
+    {
+      "id": 996,
+      "title": "Chapter 996 - Card Game",
+      "url": "chapters/0996.json"
+    },
+    {
+      "id": 997,
+      "title": "Chapter 997 - “Gambling God” Dwayne",
+      "url": "chapters/0997.json"
+    },
+    {
+      "id": 998,
+      "title": "Chapter 998 - Establishing Relations",
+      "url": "chapters/0998.json"
+    },
+    {
+      "id": 999,
+      "title": "Chapter 999 - Instigation",
+      "url": "chapters/0999.json"
+    },
+    {
+      "id": 1000,
+      "title": "Chapter 1000 - Prelude",
+      "url": "chapters/1000.json"
+    },
+    {
+      "id": 1001,
+      "title": "Chapter 1001 - First Movement",
+      "url": "chapters/1001.json"
+    },
+    {
+      "id": 1002,
+      "title": "Chapter 1002 - Second Movement",
+      "url": "chapters/1002.json"
+    },
+    {
+      "id": 1003,
+      "title": "Chapter 1003 - Ritornello",
+      "url": "chapters/1003.json"
+    },
+    {
+      "id": 1004,
+      "title": "Chapter 1004 - Third Movement",
+      "url": "chapters/1004.json"
+    },
+    {
+      "id": 1005,
+      "title": "Chapter 1005 - Fourth Movement",
+      "url": "chapters/1005.json"
+    },
+    {
+      "id": 1006,
+      "title": "Chapter 1006 - Finale and Ending",
+      "url": "chapters/1006.json"
+    },
+    {
+      "id": 1007,
+      "title": "Chapter 1007 - Dealing With The Aftermath",
+      "url": "chapters/1007.json"
+    },
+    {
+      "id": 1008,
+      "title": "Chapter 1008 - Splitting",
+      "url": "chapters/1008.json"
+    },
+    {
+      "id": 1009,
+      "title": "Chapter 1009 - Payment Is Always Exacted for What’s Bestowed",
+      "url": "chapters/1009.json"
+    },
+    {
+      "id": 1010,
+      "title": "Chapter 1010 - Consultant Fee",
+      "url": "chapters/1010.json"
+    },
+    {
+      "id": 1011,
+      "title": "Chapter 1011 - Roselle’s Other Warning",
+      "url": "chapters/1011.json"
+    },
+    {
+      "id": 1012,
+      "title": "Chapter 1012 - First Day of September",
+      "url": "chapters/1012.json"
+    },
+    {
+      "id": 1013,
+      "title": "Chapter 1013 - 1013 Individual Growth",
+      "url": "chapters/1013.json"
+    },
+    {
+      "id": 1014,
+      "title": "Chapter 1014 - 1014 The Growing Group",
+      "url": "chapters/1014.json"
+    },
+    {
+      "id": 1015,
+      "title": "Chapter 1015 - 1015 March of War",
+      "url": "chapters/1015.json"
+    },
+    {
+      "id": 1016,
+      "title": "Chapter 1016 - 1016 News from the Numinous Episcopate",
+      "url": "chapters/1016.json"
+    },
+    {
+      "id": 1017,
+      "title": "Chapter 1017 - 1017 Maygur Manor",
+      "url": "chapters/1017.json"
+    },
+    {
+      "id": 1018,
+      "title": "Chapter 1018 - 1018 Unexpected",
+      "url": "chapters/1018.json"
+    },
+    {
+      "id": 1019,
+      "title": "Chapter 1019 - Patience",
+      "url": "chapters/1019.json"
+    },
+    {
+      "id": 1020,
+      "title": "Chapter 1020 - Means of a Demoness",
+      "url": "chapters/1020.json"
+    },
+    {
+      "id": 1021,
+      "title": "Chapter 1021 - Cross",
+      "url": "chapters/1021.json"
+    },
+    {
+      "id": 1022,
+      "title": "Chapter 1022 - 1022 Answer",
+      "url": "chapters/1022.json"
+    },
+    {
+      "id": 1023,
+      "title": "Chapter 1023 - Mason Dere’s Death",
+      "url": "chapters/1023.json"
+    },
+    {
+      "id": 1024,
+      "title": "Chapter 1024 - 1024 Traditional Skills",
+      "url": "chapters/1024.json"
+    },
+    {
+      "id": 1025,
+      "title": "Chapter 1025 - Random Anomalies",
+      "url": "chapters/1025.json"
+    },
+    {
+      "id": 1026,
+      "title": "Chapter 1026 - Two Restrictions",
+      "url": "chapters/1026.json"
+    },
+    {
+      "id": 1027,
+      "title": "Chapter 1027 - Decei",
+      "url": "chapters/1027.json"
+    },
+    {
+      "id": 1028,
+      "title": "Chapter 1028 - 1028 Saving Himself",
+      "url": "chapters/1028.json"
+    },
+    {
+      "id": 1029,
+      "title": "Chapter 1029 - Ruins No. 1",
+      "url": "chapters/1029.json"
+    },
+    {
+      "id": 1030,
+      "title": "Chapter 1030 - Joint Operations",
+      "url": "chapters/1030.json"
+    },
+    {
+      "id": 1031,
+      "title": "Chapter 1031 - Possibility",
+      "url": "chapters/1031.json"
+    },
+    {
+      "id": 1032,
+      "title": "Chapter 1032 - Forceful Purifier",
+      "url": "chapters/1032.json"
+    },
+    {
+      "id": 1033,
+      "title": "Chapter 1033 - Let There Be Ligh",
+      "url": "chapters/1033.json"
+    },
+    {
+      "id": 1034,
+      "title": "Chapter 1034 - Gains",
+      "url": "chapters/1034.json"
+    },
+    {
+      "id": 1035,
+      "title": "Chapter 1035 - Diary Page in Advance",
+      "url": "chapters/1035.json"
+    },
+    {
+      "id": 1036,
+      "title": "Chapter 1036 - “Expected” Development",
+      "url": "chapters/1036.json"
+    },
+    {
+      "id": 1037,
+      "title": "Chapter 1037 - Gehrman’s Problem",
+      "url": "chapters/1037.json"
+    },
+    {
+      "id": 1038,
+      "title": "Chapter 1038 - Name Lis",
+      "url": "chapters/1038.json"
+    },
+    {
+      "id": 1039,
+      "title": "Chapter 1039 - Hope",
+      "url": "chapters/1039.json"
+    },
+    {
+      "id": 1040,
+      "title": "Chapter 1040 - The Tranquil Surface of the Sea",
+      "url": "chapters/1040.json"
+    },
+    {
+      "id": 1041,
+      "title": "Chapter 1041 - 1041 King’s Daughter",
+      "url": "chapters/1041.json"
+    },
+    {
+      "id": 1042,
+      "title": "Chapter 1042 - 1042 Plan From a Different Angle",
+      "url": "chapters/1042.json"
+    },
+    {
+      "id": 1043,
+      "title": "Chapter 1043 - Each Having Their Own Plans",
+      "url": "chapters/1043.json"
+    },
+    {
+      "id": 1044,
+      "title": "Chapter 1044 - 1044 Placing Herself in the Tides",
+      "url": "chapters/1044.json"
+    },
+    {
+      "id": 1045,
+      "title": "Chapter 1045 - 1045 Dreamwalker",
+      "url": "chapters/1045.json"
+    },
+    {
+      "id": 1046,
+      "title": "Chapter 1046 - A “Test”",
+      "url": "chapters/1046.json"
+    },
+    {
+      "id": 1047,
+      "title": "Chapter 1047 - Brainstorm",
+      "url": "chapters/1047.json"
+    },
+    {
+      "id": 1048,
+      "title": "Chapter 1048 - Real and Fake “Spy1",
+      "url": "chapters/1048.json"
+    },
+    {
+      "id": 1049,
+      "title": "Chapter 1049 - 1049 Spectator’s Intuition",
+      "url": "chapters/1049.json"
+    },
+    {
+      "id": 1050,
+      "title": "Chapter 1050 - Good At Using Hypnosis",
+      "url": "chapters/1050.json"
+    },
+    {
+      "id": 1051,
+      "title": "Chapter 1051  Different Styles of Different Pathways",
+      "url": "chapters/1051.json"
+    },
+    {
+      "id": 1052,
+      "title": "Chapter 1052 - 1052 3vl",
+      "url": "chapters/1052.json"
+    },
+    {
+      "id": 1053,
+      "title": "Chapter 1053 - 1053 Presiden",
+      "url": "chapters/1053.json"
+    },
+    {
+      "id": 1054,
+      "title": "Chapter 1054 - Tailored-Made Ritual",
+      "url": "chapters/1054.json"
+    },
+    {
+      "id": 1055,
+      "title": "Chapter 1055 - Train of Though",
+      "url": "chapters/1055.json"
+    },
+    {
+      "id": 1056,
+      "title": "Chapter 1056 - The Real “Devil“",
+      "url": "chapters/1056.json"
+    },
+    {
+      "id": 1057,
+      "title": "Chapter 1057 - The Extraordinary and the Ordinary",
+      "url": "chapters/1057.json"
+    },
+    {
+      "id": 1058,
+      "title": "Chapter 1058 - A Tool",
+      "url": "chapters/1058.json"
+    },
+    {
+      "id": 1059,
+      "title": "Chapter 1059 - The Authority of the Moon",
+      "url": "chapters/1059.json"
+    },
+    {
+      "id": 1060,
+      "title": "Chapter 1060 - Covered-up Secre",
+      "url": "chapters/1060.json"
+    },
+    {
+      "id": 1061,
+      "title": "Chapter 1061 - Whose Dream",
+      "url": "chapters/1061.json"
+    },
+    {
+      "id": 1062,
+      "title": "Chapter 1062 - Teaching“ Online",
+      "url": "chapters/1062.json"
+    },
+    {
+      "id": 1063,
+      "title": "Chapter 1063 - The Lord’s Left-Hand",
+      "url": "chapters/1063.json"
+    },
+    {
+      "id": 1064,
+      "title": "Chapter 1064 - Drawing Closer",
+      "url": "chapters/1064.json"
+    },
+    {
+      "id": 1065,
+      "title": "Chapter 1065 - Cosmos Wanderer",
+      "url": "chapters/1065.json"
+    },
+    {
+      "id": 1066,
+      "title": "Chapter 1066 - Familiar Name",
+      "url": "chapters/1066.json"
+    },
+    {
+      "id": 1067,
+      "title": "Chapter 1067 - The Elven Version of History",
+      "url": "chapters/1067.json"
+    },
+    {
+      "id": 1068,
+      "title": "Chapter 1068 - Illogical Details",
+      "url": "chapters/1068.json"
+    },
+    {
+      "id": 1069,
+      "title": "Chapter 1069 - “Under the Sea’",
+      "url": "chapters/1069.json"
+    },
+    {
+      "id": 1070,
+      "title": "Chapter 1070 - Maybe It’s Real",
+      "url": "chapters/1070.json"
+    },
+    {
+      "id": 1071,
+      "title": "Chapter 1071 - Hall of Truth",
+      "url": "chapters/1071.json"
+    },
+    {
+      "id": 1072,
+      "title": "Chapter 1072 - The Call From Behind the Door",
+      "url": "chapters/1072.json"
+    },
+    {
+      "id": 1073,
+      "title": "Chapter 1073 - Three Possibilities",
+      "url": "chapters/1073.json"
+    },
+    {
+      "id": 1074,
+      "title": "Chapter 1074 - The Answer to Questions",
+      "url": "chapters/1074.json"
+    },
+    {
+      "id": 1075,
+      "title": "Chapter 1075 - No Response",
+      "url": "chapters/1075.json"
+    },
+    {
+      "id": 1076,
+      "title": "Chapter 1076 - Dorian’s Request",
+      "url": "chapters/1076.json"
+    },
+    {
+      "id": 1077,
+      "title": "Chapter 1077 - Four Choices",
+      "url": "chapters/1077.json"
+    },
+    {
+      "id": 1078,
+      "title": "Chapter 1078 - The Hidden Secre",
+      "url": "chapters/1078.json"
+    },
+    {
+      "id": 1079,
+      "title": "Chapter 1079 - 1079 The Hardworking Gardeners",
+      "url": "chapters/1079.json"
+    },
+    {
+      "id": 1080,
+      "title": "Chapter 1080 - The Line of Thinking for Acting",
+      "url": "chapters/1080.json"
+    },
+    {
+      "id": 1081,
+      "title": "Chapter 1081 - The Returnee",
+      "url": "chapters/1081.json"
+    },
+    {
+      "id": 1082,
+      "title": "Chapter 1082 - Sudden Turn of Events",
+      "url": "chapters/1082.json"
+    },
+    {
+      "id": 1083,
+      "title": "Chapter 1083 - 1083 Backlund in Chaos",
+      "url": "chapters/1083.json"
+    },
+    {
+      "id": 1084,
+      "title": "Chapter 1084 - The People in War",
+      "url": "chapters/1084.json"
+    },
+    {
+      "id": 1085,
+      "title": "Chapter 1085 - 1085 Scrutinizing the Situation",
+      "url": "chapters/1085.json"
+    },
+    {
+      "id": 1086,
+      "title": "Chapter 1086 - A Simple Inference",
+      "url": "chapters/1086.json"
+    },
+    {
+      "id": 1087,
+      "title": "Chapter 1087 - The Deities’ Attitudes",
+      "url": "chapters/1087.json"
+    },
+    {
+      "id": 1088,
+      "title": "Chapter 1088 - 1088 Hiding in Secre",
+      "url": "chapters/1088.json"
+    },
+    {
+      "id": 1089,
+      "title": "Chapter 1089 - A Difficult Decision",
+      "url": "chapters/1089.json"
+    },
+    {
+      "id": 1090,
+      "title": "Chapter 1090 - 1090 Haunted Tales",
+      "url": "chapters/1090.json"
+    },
+    {
+      "id": 1091,
+      "title": "Chapter 1091 - 1091 Asking Himself",
+      "url": "chapters/1091.json"
+    },
+    {
+      "id": 1092,
+      "title": "Chapter 1092 - 1092 Ridiculous People",
+      "url": "chapters/1092.json"
+    },
+    {
+      "id": 1093,
+      "title": "Chapter 1093 - 1093 The Angels of The Fool",
+      "url": "chapters/1093.json"
+    },
+    {
+      "id": 1094,
+      "title": "Chapter 1094 - 1094 Breakthrough Poin",
+      "url": "chapters/1094.json"
+    },
+    {
+      "id": 1095,
+      "title": "Chapter 1095 - 1095 Acting as Himself",
+      "url": "chapters/1095.json"
+    },
+    {
+      "id": 1096,
+      "title": "Chapter 1096 - 1096 Cooperation",
+      "url": "chapters/1096.json"
+    },
+    {
+      "id": 1097,
+      "title": "Chapter 1097 - Different Conundrum",
+      "url": "chapters/1097.json"
+    },
+    {
+      "id": 1098,
+      "title": "Chapter 1098 - Contribution Accumulation",
+      "url": "chapters/1098.json"
+    },
+    {
+      "id": 1099,
+      "title": "Chapter 1099 - 1368",
+      "url": "chapters/1099.json"
+    },
+    {
+      "id": 1100,
+      "title": "Chapter 1100 - One Book",
+      "url": "chapters/1100.json"
+    },
+    {
+      "id": 1101,
+      "title": "Chapter 1101 - Special Reward",
+      "url": "chapters/1101.json"
+    },
+    {
+      "id": 1102,
+      "title": "Chapter 1102 - Engaging Tigers to Hunt Wolves",
+      "url": "chapters/1102.json"
+    },
+    {
+      "id": 1103,
+      "title": "Chapter 1103 - 1103 Hin",
+      "url": "chapters/1103.json"
+    },
+    {
+      "id": 1104,
+      "title": "Chapter 1104 - 1104 Contradiction",
+      "url": "chapters/1104.json"
+    },
+    {
+      "id": 1105,
+      "title": "Chapter 1105 - 1105 The Key Diary Entry",
+      "url": "chapters/1105.json"
+    },
+    {
+      "id": 1106,
+      "title": "Chapter 1106 - Making Contac",
+      "url": "chapters/1106.json"
+    },
+    {
+      "id": 1107,
+      "title": "Chapter 1107 - 1107 Relax",
+      "url": "chapters/1107.json"
+    },
+    {
+      "id": 1108,
+      "title": "Chapter 1108 - Messed Up Family",
+      "url": "chapters/1108.json"
+    },
+    {
+      "id": 1109,
+      "title": "Chapter 1109 - Patience",
+      "url": "chapters/1109.json"
+    },
+    {
+      "id": 1110,
+      "title": "Chapter 1110 - Spirit“ Channeling",
+      "url": "chapters/1110.json"
+    },
+    {
+      "id": 1111,
+      "title": "Chapter 1111 - “Poker Expert“",
+      "url": "chapters/1111.json"
+    },
+    {
+      "id": 1112,
+      "title": "Chapter 1112 - 1112 Traveling Notebook",
+      "url": "chapters/1112.json"
+    },
+    {
+      "id": 1113,
+      "title": "Chapter 1113 - Powerful Guardian",
+      "url": "chapters/1113.json"
+    },
+    {
+      "id": 1114,
+      "title": "Chapter 1114 - The Remnant Will",
+      "url": "chapters/1114.json"
+    },
+    {
+      "id": 1115,
+      "title": "Chapter 1115 - 1115 Inside the King’s Cour",
+      "url": "chapters/1115.json"
+    },
+    {
+      "id": 1116,
+      "title": "Chapter 1116 - Familiar Gaze",
+      "url": "chapters/1116.json"
+    },
+    {
+      "id": 1117,
+      "title": "Chapter 1117 - The Strongest Organization",
+      "url": "chapters/1117.json"
+    },
+    {
+      "id": 1118,
+      "title": "Chapter 1118 - Klein’s Fear",
+      "url": "chapters/1118.json"
+    },
+    {
+      "id": 1119,
+      "title": "Chapter 1119 - 1119 Tacit Cooperation",
+      "url": "chapters/1119.json"
+    },
+    {
+      "id": 1120,
+      "title": "Chapter 1120 - 1120 Court Chaser",
+      "url": "chapters/1120.json"
+    },
+    {
+      "id": 1121,
+      "title": "Chapter 1121 - 1121 Weakness",
+      "url": "chapters/1121.json"
+    },
+    {
+      "id": 1122,
+      "title": "Chapter 1122 - The Instructions of The Fool",
+      "url": "chapters/1122.json"
+    },
+    {
+      "id": 1123,
+      "title": "Chapter 1123 - 1123 After the Expedition",
+      "url": "chapters/1123.json"
+    },
+    {
+      "id": 1124,
+      "title": "Chapter 1124 - Enhanced Teammates",
+      "url": "chapters/1124.json"
+    },
+    {
+      "id": 1125,
+      "title": "Chapter 1125 - Opportunity",
+      "url": "chapters/1125.json"
+    },
+    {
+      "id": 1126,
+      "title": "Chapter 1126 - Unexpected1",
+      "url": "chapters/1126.json"
+    },
+    {
+      "id": 1127,
+      "title": "Chapter 1127 - Sefirah Castle",
+      "url": "chapters/1127.json"
+    },
+    {
+      "id": 1128,
+      "title": "Chapter 1128 - Finally An Outcome",
+      "url": "chapters/1128.json"
+    },
+    {
+      "id": 1129,
+      "title": "Chapter 1129 - Pressure",
+      "url": "chapters/1129.json"
+    },
+    {
+      "id": 1130,
+      "title": "Chapter 1130 - News Storm",
+      "url": "chapters/1130.json"
+    },
+    {
+      "id": 1131,
+      "title": "Chapter 1131 - An Indescribable Transaction",
+      "url": "chapters/1131.json"
+    },
+    {
+      "id": 1132,
+      "title": "Chapter 1132 - Interlude",
+      "url": "chapters/1132.json"
+    },
+    {
+      "id": 1133,
+      "title": "Chapter 1133 - Chan",
+      "url": "chapters/1133.json"
+    },
+    {
+      "id": 1134,
+      "title": "Chapter 1134 - Mr. Door",
+      "url": "chapters/1134.json"
+    },
+    {
+      "id": 1135,
+      "title": "Chapter 1135 - Fragran",
+      "url": "chapters/1135.json"
+    },
+    {
+      "id": 1136,
+      "title": "Chapter 1136 - 1136 Rumors from Ancient Times",
+      "url": "chapters/1136.json"
+    },
+    {
+      "id": 1137,
+      "title": "Chapter 1137 - 1137 Amidst History",
+      "url": "chapters/1137.json"
+    },
+    {
+      "id": 1138,
+      "title": "Chapter 1138 - “Scholar of Yore“",
+      "url": "chapters/1138.json"
+    },
+    {
+      "id": 1139,
+      "title": "Chapter 1139 - A Different Form of Companionship",
+      "url": "chapters/1139.json"
+    },
+    {
+      "id": 1140,
+      "title": "Chapter 1140 - 1140 Plans",
+      "url": "chapters/1140.json"
+    },
+    {
+      "id": 1141,
+      "title": "Chapter 1141 - 1141 Deep Winter",
+      "url": "chapters/1141.json"
+    },
+    {
+      "id": 1142,
+      "title": "Chapter 1142 - Warning",
+      "url": "chapters/1142.json"
+    },
+    {
+      "id": 1143,
+      "title": "Chapter 1143 - 1143 Reasonable Developmen",
+      "url": "chapters/1143.json"
+    },
+    {
+      "id": 1144,
+      "title": "Chapter 1144 - 1144 Narrowly",
+      "url": "chapters/1144.json"
+    },
+    {
+      "id": 1145,
+      "title": "Chapter 1145 - Three Arrows At The Same Time",
+      "url": "chapters/1145.json"
+    },
+    {
+      "id": 1146,
+      "title": "Chapter 1146 - 1146 A Real Charlatan",
+      "url": "chapters/1146.json"
+    },
+    {
+      "id": 1147,
+      "title": "Chapter 1147 - Chaos",
+      "url": "chapters/1147.json"
+    },
+    {
+      "id": 1148,
+      "title": "Chapter 1148 - 1148 Not Late",
+      "url": "chapters/1148.json"
+    },
+    {
+      "id": 1149,
+      "title": "Chapter 1149 - 1149 Escape",
+      "url": "chapters/1149.json"
+    },
+    {
+      "id": 1150,
+      "title": "Chapter 1150 - 1150 Mad Dash",
+      "url": "chapters/1150.json"
+    },
+    {
+      "id": 1151,
+      "title": "Chapter 1151 - 1151 Decei",
+      "url": "chapters/1151.json"
+    },
+    {
+      "id": 1152,
+      "title": "Chapter 1152 - 1152 “Error“",
+      "url": "chapters/1152.json"
+    },
+    {
+      "id": 1153,
+      "title": "Chapter 1153 - 1153 The Sunset Tunnel",
+      "url": "chapters/1153.json"
+    },
+    {
+      "id": 1154,
+      "title": "Chapter 1154 - I“ll Give You a Chance",
+      "url": "chapters/1154.json"
+    },
+    {
+      "id": 1155,
+      "title": "Chapter 1155 - Walking in the Dark",
+      "url": "chapters/1155.json"
+    },
+    {
+      "id": 1156,
+      "title": "Chapter 1156 - Thinking",
+      "url": "chapters/1156.json"
+    },
+    {
+      "id": 1157,
+      "title": "Chapter 1157 - Poise",
+      "url": "chapters/1157.json"
+    },
+    {
+      "id": 1158,
+      "title": "Chapter 1158 - Coming to Terms",
+      "url": "chapters/1158.json"
+    },
+    {
+      "id": 1159,
+      "title": "Chapter 1159 - Validation",
+      "url": "chapters/1159.json"
+    },
+    {
+      "id": 1160,
+      "title": "Chapter 1160 - 1160 Improving",
+      "url": "chapters/1160.json"
+    },
+    {
+      "id": 1161,
+      "title": "Chapter 1161 - 1161 Countdown",
+      "url": "chapters/1161.json"
+    },
+    {
+      "id": 1162,
+      "title": "Chapter 1162 - 1162 Prophecy",
+      "url": "chapters/1162.json"
+    },
+    {
+      "id": 1163,
+      "title": "Chapter 1163 - Approaching",
+      "url": "chapters/1163.json"
+    },
+    {
+      "id": 1164,
+      "title": "Chapter 1164 - 1164 Cheating",
+      "url": "chapters/1164.json"
+    },
+    {
+      "id": 1165,
+      "title": "Chapter 1165 - The Grand Lineup",
+      "url": "chapters/1165.json"
+    },
+    {
+      "id": 1166,
+      "title": "Chapter 1166 - Its Name",
+      "url": "chapters/1166.json"
+    },
+    {
+      "id": 1167,
+      "title": "Chapter 1167 - When the Stars Are Righ",
+      "url": "chapters/1167.json"
+    },
+    {
+      "id": 1168,
+      "title": "Chapter 1168 - My Anchors",
+      "url": "chapters/1168.json"
+    },
+    {
+      "id": 1169,
+      "title": "Chapter 1169 - Klein“s",
+      "url": "chapters/1169.json"
+    },
+    {
+      "id": 1170,
+      "title": "Chapter 1170 - Ritual",
+      "url": "chapters/1170.json"
+    },
+    {
+      "id": 1171,
+      "title": "Chapter 1171 - The Third One",
+      "url": "chapters/1171.json"
+    },
+    {
+      "id": 1172,
+      "title": "Chapter 1172 - Unperturbed",
+      "url": "chapters/1172.json"
+    },
+    {
+      "id": 1173,
+      "title": "Chapter 1173 - Advice",
+      "url": "chapters/1173.json"
+    },
+    {
+      "id": 1174,
+      "title": "Chapter 1174 - Joint Operation",
+      "url": "chapters/1174.json"
+    },
+    {
+      "id": 1175,
+      "title": "Chapter 1175 - Ideas Are Very Importan",
+      "url": "chapters/1175.json"
+    },
+    {
+      "id": 1176,
+      "title": "Chapter 1176 - 1176 Plo",
+      "url": "chapters/1176.json"
+    },
+    {
+      "id": 1177,
+      "title": "Chapter 1177 - Substitute",
+      "url": "chapters/1177.json"
+    },
+    {
+      "id": 1178,
+      "title": "Chapter 1178 - I Have a Blessed",
+      "url": "chapters/1178.json"
+    },
+    {
+      "id": 1179,
+      "title": "Chapter 1179 - Preparations Both Ways",
+      "url": "chapters/1179.json"
+    },
+    {
+      "id": 1180,
+      "title": "Chapter 1180 - 1180 Different Effects",
+      "url": "chapters/1180.json"
+    },
+    {
+      "id": 1181,
+      "title": "Chapter 1181 - Nois Ancient City",
+      "url": "chapters/1181.json"
+    },
+    {
+      "id": 1182,
+      "title": "Chapter 1182 - The Holy Word",
+      "url": "chapters/1182.json"
+    },
+    {
+      "id": 1183,
+      "title": "Chapter 1183 - Klein’s Advantage",
+      "url": "chapters/1183.json"
+    },
+    {
+      "id": 1184,
+      "title": "Chapter 1184 - Record",
+      "url": "chapters/1184.json"
+    },
+    {
+      "id": 1185,
+      "title": "Chapter 1185 - Reappearing",
+      "url": "chapters/1185.json"
+    },
+    {
+      "id": 1186,
+      "title": "Chapter 1186 - Opportunity and Danger Are Two Sides of the Same Coin",
+      "url": "chapters/1186.json"
+    },
+    {
+      "id": 1187,
+      "title": "Chapter 1187 - Change",
+      "url": "chapters/1187.json"
+    },
+    {
+      "id": 1188,
+      "title": "Chapter 1188 - Thick-Skinned",
+      "url": "chapters/1188.json"
+    },
+    {
+      "id": 1189,
+      "title": "Chapter 1189 - Winter Gifts Day",
+      "url": "chapters/1189.json"
+    },
+    {
+      "id": 1190,
+      "title": "Chapter 1190 - Resonance",
+      "url": "chapters/1190.json"
+    },
+    {
+      "id": 1191,
+      "title": "Chapter 1191 - Grasping One’s Mentality",
+      "url": "chapters/1191.json"
+    },
+    {
+      "id": 1192,
+      "title": "Chapter 1192 - Each Serving their Duty",
+      "url": "chapters/1192.json"
+    },
+    {
+      "id": 1193,
+      "title": "Chapter 1193 - 1193 Heading Eas",
+      "url": "chapters/1193.json"
+    },
+    {
+      "id": 1194,
+      "title": "Chapter 1194 - A Lion’s Hunt of a Rabbi",
+      "url": "chapters/1194.json"
+    },
+    {
+      "id": 1195,
+      "title": "Chapter 1195 - 1195 Grade 0",
+      "url": "chapters/1195.json"
+    },
+    {
+      "id": 1196,
+      "title": "Chapter 1196 - The Ugly Duckling",
+      "url": "chapters/1196.json"
+    },
+    {
+      "id": 1197,
+      "title": "Chapter 1197 - Mind Storm",
+      "url": "chapters/1197.json"
+    },
+    {
+      "id": 1198,
+      "title": "Chapter 1198 - Frenzy",
+      "url": "chapters/1198.json"
+    },
+    {
+      "id": 1199,
+      "title": "Chapter 1199 - 1199 Inauspicious Box",
+      "url": "chapters/1199.json"
+    },
+    {
+      "id": 1200,
+      "title": "Chapter 1200 - Randomness",
+      "url": "chapters/1200.json"
+    },
+    {
+      "id": 1201,
+      "title": "Chapter 1201 - Professional",
+      "url": "chapters/1201.json"
+    },
+    {
+      "id": 1202,
+      "title": "Chapter 1202 - The Tarot Club",
+      "url": "chapters/1202.json"
+    },
+    {
+      "id": 1203,
+      "title": "Chapter 1203 - Harves",
+      "url": "chapters/1203.json"
+    },
+    {
+      "id": 1204,
+      "title": "Chapter 1204 - 1204 Putting Life and Death Aside",
+      "url": "chapters/1204.json"
+    },
+    {
+      "id": 1205,
+      "title": "Chapter 1205 - A Thousand-Year-Old Trap",
+      "url": "chapters/1205.json"
+    },
+    {
+      "id": 1206,
+      "title": "Chapter 1206 - Sly Old Foxes, Everyone of Them",
+      "url": "chapters/1206.json"
+    },
+    {
+      "id": 1207,
+      "title": "Chapter 1207 - 1207 Dorian’s Decision",
+      "url": "chapters/1207.json"
+    },
+    {
+      "id": 1208,
+      "title": "Chapter 1208 - 1208 The Long-Awaited Serenity",
+      "url": "chapters/1208.json"
+    },
+    {
+      "id": 1209,
+      "title": "Chapter 1209 - Two Choices",
+      "url": "chapters/1209.json"
+    },
+    {
+      "id": 1210,
+      "title": "Chapter 1210 - Moon City",
+      "url": "chapters/1210.json"
+    },
+    {
+      "id": 1211,
+      "title": "Chapter 1211 - Unimaginable",
+      "url": "chapters/1211.json"
+    },
+    {
+      "id": 1212,
+      "title": "Chapter 1212 - Spreading Radiance",
+      "url": "chapters/1212.json"
+    },
+    {
+      "id": 1213,
+      "title": "Chapter 1213 - The Eternally Imperturbable Fog",
+      "url": "chapters/1213.json"
+    },
+    {
+      "id": 1214,
+      "title": "Chapter 1214 - Voice",
+      "url": "chapters/1214.json"
+    },
+    {
+      "id": 1215,
+      "title": "Chapter 1215 - 1215 Not Time Ye",
+      "url": "chapters/1215.json"
+    },
+    {
+      "id": 1216,
+      "title": "Chapter 1216 - Patience Will Ultimately Pay Off",
+      "url": "chapters/1216.json"
+    },
+    {
+      "id": 1217,
+      "title": "Chapter 1217 - The Five Mush and Two Rooms",
+      "url": "chapters/1217.json"
+    },
+    {
+      "id": 1354,
+      "title": "Chapter 1354 - This Nigh",
+      "url": "chapters/1354.json"
+    },
+    {
+      "id": 1355,
+      "title": "Chapter 1355 - Wrapping Up The Matter",
+      "url": "chapters/1355.json"
+    },
+    {
+      "id": 1356,
+      "title": "Chapter 1356 - Urgency",
+      "url": "chapters/1356.json"
+    },
+    {
+      "id": 1357,
+      "title": "Chapter 1357 - Meeting",
+      "url": "chapters/1357.json"
+    },
+    {
+      "id": 1358,
+      "title": "Chapter 1358 - Conversation",
+      "url": "chapters/1358.json"
+    },
+    {
+      "id": 1359,
+      "title": "Chapter 1359 - Early Morning",
+      "url": "chapters/1359.json"
+    },
+    {
+      "id": 1360,
+      "title": "Chapter 1360 - Choice",
+      "url": "chapters/1360.json"
+    },
+    {
+      "id": 1361,
+      "title": "Chapter 1361 - Joint Operation",
+      "url": "chapters/1361.json"
+    },
+    {
+      "id": 1362,
+      "title": "Chapter 1362 - Witness",
+      "url": "chapters/1362.json"
+    },
+    {
+      "id": 1363,
+      "title": "Chapter 1363 - Treatment Plan",
+      "url": "chapters/1363.json"
+    },
+    {
+      "id": 1364,
+      "title": "Chapter 1364 - Proactive Klein",
+      "url": "chapters/1364.json"
+    },
+    {
+      "id": 1365,
+      "title": "Chapter 1365 - Destruction",
+      "url": "chapters/1365.json"
+    },
+    {
+      "id": 1366,
+      "title": "Chapter 1366 - Set Up",
+      "url": "chapters/1366.json"
+    },
+    {
+      "id": 1367,
+      "title": "Chapter 1367 - Distributary",
+      "url": "chapters/1367.json"
+    },
+    {
+      "id": 1368,
+      "title": "Chapter 1368 - Death Imprin",
+      "url": "chapters/1368.json"
+    },
+    {
+      "id": 1369,
+      "title": "Chapter 1369 - Pomp",
+      "url": "chapters/1369.json"
+    },
+    {
+      "id": 1370,
+      "title": "Chapter 1370 - Decisive",
+      "url": "chapters/1370.json"
+    },
+    {
+      "id": 1371,
+      "title": "Chapter 1371 - Who are Allies and Who are Foes",
+      "url": "chapters/1371.json"
+    },
+    {
+      "id": 1372,
+      "title": "Chapter 1372 - The Other Use of the Magic Wishing Lamp",
+      "url": "chapters/1372.json"
+    },
+    {
+      "id": 1373,
+      "title": "Chapter 1373 - Facing",
+      "url": "chapters/1373.json"
+    },
+    {
+      "id": 1374,
+      "title": "Chapter 1374 - Trojan Horse of Destiny",
+      "url": "chapters/1374.json"
+    },
+    {
+      "id": 1375,
+      "title": "Chapter 1375 - Beginning the Accommodation",
+      "url": "chapters/1375.json"
+    },
+    {
+      "id": 1376,
+      "title": "Chapter 1376 - Half a Great Old One",
+      "url": "chapters/1376.json"
+    },
+    {
+      "id": 1377,
+      "title": "Chapter 1377 - Crazy Ravings",
+      "url": "chapters/1377.json"
+    },
+    {
+      "id": 1378,
+      "title": "Chapter 1378 - Change of Plans",
+      "url": "chapters/1378.json"
+    },
+    {
+      "id": 1379,
+      "title": "Chapter 1379 - Combining Forces",
+      "url": "chapters/1379.json"
+    },
+    {
+      "id": 1380,
+      "title": "Chapter 1380 - A Miracle",
+      "url": "chapters/1380.json"
+    },
+    {
+      "id": 1381,
+      "title": "Chapter 1381 - Authority",
+      "url": "chapters/1381.json"
+    },
+    {
+      "id": 1382,
+      "title": "Chapter 1382 - Home Ground Advantage",
+      "url": "chapters/1382.json"
+    },
+    {
+      "id": 1383,
+      "title": "Chapter 1383 - Stipulated Rules",
+      "url": "chapters/1383.json"
+    },
+    {
+      "id": 1384,
+      "title": "Chapter 1384 - Conceptualization",
+      "url": "chapters/1384.json"
+    },
+    {
+      "id": 1385,
+      "title": "Chapter 1385 - “Madness",
+      "url": "chapters/1385.json"
+    },
+    {
+      "id": 1386,
+      "title": "Chapter 1386 - Narrow Path",
+      "url": "chapters/1386.json"
+    },
+    {
+      "id": 1387,
+      "title": "Chapter 1387 - Method",
+      "url": "chapters/1387.json"
+    },
+    {
+      "id": 1388,
+      "title": "Chapter 1388 - A Sudden Gathering",
+      "url": "chapters/1388.json"
+    },
+    {
+      "id": 1389,
+      "title": "Chapter 1389 - The Fool’s Commission",
+      "url": "chapters/1389.json"
+    },
+    {
+      "id": 1390,
+      "title": "Chapter 1390 - Questions and Answers",
+      "url": "chapters/1390.json"
+    },
+    {
+      "id": 1391,
+      "title": "Chapter 1391 - Facing I",
+      "url": "chapters/1391.json"
+    },
+    {
+      "id": 1392,
+      "title": "Chapter 1392 - Yesterday No More",
+      "url": "chapters/1392.json"
+    },
+    {
+      "id": 1393,
+      "title": "Chapter 1393 - Where the Dream Begins",
+      "url": "chapters/1393.json"
+    },
+    {
+      "id": 1394,
+      "title": "Chapter 1394 - A New Journey",
+      "url": "chapters/1394.json"
+    },
+    {
+      "id": 1395,
+      "title": "Chapter 1395 - An Ordinary Person’s Daily Life 1/8",
+      "url": "chapters/1395.json"
+    },
+    {
+      "id": 1396,
+      "title": "Chapter 1396 - An Ordinary Person’s Daily Life (2/8)",
+      "url": "chapters/1396.json"
+    },
+    {
+      "id": 1397,
+      "title": "Chapter 1397 - An Ordinary Person’s Daily Life 3/8",
+      "url": "chapters/1397.json"
+    },
+    {
+      "id": 1398,
+      "title": "Chapter 1398 - An Ordinary Person’s Daily Life 4/8",
+      "url": "chapters/1398.json"
+    },
+    {
+      "id": 1399,
+      "title": "Chapter 1399 - An Ordinary Person’s Daily Life 5/8",
+      "url": "chapters/1399.json"
+    },
+    {
+      "id": 1400,
+      "title": "Chapter 1400 - An Ordinary Person’s Daily Life 6/8",
+      "url": "chapters/1400.json"
+    },
+    {
+      "id": 1401,
+      "title": "Chapter 1401 - An Ordinary Person’s Daily Life 7/8",
+      "url": "chapters/1401.json"
+    },
+    {
+      "id": 1402,
+      "title": "Chapter 1402 - An Ordinary Person’s Daily Life 8/8",
+      "url": "chapters/1402.json"
+    },
+    {
+      "id": 1403,
+      "title": "Chapter 1403 - In Modern Day 1",
+      "url": "chapters/1403.json"
+    },
+    {
+      "id": 1404,
+      "title": "Chapter 1404 - In Modern Day 2",
+      "url": "chapters/1404.json"
+    },
+    {
+      "id": 1405,
+      "title": "Chapter 1405 - In Modern Day 3",
+      "url": "chapters/1405.json"
+    },
+    {
+      "id": 1406,
+      "title": "Chapter 1406 - In Modern Day 4",
+      "url": "chapters/1406.json"
+    },
+    {
+      "id": 1407,
+      "title": "Chapter 1407 - In Modern Day 5",
+      "url": "chapters/1407.json"
+    },
+    {
+      "id": 1408,
+      "title": "Chapter 1408 - In Modern Day 6",
+      "url": "chapters/1408.json"
+    },
+    {
+      "id": 1409,
+      "title": "Chapter 1409 - In Modern Day 7",
+      "url": "chapters/1409.json"
+    },
+    {
+      "id": 1410,
+      "title": "Chapter 1410 - In Modern Day 8",
+      "url": "chapters/1410.json"
+    },
+    {
+      "id": 1411,
+      "title": "Chapter 1411 - In Modern Day 9",
+      "url": "chapters/1411.json"
+    },
+    {
+      "id": 1412,
+      "title": "Chapter 1412 - In Modern Day 10",
+      "url": "chapters/1412.json"
+    },
+    {
+      "id": 1413,
+      "title": "Chapter 1413 - In Modern Day 11",
+      "url": "chapters/1413.json"
+    },
+    {
+      "id": 1414,
+      "title": "Chapter 1414 - In Modern Day 12",
+      "url": "chapters/1414.json"
+    },
+    {
+      "id": 1415,
+      "title": "Chapter 1415 - In Modern Day 13",
+      "url": "chapters/1415.json"
+    },
+    {
+      "id": 1416,
+      "title": "Chapter 1416 - In Modern Day 14",
+      "url": "chapters/1416.json"
+    },
+    {
+      "id": 1417,
+      "title": "Chapter 1417 - In Modern Day 15",
+      "url": "chapters/1417.json"
+    },
+    {
+      "id": 1418,
+      "title": "Chapter 1418 - In Modern Day 16",
+      "url": "chapters/1418.json"
+    },
+    {
+      "id": 1419,
+      "title": "Chapter 1419 - In Modern Day 17",
+      "url": "chapters/1419.json"
+    },
+    {
+      "id": 1420,
+      "title": "Chapter 1420 - In Modern Day 18",
+      "url": "chapters/1420.json"
+    },
+    {
+      "id": 1421,
+      "title": "Chapter 1421 - In Modern Day 19",
+      "url": "chapters/1421.json"
+    },
+    {
+      "id": 1422,
+      "title": "Chapter 1422 - In Modern Day 20",
+      "url": "chapters/1422.json"
+    },
+    {
+      "id": 1423,
+      "title": "Chapter 1423 - In Modern Day 21",
+      "url": "chapters/1423.json"
+    },
+    {
+      "id": 1424,
+      "title": "Chapter 1424 - In Modern Day 22",
+      "url": "chapters/1424.json"
+    },
+    {
+      "id": 1425,
+      "title": "Chapter 1425 - In Modern Day 23",
+      "url": "chapters/1425.json"
+    },
+    {
+      "id": 1426,
+      "title": "Chapter 1426 - In Modern Day 24",
+      "url": "chapters/1426.json"
+    },
+    {
+      "id": 1427,
+      "title": "Chapter 1427 - In Modern Day (25)",
+      "url": "chapters/1427.json"
+    },
+    {
+      "id": 1428,
+      "title": "Chapter 1428 - In Modern Day (26)",
+      "url": "chapters/1428.json"
+    },
+    {
+      "id": 1429,
+      "title": "Chapter 1429 - In Modern Day 27",
+      "url": "chapters/1429.json"
+    },
+    {
+      "id": 1430,
+      "title": "Chapter 1430 (END) - In Modern Day (28)",
+      "url": "chapters/1430.json"
+    },
+    {
+      "id": 1431,
+      "title": "Chapter 1431 - 1431 Bonus Chapter: That Corner (1)",
+      "url": "chapters/1431.json"
+    },
+    {
+      "id": 1432,
+      "title": "Chapter 1432-END - 1432 Bonus Chapter: That Corner (2)",
+      "url": "chapters/1432.json"
+    }
+  ]
+}
