@@ -2,7 +2,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="manifest" href="app.webmanifest">
-<title>Isaac · 雙語朗讀</title>
+<title>音聽小說</title>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -363,6 +363,8 @@ input[type=range]{width:60px;accent-color:var(--gold);cursor:pointer;height:3px}
   #top {
     padding-top: env(safe-area-inset-top) !important;
     justify-content: space-between !important;
+    position: relative !important;
+    z-index: 101 !important;
   }
   
   #ctrls {
@@ -432,7 +434,7 @@ input[type=range]{width:60px;accent-color:var(--gold);cursor:pointer;height:3px}
 <body class="t-sepia">
 <div style="display:flex;flex-direction:column;height:100vh">
 <div id="top">
-<div class="bb"><div><div class="bt">English Listener</div><div class="bs">雙語朗讀</div></div></div>
+<div class="bb"><div><div class="bt">音聽小說</div><div class="bs">雙語朗讀</div></div></div>
 <button onclick="document.getElementById('importJson').click()" style="font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--t3,#555);background:transparent;color:var(--t1,#eee);cursor:pointer;white-space:nowrap;margin-left:8px">📂 匯入 JSON</button>
 <input type="file" id="importJson" style="display:none" accept=".json" onchange="handleFileSelect(this)">
 <div class="sep"></div>
