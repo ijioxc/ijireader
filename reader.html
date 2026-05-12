@@ -623,7 +623,18 @@ function getCachedTranslation(chId, paraIdx) {
   return localStorage.getItem(tlCacheKey(chId, paraIdx)) || '';
 }
 function setCachedTranslation(chId, paraIdx, text) {
-  localStorage.setItem(tlCacheKey(chId, paraIdx), text);
+  try {
+    localStorage.setItem(tlCacheKey(chId, paraIdx), text);
+  } catch (e) {
+    if (e.name === 'QuotaExceededError') {
+      console.warn('LocalStorage 空間爆了，自動清理舊翻譯快取...');
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('tl_')) localStorage.removeItem(k);
+      }
+      try { localStorage.setItem(tlCacheKey(chId, paraIdx), text); } catch(e2) {}
+    }
+  }
 }
 
 async function translatePara(idx, event) {
@@ -768,7 +779,13 @@ Input: ${JSON.stringify(texts)}`;
   }
   const data = await res.json();
   const text = data.candidates[0].content.parts[0].text;
-  // 防呆：有時候 Gemini 還是會吐 ```json ... ```，把 markdown 標記濾掉
+  // 防呆：優先抓取第一個 [ 和最後一個 ] 之間的內容，過濾掉 AI 的廢話
+  const match = text.match(/\[[\s\S]*\]/);
+  if (match) {
+    try {
+      return JSON.parse(match[0]);
+    } catch(e) { console.warn('JSON parse array failed, fallback.'); }
+  }
   const cleanJson = text.replace(/^```json\s*|```$/g, '').trim();
   return JSON.parse(cleanJson);
 }
