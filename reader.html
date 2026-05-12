@@ -285,6 +285,15 @@ body.m-edge #edge-hint{display:block}
         </div>
       </div>
 
+      <!-- Translation Engine -->
+      <div class="sps">
+        <div class="spst">翻譯引擎</div>
+        <div class="vtabs" id="engineTabs">
+          <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
+          <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
+        </div>
+      </div>
+
       <!-- Voice (Legacy only) -->
       <div class="sps" id="voice_section">
         <div class="spst">朗讀語音</div>
@@ -306,7 +315,7 @@ body.m-edge #edge-hint{display:block}
       </div>
 
       <!-- DeepL API -->
-      <div class="sps">
+      <div class="sps" id="deepl_section">
         <div class="spst">DeepL 翻譯 API</div>
         <input class="api-input" type="password" id="deeplKey" placeholder="your-deepl-api-key:fx" autocomplete="off">
         <button class="save-btn" onclick="saveApiKey()">儲存 API Key</button>
@@ -314,6 +323,16 @@ body.m-edge #edge-hint{display:block}
           免費方案：500,000 字/月<br>
           申請：<a href="https://www.deepl.com/pro-api" target="_blank" style="color:var(--ice)">deepl.com/pro-api</a><br>
           Key 儲存於本機 localStorage，不會上傳
+        </div>
+      </div>
+
+      <!-- Gemini API -->
+      <div class="sps" id="gemini_section" style="display:none">
+        <div class="spst">Gemini 翻譯 API</div>
+        <input class="api-input" type="password" id="geminiKey" placeholder="AIzaSy..." autocomplete="off">
+        <button class="save-btn" onclick="saveGeminiKey()">儲存 API Key</button>
+        <div class="api-note" style="margin-top:8px">
+          申請：<a href="https://aistudio.google.com/" target="_blank" style="color:var(--ice)">aistudio.google.com</a>
         </div>
       </div>
 
@@ -352,6 +371,8 @@ const SY = window.speechSynthesis;
 let allV=[], enV=null, zhV=null, mixV=null, vtab='en', useMixVoice=false;
 
 let deeplKey = localStorage.getItem('deepl_api_key') || '';
+let geminiKey = localStorage.getItem('gemini_api_key') || '';
+let currentEngine = localStorage.getItem('translation_engine') || 'deepl';
 
 // ══ IndexedDB ══════════════════════════════════════════════════
 const DB_NAME = 'BilingualReader';
@@ -479,6 +500,9 @@ window.onload = async () => {
   }
 
   if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
+  if (geminiKey) document.getElementById('geminiKey').value = geminiKey;
+  setEngine(currentEngine);
+
   if (!navigator.onLine) setOfflineBadge(true);
   try { db = await openDB(); } catch(e) { console.warn('IDB unavailable:', e); }
 
@@ -583,7 +607,6 @@ function goToChapterInput() {
 }
 
 // ══ RENDER STRATEGY A — Legacy ════════════════════════════════
-// DOM: sp-n → sp-en → sp-zh  |  paragraph clickable → selectPara → speakCurrent
 async function renderLegacy() {
   const slist = document.getElementById('slist');
   slist.innerHTML = '';
@@ -612,9 +635,6 @@ async function renderLegacy() {
 }
 
 // ══ RENDER STRATEGY B — Edge ══════════════════════════════════
-// DOM: sp-n[aria-hidden] → sp-zh[lang=zh-TW] → sp-en[lang=en-US]
-// All UI chrome gets aria-hidden so Edge Read Aloud only reads content text
-// SpeechSynthesis is never called in this mode
 async function renderEdge() {
   const slist = document.getElementById('slist');
   slist.innerHTML = '';
@@ -632,7 +652,6 @@ async function renderEdge() {
     const div = document.createElement('div');
     div.className = 'sp'; div.id = `sp_${idx}`;
     const zh = cached[idx] || para.zh || '';
-    // Inverted DOM order: Chinese above English
     div.innerHTML = `
       <div class="sp-n" aria-hidden="true">
         <span>${idx + 1}</span>
@@ -669,13 +688,61 @@ async function updateNP() {
   document.getElementById('prfill').style.width = `${((currentParaIndex + 1) / currentChapterData.paragraphs.length) * 100}%`;
 }
 
-// ══ TRANSLATION — DeepL + IndexedDB cache ══════════════════════
+// ══ TRANSLATION — DeepL + Gemini + IndexedDB cache ══════════════
+function setEngine(engine) {
+  currentEngine = engine;
+  localStorage.setItem('translation_engine', engine);
+  document.getElementById('eng_deepl').classList.toggle('on', engine === 'deepl');
+  document.getElementById('eng_gemini').classList.toggle('on', engine === 'gemini');
+  document.getElementById('deepl_section').style.display = engine === 'deepl' ? 'block' : 'none';
+  document.getElementById('gemini_section').style.display = engine === 'gemini' ? 'block' : 'none';
+}
+
+function saveGeminiKey() {
+  const key = document.getElementById('geminiKey').value.trim();
+  if (!key) { alert('請輸入 API Key'); return; }
+  geminiKey = key;
+  localStorage.setItem('gemini_api_key', key);
+  alert('✓ 已儲存 Gemini API Key');
+}
+
+async function callGeminiBatch(texts) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+  const prompt = `Translate the following English sentences to Traditional Chinese. Output ONLY a JSON array of strings. Do not include markdown formatting.\n\nInput: ${JSON.stringify(texts)}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { response_mime_type: "application/json" }
+    })
+  });
+
+  if (!res.ok) throw new Error(`Gemini ${res.status}: ${await res.text()}`);
+  const data = await res.json();
+  const text = data.candidates[0].content.parts[0].text;
+  
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    console.error('JSON parse failed. Text:', text);
+    const match = text.match(/\[[\s\S]*\]/);
+    if (match) return JSON.parse(match[0]);
+    throw e;
+  }
+}
+
 async function translatePara(idx, event) {
-  if (!deeplKey) { alert('請先在設定中填入 DeepL API Key'); openS(); return; }
+  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
+  if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
   const btn = event?.target;
   if (btn) { btn.textContent = '⟳ ...'; btn.classList.add('loading'); }
   try {
-    const zh = await callDeepL(currentChapterData.paragraphs[idx].en);
+    const results = currentEngine === 'gemini' 
+      ? await callGeminiBatch([currentChapterData.paragraphs[idx].en]) 
+      : await callDeepLBatch([currentChapterData.paragraphs[idx].en]);
+    const zh = results[0];
     await setCachedTranslation(currentChapterData.id, idx, zh);
     const el = document.getElementById(`spzh_${idx}`);
     if (el) el.textContent = zh;
@@ -689,7 +756,8 @@ async function translatePara(idx, event) {
 }
 
 async function translateChapter() {
-  if (!deeplKey) { alert('請先在設定中填入 DeepL API Key'); openS(); return; }
+  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
+  if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
   if (!currentChapterData) return;
   const btn = document.getElementById('tlAllBtn');
   btn.textContent = '⟳ 翻譯中...'; btn.disabled = true;
@@ -699,11 +767,13 @@ async function translateChapter() {
   const toTrans = paras.map((p, i) => ({ i, en: p.en })).filter((_, i) => !checks[i]);
 
   let done = 0;
-  const BATCH = 20;
+  const BATCH = currentEngine === 'gemini' ? 10 : 20;
   for (let b = 0; b < toTrans.length; b += BATCH) {
     const batch = toTrans.slice(b, b + BATCH);
     try {
-      const results = await callDeepLBatch(batch.map(x => x.en));
+      const results = currentEngine === 'gemini'
+        ? await callGeminiBatch(batch.map(x => x.en))
+        : await callDeepLBatch(batch.map(x => x.en));
       await Promise.all(results.map(async (zh, ri) => {
         const pi = batch[ri].i;
         await setCachedTranslation(currentChapterData.id, pi, zh);
@@ -848,16 +918,20 @@ function pickV() {
   const zh  = allV.filter(v => v.lang.startsWith('zh'));
   const ENn = ['andrew','samantha','karen','daniel','moira','tessa','fiona','aria','jenny','guy','ana','zira','david'];
   const ZHn = ['yunjian','yunxi','eddy','reed','rocko','grandpa','kangkang','zhiwei','mei-jia','yu-shu','tingting','xiaoxiao','sin-ji','ting-ting','hanhan','huihui'];
-  useMixVoice = localStorage.getItem('useMixVoice') === 'true';
-  const sEn = localStorage.getItem('selectedEnVoice');
-  const sZh = localStorage.getItem('selectedZhVoice');
-  const sMx = localStorage.getItem('selectedMixVoice');
-  if (sEn) enV  = allV.find(v => v.name === sEn);
-  if (sZh) zhV  = allV.find(v => v.name === sZh);
-  if (sMx) mixV = allV.find(v => v.name === sMx);
-  if (!enV)  { for (const n of ENn) { const f=en.find(v=>v.name.toLowerCase().includes(n)); if(f){enV=f;break;} } if(!enV) enV=en.find(v=>v.lang==='en-US')||en[0]||null; }
-  if (!zhV)  { for (const n of ZHn) { const f=zh.find(v=>v.name.toLowerCase().includes(n)); if(f){zhV=f;break;} } if(!zhV) zhV=zh.find(v=>v.lang==='zh-TW')||zh.find(v=>v.lang==='zh-CN')||zh[0]||null; }
-  if (!mixV) mixV = zhV || enV;
+  const savedEn = localStorage.getItem('selectedEnVoice');
+  const savedZh = localStorage.getItem('selectedZhVoice');
+  const savedMix = localStorage.getItem('selectedMixVoice');
+  const savedUseMix = localStorage.getItem('useMixVoice');
+  useMixVoice = savedUseMix === null ? true : savedUseMix === 'true';
+  if (savedEn) enV = allV.find(v => v.name === savedEn);
+  if (savedZh) zhV = allV.find(v => v.name === savedZh);
+  if (savedMix) mixV = allV.find(v => v.name === savedMix);
+  if (!enV) { for (let n of ENn) { let f=en.find(v=>v.name.toLowerCase().includes(n)); if(f){enV=f;break;} } if(!enV) enV=en.find(v=>v.lang==='en-US')||en[0]||null; }
+  if (!zhV) { for (let n of ZHn) { let f=zh.find(v=>v.name.toLowerCase().includes(n)); if(f){zhV=f;break;} } if(!zhV) zhV=zh.find(v=>v.lang==='zh-TW')||zh.find(v=>v.lang==='zh-CN')||zh[0]||null; }
+  if (!mixV) {
+    mixV = allV.find(v => v.name.includes('AndrewMultilingual'));
+    if (!mixV) mixV = zhV || enV;
+  }
 }
 
 function vq(v) {
@@ -870,24 +944,24 @@ function vq(v) {
 
 function renderV(lang) {
   if (READ_MODE === 'edge') return;
-  const vs = lang === 'mix' ? allV : allV.filter(v => v.lang.startsWith(lang === 'en' ? 'en' : 'zh'));
+  let vs = lang==='mix' ? allV.filter(v=>v.lang.startsWith('en') || v.lang.startsWith('zh')) : allV.filter(v=>v.lang.startsWith(lang==='en'?'en':'zh'));
   const el = document.getElementById('vlist');
-  if (!vs.length) { el.innerHTML = '<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
-  const sorted = [...vs].sort((a,b) => ['n','p','s'].indexOf(vq(a)) - ['n','p','s'].indexOf(vq(b)));
+  if (!vs.length) { el.innerHTML='<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
+  const s = [...vs].sort((a,b)=>['n','p','s'].indexOf(vq(a))-['n','p','s'].indexOf(vq(b)));
   el.innerHTML = '';
-  sorted.forEach(v => {
-    const q = vq(v), ql = {n:'neural',p:'premium',s:'std'}[q];
-    const sel = lang==='en'?(enV?.name===v.name):lang==='zh'?(zhV?.name===v.name):(mixV?.name===v.name);
-    const cls = sel ? (lang==='en'?' es':lang==='zh'?' zs':' ms') : '';
+  s.forEach(v => {
+    const q=vq(v), ql={n:'neural',p:'premium',s:'std'}[q];
+    const sel = lang==='en'?(enV&&enV.name===v.name):lang==='zh'?(zhV&&zhV.name===v.name):(mixV&&mixV.name===v.name);
+    const cls = sel?(lang==='en'?' es':lang==='zh'?' zs':' ms'):'';
     const d = document.createElement('div');
-    d.className = 'vi' + cls;
+    d.className = 'vi'+cls;
     d.innerHTML = `<div style="flex:1"><div class="vi-n">${v.name}</div><div class="vi-l">${v.lang}</div></div><span class="vi-q ${q}">${ql}</span><button class="pvb">▶</button>`;
-    d.querySelector('.pvb').onclick = ev => { ev.stopPropagation(); pvV(v, lang); };
+    d.querySelector('.pvb').onclick = ev => { ev.stopPropagation(); pvV(v,lang); };
     d.onclick = () => {
-      if (lang==='en') { enV=v; useMixVoice=false; localStorage.setItem('selectedEnVoice',v.name); }
-      else if (lang==='zh') { zhV=v; useMixVoice=false; localStorage.setItem('selectedZhVoice',v.name); }
-      else { mixV=v; useMixVoice=true; localStorage.setItem('selectedMixVoice',v.name); }
-      localStorage.setItem('useMixVoice', useMixVoice);
+      if(lang==='en'){enV=v;useMixVoice=false;localStorage.setItem('selectedEnVoice',v.name);}
+      else if(lang==='zh'){zhV=v;useMixVoice=false;localStorage.setItem('selectedZhVoice',v.name);}
+      else{mixV=v;useMixVoice=true;localStorage.setItem('selectedMixVoice',v.name);}
+      localStorage.setItem('useMixVoice',useMixVoice);
       renderV(lang);
     };
     el.appendChild(d);
