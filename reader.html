@@ -576,13 +576,13 @@ function renderSidebar() {
     const short = ch.title.replace(/^.*?Chapter\s*\d+\s*[-–—·]\s*/i, '').substring(0, 40);
     div.textContent = `${String(ch.id).padStart(4,'0')} ${short}`;
     if (ch.id < readUpto) div.classList.add('read');
-    div.onclick = () => { loadChapterByIndex(idx); closeSidebar(); };
+    div.onclick = () => { loadChapterByIndex(idx, 0, true); closeSidebar(); };
     sbl.appendChild(div);
   });
 }
 
 // ══ CHAPTER LOADING ════════════════════════════════════════════
-async function loadChapterByIndex(idx, resumePara = 0) {
+async function loadChapterByIndex(idx, resumePara = 0, autoPlay = false) {
   if (!manifest || idx < 0 || idx >= manifest.chapters.length) return;
   currentChIdx = idx;
   const chMeta = manifest.chapters[idx];
@@ -615,6 +615,13 @@ async function loadChapterByIndex(idx, resumePara = 0) {
     await selectPara(Math.min(resumePara, paragraphs.length - 1));
     await saveProgress(chMeta.id, resumePara);
 
+    if (autoPlay && READ_MODE === 'legacy') {
+      translateChapter(); // run in background
+      isPlaying = true;
+      updatePlayBtn();
+      speakCurrent();
+    }
+
   } catch(e) {
     loader.classList.remove('show');
     console.error('Chapter load failed:', e);
@@ -632,7 +639,7 @@ function changeChapter(delta) {
   const ni = currentChIdx + delta;
   if (ni >= 0 && ni < manifest.chapters.length) {
     if (isPlaying && READ_MODE === 'legacy') { isPlaying = false; SY.cancel(); updatePlayBtn(); }
-    loadChapterByIndex(ni);
+    loadChapterByIndex(ni, 0, true);
   }
 }
 
