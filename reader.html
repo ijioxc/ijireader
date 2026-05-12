@@ -916,17 +916,19 @@ function speakCurrent() {
 function speakBilingual(enText, zhText) {
   const uEn = enText ? new SpeechSynthesisUtterance(enText) : null;
   const uZh = zhText ? new SpeechSynthesisUtterance(zhText) : null;
-  if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
-  if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
+  if (uEn) { uEn.voice = useMixVoice ? mixV : enV; uEn.rate = rate; uEn.lang = uEn.voice?.lang || 'en-US'; }
+  if (uZh) { uZh.voice = useMixVoice ? mixV : zhV; uZh.rate = rate; uZh.lang = uZh.voice?.lang || 'zh-TW'; }
+
+  // 絲滑關鍵：直接把兩個語音物件連續推進佇列 (Queue)
   if (uEn && uZh) {
     if (displayOrder === 'zh_first') {
-      uZh.onend = () => { if (isPlaying) SY.speak(uEn); };
-      uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
+      uEn.onend = () => { if (isPlaying && isAuto) skip(1); }; // 只有最後一句才負責觸發換段落
       SY.speak(uZh);
+      SY.speak(uEn);
     } else {
-      uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
       uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
       SY.speak(uEn);
+      SY.speak(uZh);
     }
   } else if (uEn) {
     uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
@@ -934,15 +936,25 @@ function speakBilingual(enText, zhText) {
   } else if (uZh) {
     uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
     SY.speak(uZh);
-  } else { skip(1); }
+  } else { 
+    skip(1); 
+  }
 }
 
 function skip(val) {
   if (!currentChapterData) return;
   let next = currentParaIndex + val;
   if (next >= 0 && next < currentChapterData.paragraphs.length) {
-    selectPara(next);
-    if (isPlaying) speakCurrent();
+    // 1. 先默默更新 index，不要觸發畫面重繪
+    currentParaIndex = next; 
+    
+    // 2. 第一時間把文字餵給語音引擎 (保證聲音不斷)
+    if (isPlaying) speakCurrent(); 
+    
+    // 3. 把 UI 畫面更新 (高亮、捲動) 推遲 10 毫秒執行，避開主執行緒塞車
+    setTimeout(() => {
+      selectPara(next);
+    }, 10);
   } else if (next >= currentChapterData.paragraphs.length) {
     // Auto advance to next chapter
     if (isAuto && currentChIdx < manifest.chapters.length - 1) {
