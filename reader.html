@@ -755,7 +755,7 @@ async function callDeepLBatch(texts) {
 }
 
 async function callGeminiBatch(texts) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${geminiKey}`;
   const prompt = `Translate the following English sentences to Traditional Chinese. Return ONLY a JSON array of strings in the exact same order. Do not include markdown formatting or any other text outside the JSON array.
   
 Input: ${JSON.stringify(texts)}`;
