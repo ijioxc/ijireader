@@ -89,9 +89,9 @@ body{display:flex;flex-direction:column;overflow:hidden}
 #ha.collapsed{max-height:0;opacity:0;pointer-events:none;}
 
 /* Controls */
-#ctrls{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 24px;max-width:808px;width:100%;margin:0 auto;flex-wrap:wrap}
-.pbig{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c8a96e 0%,#a07840 100%);border:none;color:#0d0d0f;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.psk{padding:5px 12px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:.15s}
+#ctrls{flex-shrink:0;display:flex;align-items:center;gap:4px;padding:10px 12px;max-width:808px;width:100%;margin:0 auto;flex-wrap:nowrap;justify-content:space-between}
+.pbig{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#c8a96e 0%,#a07840 100%);border:none;color:#0d0d0f;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.psk{padding:5px 8px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:.15s}
 .psk:hover{border-color:var(--goldg);color:var(--gold)}
 .mb{padding:7px 15px;border:none;background:transparent;font-family:'DM Mono',monospace;font-size:10px;color:var(--t2);cursor:pointer;transition:.15s;border-right:1px solid var(--b2);white-space:nowrap}
 .mb:last-child{border-right:none}
@@ -229,8 +229,8 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
 
       <div id="ctrls">
         <button class="pbig" id="playBtn" onclick="togglePlay()">▶</button>
-        <button class="psk" onclick="skip(-1)">Prev</button>
-        <button class="psk" onclick="skip(1)">Next</button>
+        <button class="psk" onclick="skip(-1)">❮</button>
+        <button class="psk" onclick="skip(1)">❯</button>
 
         <div id="mg-lang" style="display:flex;border:1px solid var(--b2);border-radius:6px;overflow:hidden">
           <button class="mb on" id="mL_both" onclick="setLang('both')">Ｅ/中</button>
@@ -239,11 +239,11 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
         </div>
 
         <button class="abtn on" id="abtn" onclick="toggleAuto()"><div class="adot"></div>AUTO</button>
-        <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()">⟳ 翻譯本章</button>
+        <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()" title="翻譯本章">⟳</button>
 
         <div class="spd">
           <label>SPD</label>
-          <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()">
+          <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()" style="width:50px">
         </div>
       </div>
     </div>
@@ -392,6 +392,16 @@ window.onload = async () => {
   if (SY.onvoiceschanged !== undefined)
     SY.onvoiceschanged = () => { pickV(); if(document.getElementById('sov').classList.contains('show')) renderV(vtab); };
   pickV();
+
+  // ─── [手機版語音防呆重抓] ───
+  // 原因：手機版瀏覽器在剛載入時 getVoices() 可能為空且不會觸發 onvoiceschanged。一秒後強制重抓。
+  // 如果未來瀏覽器原生支援改善，此段可刪除。
+  setTimeout(() => {
+    if (!allV || !allV.length) {
+      pickV();
+      if(document.getElementById('sov') && document.getElementById('sov').classList.contains('show')) renderV(vtab);
+    }
+  }, 1000);
 
   // DeepL key
   if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
