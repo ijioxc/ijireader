@@ -318,6 +318,15 @@ body.m-edge #mode-badge{display:inline-block}
         </div>
       </div>
 
+      <!-- Display Order -->
+      <div class="sps">
+        <div class="spst">語系順序</div>
+        <div class="vtabs" id="orderTabs">
+          <button class="vt" id="ord_en" onclick="setOrder('en')">原文在前</button>
+          <button class="vt" id="ord_zh" onclick="setOrder('zh')">譯文在前</button>
+        </div>
+      </div>
+
       <!-- Translation Engine -->
       <div class="sps">
         <div class="spst">翻譯引擎</div>
@@ -388,6 +397,7 @@ const BOOK_BASE = `books/${BOOK_ID}`;
 
 // READ_MODE is immutable per page-load — changes force reload (no hot-swap)
 const READ_MODE = localStorage.getItem('readMode') || 'edge';
+const DISPLAY_ORDER = localStorage.getItem('displayOrder') || 'en';
 
 let manifest           = null;
 let currentChapterData = null;
@@ -529,6 +539,10 @@ window.onload = async () => {
   document.getElementById('mode_legacy').classList.toggle('on',     READ_MODE === 'legacy');
   document.getElementById('mode_edge').classList.toggle('ice-on',   READ_MODE === 'edge');
 
+  // Order UI
+  document.getElementById('ord_en').classList.toggle('on', DISPLAY_ORDER === 'en');
+  document.getElementById('ord_zh').classList.toggle('on', DISPLAY_ORDER === 'zh');
+
   // Legacy-only: init voices
   if (READ_MODE === 'legacy') {
     if (SY.onvoiceschanged !== undefined)
@@ -562,6 +576,12 @@ window.onload = async () => {
 function setReadMode(mode) {
   if (mode === READ_MODE) return;
   localStorage.setItem('readMode', mode);
+  window.location.reload();
+}
+
+function setOrder(order) {
+  if (order === DISPLAY_ORDER) return;
+  localStorage.setItem('displayOrder', order);
   window.location.reload();
 }
 
@@ -663,13 +683,14 @@ async function renderLegacy() {
     const div = document.createElement('div');
     div.className = 'sp'; div.id = `sp_${idx}`;
     const zh = cached[idx] || para.zh || '';
+    const enHtml = `<div class="sp-en">${escHtml(para.en)}</div>`;
+    const zhHtml = `<div class="sp-zh" id="spzh_${idx}">${escHtml(zh)}</div>`;
     div.innerHTML = `
       <div class="sp-n">
         <span>${idx + 1}</span>
         ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
       </div>
-      <div class="sp-en">${escHtml(para.en)}</div>
-      <div class="sp-zh" id="spzh_${idx}">${escHtml(zh)}</div>
+      ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
     `;
     div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
     slist.appendChild(div);
@@ -696,13 +717,14 @@ async function renderEdge() {
     const div = document.createElement('div');
     div.className = 'sp'; div.id = `sp_${idx}`;
     const zh = cached[idx] || para.zh || '';
+    const zhHtml = `<div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh).replace(/([。！？][\p{Pe}\p{Pf}"']*)/gu, '$1<br>')}</div>`;
+    const enHtml = `<div class="sp-en" lang="en-US">${escHtml(para.en).replace(/([.!?])\s+([A-Z])/g, '$1<br>$2')}</div>`;
     div.innerHTML = `
       <div class="sp-n" aria-hidden="true">
         <span>${idx + 1}</span>
         ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
       </div>
-      <div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh).replace(/([。！？][\p{Pe}\p{Pf}"']*)/gu, '$1<br>')}</div>
-      <div class="sp-en" lang="en-US">${escHtml(para.en).replace(/([.!?])\s+([A-Z])/g, '$1<br>$2')}</div>
+      ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
     `;
     div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
     slist.appendChild(div);
@@ -939,9 +961,15 @@ function speakBilingual(enText, zhText) {
   }
 
   if (uEn && uZh) {
-    uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
-    uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
-    SY.speak(uEn);
+    if (DISPLAY_ORDER === 'zh') {
+      uZh.onend = () => { if (isPlaying) SY.speak(uEn); };
+      uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
+      SY.speak(uZh);
+    } else {
+      uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
+      uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
+      SY.speak(uEn);
+    }
   } else if (uEn) { uEn.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uEn); }
   else if (uZh)   { uZh.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uZh); }
   else { skip(1); }
