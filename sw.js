@@ -20,8 +20,10 @@ self.addEventListener('fetch', (e) => {
   // 優先從網路獲取，失敗時從快取獲取 (Network First)
   // 因為章節內容已經用 IndexedDB 快取了，這裡主要處理 index.html 和基礎靜態資源
   e.respondWith(
-    fetch(e.request).catch(() => {
-      return caches.match(e.request);
+    fetch(e.request).catch(async () => {
+      const cached = await caches.match(e.request);
+      if (cached) return cached;
+      throw new Error('Network fail and no cache');
     })
   );
 });
