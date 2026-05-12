@@ -31,13 +31,12 @@ body.m-edge #spdGroup,
 body.m-edge #voice_section,
 body.m-edge #voice_desc_section { display: none !important; }
 body.m-edge #npw { display: none; }
-body.m-edge .sp { cursor: default; opacity: 1 !important; transform: none !important; }
+body.m-edge #slist { gap: 20px; }
+body.m-edge .sp { cursor: default; opacity: 1 !important; transform: none !important; padding: 24px 28px; }
 body.m-edge .sp:hover { background: transparent; border-color: transparent; }
-body.m-edge .sp.on { background: var(--card); border-color: rgba(200,169,110,.2); box-shadow: none; transform: none !important; }
-body.m-edge .sp-zh { font-size: 17px; color: var(--t1); margin-bottom: 6px; }
-body.m-edge .sp-en { font-size: 15px; color: var(--t2); margin-bottom: 0; }
-body.m-edge .sp.on .sp-zh { color: var(--sp-zh); }
-body.m-edge .sp.on .sp-en { color: var(--sp-en); }
+body.m-edge .sp.on { background: transparent; border-color: transparent; box-shadow: none; transform: none !important; }
+body.m-edge .sp-zh { font-size: 22px; line-height: 1.8; color: var(--t1); margin-bottom: 10px; }
+body.m-edge .sp-en { font-size: 18px; line-height: 1.8; color: var(--t2); margin-bottom: 0; }
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
@@ -94,25 +93,44 @@ body.m-edge #mode-badge{display:inline-block}
 
 /* Controls */
 #ctrls{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 24px;max-width:808px;width:100%;margin:0 auto;flex-wrap:wrap}
-.pbig{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c8a96e 0%,#a07840 100%);border:none;color:#0d0d0f;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.psk{padding:5px 12px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:.15s}
-.psk:hover{border-color:var(--goldg);color:var(--gold)}
-.mb{padding:7px 15px;border:none;background:transparent;font-family:'DM Mono',monospace;font-size:10px;color:var(--t2);cursor:pointer;transition:.15s;border-right:1px solid var(--b2);white-space:nowrap}
-.mb:last-child{border-right:none}
-.mb:hover{background:var(--goldd);color:var(--gold)}
-.mb.on{background:var(--gold);color:#0d0d0f;font-weight:700}
-.abtn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:6px;border:1px solid var(--b2);background:transparent;font-family:'DM Mono',monospace;font-size:9px;color:var(--t2);cursor:pointer;transition:.15s}
-.abtn.on{border-color:rgba(78,148,112,.5);color:var(--green);background:rgba(78,148,112,.08)}
-.adot{width:5px;height:5px;border-radius:50%;background:currentColor}
-.spd{display:flex;align-items:center;gap:5px}
-.spd label{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3)}
-input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
-.tl-btn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:6px;border:1px solid var(--b2);background:transparent;font-family:'DM Mono',monospace;font-size:9px;color:var(--t2);cursor:pointer;transition:.15s}
-.tl-btn:hover{border-color:var(--ice);color:var(--ice)}
+#ctrls button, #ctrls .abtn, #ctrls .tl-btn, #ctrls #mg-lang {
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--t2);
+  background: var(--bg2);
+  border: 1px solid var(--b2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0 12px;
+}
+#ctrls button:hover, #ctrls .abtn:hover, #ctrls .tl-btn:hover { border-color: var(--goldg); color: var(--gold); }
+#ctrls #playBtn {
+  background: linear-gradient(135deg, var(--gold), #a07840);
+  color: #0d0d0f;
+  border: none;
+  font-weight: bold;
+  width: 34px;
+  padding: 0;
+}
+#ctrls #playBtn:hover { transform: scale(1.05); }
+#ctrls #mg-lang { display: flex; padding: 0; overflow: hidden; }
+#ctrls .mb { height: 100%; padding: 0 12px; border: none; border-right: 1px solid var(--b2); background: transparent; color: var(--t2); cursor: pointer; }
+#ctrls .mb:last-child { border-right: none; }
+#ctrls .mb:hover { background: var(--goldd); color: var(--gold); }
+#ctrls .mb.on { background: var(--gold); color: #0d0d0f; font-weight: bold; }
+#ctrls .abtn.on { border-color: rgba(78,148,112,.5); color: var(--green); background: rgba(78,148,112,.08); }
+#ctrls .adot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; margin-right: 4px; }
+#ctrls .spd { display: flex; align-items: center; gap: 5px; height: 34px; }
+#ctrls .spd label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--t3); }
+#ctrls input[type=range] { width: 62px; accent-color: var(--gold); cursor: pointer; }
 
 /* Edge hint */
-#edge-hint{display:none;max-width:760px;margin:6px auto 0;padding:8px 16px;background:var(--iced);border:1px solid rgba(139,191,207,.2);border-radius:8px;font-family:'DM Mono',monospace;font-size:9px;color:var(--ice);line-height:1.8}
-body.m-edge #edge-hint{display:block}
+
 
 #ch-loading{display:none;padding:10px 24px;font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);text-align:center}
 #ch-loading.show{display:block}
@@ -177,6 +195,12 @@ body.m-edge #edge-hint{display:block}
   #sb-overlay.show{display:block}
   #book-title-top{display:none}
   .spd{display:none}
+  #scroll{padding:6px 12px 50px}
+  .sp{padding:16px 18px;border-radius:10px}
+  body.m-edge .sp{padding:16px 18px}
+  body.m-edge .sp-zh{font-size:18px}
+  body.m-edge .sp-en{font-size:15px}
+  #ctrls{padding:10px 12px;gap:5px}
 }
 </style>
 </head>
@@ -221,10 +245,7 @@ body.m-edge #edge-hint{display:block}
       </div>
     </div>
 
-    <!-- Edge hint banner -->
-    <div id="edge-hint">
-      ✦ Edge 模式：使用 Edge 瀏覽器內建「大聲朗讀」<kbd>Ctrl+Shift+U</kbd> 朗讀本頁。中文在上・英文在下，雙語字幕對照。
-    </div>
+
 
     <!-- Controls -->
     <div id="ctrls">
@@ -641,7 +662,7 @@ async function renderEdge() {
   if (!currentChapterData) return;
 
   // Isolate chrome from Edge's read-aloud scanner
-  ['top','ctrls','sb','sb-overlay','edge-hint'].forEach(id =>
+  ['top','ctrls','sb','sb-overlay'].forEach(id =>
     document.getElementById(id)?.setAttribute('aria-hidden', 'true')
   );
 
@@ -674,7 +695,7 @@ async function selectPara(idx) {
   document.querySelectorAll('#slist .sp').forEach((el, i) => el.classList.toggle('on', i === idx));
   document.getElementById(`sp_${idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   await saveProgress(currentChapterData.id, idx);
-  if (READ_MODE === 'legacy') await updateNP();
+  if (READ_MODE === 'legacy') { await updateNP(); hideHighlighter(); }
 }
 
 async function updateNP() {
@@ -710,7 +731,7 @@ async function callGeminiBatch(texts) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
   const prompt = `Translate the following English sentences to Traditional Chinese. Output ONLY a JSON array of strings. Do not include markdown formatting.\n\nInput: ${JSON.stringify(texts)}`;
 
-  const res = await fetch(`https://wispy-block-436f.ijioxc.workers.dev/?url=${url}`, {
+  const res = await fetch(`https://wispy-block-436f.ijioxc.workers.dev/?url=${encodeURIComponent(url)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -797,10 +818,10 @@ async function callDeepL(text) { return (await callDeepLBatch([text]))[0]; }
 async function callDeepLBatch(texts) {
   const isFree = deeplKey.endsWith(':fx');
   const ep = isFree ? 'https://api-free.deepl.com/v2/translate' : 'https://api.deepl.com/v2/translate';
-  const res = await fetch(`https://wispy-block-436f.ijioxc.workers.dev/?url=${ep}`, {
+  const res = await fetch(`https://wispy-block-436f.ijioxc.workers.dev/?url=${encodeURIComponent(ep)}`, {
     method: 'POST',
     headers: { 'Authorization': `DeepL-Auth-Key ${deeplKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: texts, source_lang: 'EN', target_lang: 'ZH' })
+    body: JSON.stringify({ text: texts, source_lang: 'EN', target_lang: 'ZH-HANT' })
   });
   if (!res.ok) throw new Error(`DeepL ${res.status}: ${await res.text()}`);
   return (await res.json()).translations.map(t => t.text);
@@ -834,7 +855,7 @@ function togglePlay() {
   if (READ_MODE === 'edge') return;
   isPlaying = !isPlaying;
   updatePlayBtn();
-  if (isPlaying) speakCurrent(); else SY.cancel();
+  if (isPlaying) speakCurrent(); else { SY.cancel(); hideHighlighter(); }
 }
 
 function updatePlayBtn() {
@@ -862,6 +883,11 @@ async function speakCurrent() {
     u.voice = voice; u.rate = rate;
     u.lang  = voice ? voice.lang : (currentLangMode === 'en' ? 'en-US' : 'zh-TW');
     u.onend = () => { if (isPlaying && isAuto) skip(1); };
+    u.onboundary = (event) => {
+      if (event.name === 'word') {
+        highlightWord(currentParaIndex, event.charIndex, event.charLength, currentLangMode === 'both' ? 'en' : currentLangMode);
+      }
+    };
     SY.speak(u);
   }
 }
@@ -872,6 +898,18 @@ function speakBilingual(enText, zhText) {
   const uZh = zhText ? new SpeechSynthesisUtterance(zhText) : null;
   if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
   if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
+  
+  if (uEn) {
+    uEn.onboundary = (event) => {
+      if (event.name === 'word') highlightWord(currentParaIndex, event.charIndex, event.charLength, 'en');
+    };
+  }
+  if (uZh) {
+    uZh.onboundary = (event) => {
+      if (event.name === 'word') highlightWord(currentParaIndex, event.charIndex, event.charLength, 'zh');
+    };
+  }
+
   if (uEn && uZh) {
     uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
     uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
@@ -881,6 +919,47 @@ function speakBilingual(enText, zhText) {
   else { skip(1); }
 }
 
+function highlightWord(paraIdx, charIndex, charLength, lang) {
+  const el = document.querySelector(`#sp_${paraIdx} .sp-${lang}`);
+  if (!el || !el.firstChild) return;
+  const textNode = el.firstChild;
+  if (textNode.nodeType !== Node.TEXT_NODE) return;
+
+  const range = document.createRange();
+  let len = charLength;
+  if (!len) {
+    const text = textNode.textContent;
+    const rest = text.substring(charIndex);
+    const match = rest.match(/^\w+/) || rest.match(/^[\u4e00-\u9fa5]/) || [1];
+    len = match ? match[0].length : 1;
+  }
+  
+  try {
+    range.setStart(textNode, charIndex);
+    range.setEnd(textNode, charIndex + len);
+    
+    const rect = range.getBoundingClientRect();
+    let highlighter = document.getElementById('tts-highlighter');
+    if (!highlighter) {
+      highlighter = document.createElement('div');
+      highlighter.id = 'tts-highlighter';
+      highlighter.style.cssText = 'position:fixed;background:rgba(212,175,55,0.4);border-radius:3px;pointer-events:none;transition:all 0.05s ease;display:none;z-index:100;';
+      document.body.appendChild(highlighter);
+    }
+    
+    highlighter.style.left = `${rect.left}px`;
+    highlighter.style.top = `${rect.top}px`;
+    highlighter.style.width = `${rect.width}px`;
+    highlighter.style.height = `${rect.height}px`;
+    highlighter.style.display = 'block';
+  } catch (e) {}
+}
+
+function hideHighlighter() {
+  const h = document.getElementById('tts-highlighter');
+  if (h) h.style.display = 'none';
+}
+
 function skip(val) {
   if (READ_MODE === 'edge' || !currentChapterData) return;
   const next = currentParaIndex + val;
@@ -888,7 +967,7 @@ function skip(val) {
     selectPara(next); if (isPlaying) speakCurrent();
   } else if (next >= currentChapterData.paragraphs.length) {
     if (isAuto && currentChIdx < manifest.chapters.length - 1) { changeChapter(1); }
-    else { isPlaying = false; SY.cancel(); updatePlayBtn(); }
+    else { isPlaying = false; SY.cancel(); hideHighlighter(); updatePlayBtn(); }
   }
 }
 
