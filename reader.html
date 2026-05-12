@@ -137,13 +137,13 @@ body.m-edge #mode-badge{display:inline-block}
 
 /* Paragraph list */
 #scroll{flex:1;overflow-y:auto;padding:6px 24px 50px;min-height:0}
-#slist{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:20px 0}
-.sp{padding:18px 22px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:all .4s cubic-bezier(0.2,0.8,0.2,1);position:relative;opacity:.55;transform:scale(0.96);transform-origin:center}
+#slist{max-width:850px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:20px 0}
+.sp{padding:24px 28px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:all .4s cubic-bezier(0.2,0.8,0.2,1);position:relative;opacity:.55;transform:scale(0.96);transform-origin:center}
 .sp:hover{background:rgba(255,255,255,.02);border-color:var(--b1);opacity:.85}
-.sp.on{background:var(--card);border-color:var(--gold);opacity:1;transform:scale(1.05);box-shadow:0 15px 40px rgba(0,0,0,.6);z-index:10}
+.sp.on{background:var(--card);border-color:var(--gold);opacity:1;transform:scale(1.02);box-shadow:0 15px 40px rgba(0,0,0,.6);z-index:10}
 .sp-n{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.sp-en{font-size:18px;font-style:italic;line-height:1.7;color:var(--t1);margin-bottom:7px;transition:color .3s}
-.sp-zh{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:300;line-height:1.85;color:var(--t2);letter-spacing:.05em;transition:color .3s;min-height:1.5em}
+.sp-en{font-size:22px;font-style:italic;line-height:1.8;color:var(--t1);margin-bottom:10px;transition:color .3s}
+.sp-zh{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;line-height:1.85;color:var(--t2);letter-spacing:.05em;transition:color .3s;min-height:1.5em}
 .sp.on .sp-en{color:var(--sp-en)}
 .sp.on .sp-zh{color:var(--sp-zh)}
 .sp-tl{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);background:var(--b1);border:1px solid var(--b2);border-radius:3px;padding:2px 6px;cursor:pointer;transition:.15s;margin-left:6px}
@@ -234,11 +234,7 @@ body.m-edge #mode-badge{display:inline-block}
   <div id="main">
     <!-- Now Playing — Legacy only (hidden via CSS in Edge mode) -->
     <div id="npw">
-      <div id="np">
-        <span id="npbadge">READY</span>
-        <div id="npen"><span class="lc en-lc">EN</span>Select a chapter</div>
-        <div id="npzh"><span class="lc zh-lc">中</span>請選擇章節</div>
-      </div>
+
       <div id="prrow">
         <div id="prbar" onclick="seekBar(event)"><div id="prfill"></div></div>
         <span id="prtxt">0 / 0</span>
@@ -703,8 +699,10 @@ async function updateNP() {
   const para = currentChapterData.paragraphs[currentParaIndex];
   if (!para) return;
   const zh = (await getCachedTranslation(currentChapterData.id, currentParaIndex)) || para.zh || '—';
-  document.getElementById('npen').innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
-  document.getElementById('npzh').innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zh.substring(0,120))}${zh.length>120?'…':''}`;
+  const npen = document.getElementById('npen');
+  const npzh = document.getElementById('npzh');
+  if (npen) npen.innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
+  if (npzh) npzh.innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zh.substring(0,120))}${zh.length>120?'…':''}`;
   document.getElementById('prtxt').textContent = `${currentParaIndex + 1} / ${currentChapterData.paragraphs.length}`;
   document.getElementById('prfill').style.width = `${((currentParaIndex + 1) / currentChapterData.paragraphs.length) * 100}%`;
 }
