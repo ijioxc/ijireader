@@ -951,35 +951,35 @@ async function speakCurrent() {
 
 function speakBilingual(enText, zhText) {
   if (READ_MODE === 'edge') return;
-  const uEn = enText ? new SpeechSynthesisUtterance(enText.replace(/[\[\]]/g, ' ')) : null;
-  const uZh = zhText ? new SpeechSynthesisUtterance(zhText.replace(/[\[\]]/g, ' ')) : null;
-  if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
-  if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
   
-  if (uEn) {
-    uEn.onboundary = (event) => {
-      if (event.name === 'word') highlightWord(currentParaIndex, event.charIndex, event.charLength, 'en');
-    };
-  }
-  if (uZh) {
-    uZh.onboundary = (event) => {
-      if (event.name === 'word') highlightWord(currentParaIndex, event.charIndex, event.charLength, 'zh');
-    };
-  }
-
-  if (uEn && uZh) {
-    if (DISPLAY_ORDER === 'zh') {
-      uZh.onend = () => { if (isPlaying) SY.speak(uEn); };
-      uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
-      SY.speak(uZh);
-    } else {
-      uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
-      uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
-      SY.speak(uEn);
+  const cleanEn = enText.replace(/[\[\]]/g, ' ');
+  const cleanZh = zhText.replace(/[\[\]]/g, ' ');
+  
+  const isZhFirst = DISPLAY_ORDER === 'zh';
+  const firstText  = isZhFirst ? cleanZh : cleanEn;
+  const secondText = isZhFirst ? cleanEn : cleanZh;
+  const combinedText = `${firstText} 。 ${secondText}`;
+  
+  const u = new SpeechSynthesisUtterance(combinedText);
+  u.voice = mixV;
+  u.rate = rate; 
+  u.lang = mixV ? mixV.lang : (isZhFirst ? 'zh-TW' : 'en-US');
+  
+  u.onend = () => { if (isPlaying && isAuto) skip(1); };
+  
+  u.onboundary = (event) => {
+    if (event.name === 'word') {
+      const firstLen = firstText.length + 2;
+      
+      if (event.charIndex < firstLen) {
+        highlightWord(currentParaIndex, event.charIndex, event.charLength, isZhFirst ? 'zh' : 'en');
+      } else {
+        highlightWord(currentParaIndex, event.charIndex - firstLen, event.charLength, isZhFirst ? 'en' : 'zh');
+      }
     }
-  } else if (uEn) { uEn.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uEn); }
-  else if (uZh)   { uZh.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uZh); }
-  else { skip(1); }
+  };
+  
+  SY.speak(u);
 }
 
 function highlightWord(paraIdx, charIndex, charLength, lang) {
