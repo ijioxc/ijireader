@@ -907,7 +907,7 @@ async function speakCurrent() {
     const text  = currentLangMode === 'en' ? para.en : zh;
     const voice = useMixVoice ? mixV : (currentLangMode === 'en' ? enV : zhV);
     if (!text) { skip(1); return; }
-    const u = new SpeechSynthesisUtterance(text);
+    const u = new SpeechSynthesisUtterance(text.replace(/[\[\]]/g, ' '));
     u.voice = voice; u.rate = rate;
     u.lang  = voice ? voice.lang : (currentLangMode === 'en' ? 'en-US' : 'zh-TW');
     u.onend = () => { if (isPlaying && isAuto) skip(1); };
@@ -922,8 +922,8 @@ async function speakCurrent() {
 
 function speakBilingual(enText, zhText) {
   if (READ_MODE === 'edge') return;
-  const uEn = enText ? new SpeechSynthesisUtterance(enText) : null;
-  const uZh = zhText ? new SpeechSynthesisUtterance(zhText) : null;
+  const uEn = enText ? new SpeechSynthesisUtterance(enText.replace(/[\[\]]/g, ' ')) : null;
+  const uZh = zhText ? new SpeechSynthesisUtterance(zhText.replace(/[\[\]]/g, ' ')) : null;
   if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
   if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
   
