@@ -1,0 +1,18 @@
+[
+  {
+    "c": 1,
+    "t": "Chapter 1: The Beginning",
+    "p": [
+      { "en": "This is the first paragraph of the external novel.", "zh": "這是外部小說的第一段。" },
+      { "en": "The system now loads data from novel.json instead of embedding it.", "zh": "系統現在從 novel.json 載入資料，而不是將其寫入 .html。" }
+    ]
+  },
+  {
+    "c": 2,
+    "t": "Chapter 2: The Journey",
+    "p": [
+      { "en": "You can add more chapters and paragraphs here.", "zh": "您可以在這裡新增更多章節和段落。" },
+      { "en": "It supports bilingual display and basic TTS.", "zh": "它支援雙語顯示和基本的語音朗讀。" }
+    ]
+  }
+]

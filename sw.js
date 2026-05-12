@@ -1,7 +1,8 @@
-const CACHE_NAME = 'english-listener-v1';
+const CACHE_NAME = 'english-listener-v2';
 const ASSETS = [
   './index.html',
-  './books/lotm/manifest.json'
+  './reader.html',
+  './app.webmanifest'
 ];
 
 self.addEventListener('install', (e) => {
