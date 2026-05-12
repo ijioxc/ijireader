@@ -650,9 +650,16 @@ async function loadChapterByIndex(idx, resumePara = 0, autoPlay = false) {
 }
 
 function parseChapter(raw) {
-  const enBlocks = (raw.content_en || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean);
-  const zhBlocks = raw.content_zh ? (raw.content_zh || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean) : [];
-  return enBlocks.map((en, i) => ({ en, zh: zhBlocks[i] || '' }));
+  const en = raw.content_en || '';
+  const zh = raw.content_zh || '';
+  
+  const enBlocks = en.includes('\n\n') ? en.split(/\n\n+/) : en.split('\n');
+  const zhBlocks = zh.includes('\n\n') ? zh.split(/\n\n+/) : zh.split('\n');
+  
+  const cleanEn = enBlocks.map(s => s.trim()).filter(Boolean);
+  const cleanZh = zhBlocks.map(s => s.trim()).filter(Boolean);
+  
+  return cleanEn.map((enText, i) => ({ en: enText, zh: cleanZh[i] || '' }));
 }
 
 function changeChapter(delta) {
