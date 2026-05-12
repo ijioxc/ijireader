@@ -941,7 +941,7 @@ function vq(v) {
 }
 
 function renderV(lang) {
-  let vs = lang==='mix' ? allV : allV.filter(v=>v.lang.startsWith(lang==='en'?'en':'zh'));
+  let vs = lang==='mix' ? allV.filter(v=>v.lang.startsWith('en') || v.lang.startsWith('zh')) : allV.filter(v=>v.lang.startsWith(lang==='en'?'en':'zh'));
   const el = document.getElementById('vlist');
   if (!vs.length) { el.innerHTML='<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
   const s = [...vs].sort((a,b)=>['n','p','s'].indexOf(vq(a))-['n','p','s'].indexOf(vq(b)));
