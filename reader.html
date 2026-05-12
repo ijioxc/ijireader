@@ -38,6 +38,11 @@ body.m-edge .sp.on { background: transparent; border-color: transparent; box-sha
 body.m-edge .sp-zh { font-size: 16px; line-height: 1.8; color: var(--t2); margin-bottom: 10px; }
 body.m-edge .sp-en { font-size: 22px; line-height: 1.8; color: var(--t1); margin-bottom: 0; }
 
+body.f-garamond .sp-en { font-family: 'Cormorant Garamond', serif; }
+body.f-georgia .sp-en { font-family: Georgia, serif; }
+body.f-sans .sp-en { font-family: system-ui, -apple-system, sans-serif; font-style: normal; }
+body.f-mono .sp-en { font-family: 'DM Mono', monospace; font-style: normal; }
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
 
@@ -289,6 +294,17 @@ body.m-edge #mode-badge{display:inline-block}
         </div>
       </div>
 
+      <!-- Font Family -->
+      <div class="sps">
+        <div class="spst">英文字體</div>
+        <div class="vtabs" id="fontTabs">
+          <button class="vt on" onclick="setFont('f-garamond')" data-font="f-garamond">Garamond</button>
+          <button class="vt" onclick="setFont('f-georgia')" data-font="f-georgia">Georgia</button>
+          <button class="vt" onclick="setFont('f-sans')" data-font="f-sans">Sans-Serif</button>
+          <button class="vt" onclick="setFont('f-mono')" data-font="f-mono">Monospace</button>
+        </div>
+      </div>
+
       <!-- Read Mode -->
       <div class="sps">
         <div class="spst">閱讀模式</div>
@@ -504,6 +520,10 @@ window.onload = async () => {
   const savedTheme = localStorage.getItem('selectedTheme') || 't-midnight';
   setTheme(savedTheme);
 
+  // Font
+  const savedFont = localStorage.getItem('selectedFont') || 'f-garamond';
+  setFont(savedFont);
+
   // Mode — apply class + settings UI
   document.body.classList.toggle('m-edge', READ_MODE === 'edge');
   document.getElementById('mode_legacy').classList.toggle('on',     READ_MODE === 'legacy');
@@ -674,7 +694,7 @@ async function renderEdge() {
         <span>${idx + 1}</span>
         ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
       </div>
-      <div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh).replace(/([。！？])/g, '$1<br>')}</div>
+      <div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh).replace(/([。！？][\p{Pe}\p{Pf}"']*)/gu, '$1<br>')}</div>
       <div class="sp-en" lang="en-US">${escHtml(para.en).replace(/([.!?])\s+([A-Z])/g, '$1<br>$2')}</div>
     `;
     div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
@@ -860,8 +880,11 @@ function updatePlayBtn() {
   const btn = document.getElementById('playBtn');
   if (!btn) return;
   btn.textContent = isPlaying ? '⏸' : '▶';
-  document.getElementById('npbadge').classList.toggle('live', isPlaying);
-  document.getElementById('npbadge').textContent = isPlaying ? 'PLAYING' : 'READY';
+  const npbadge = document.getElementById('npbadge');
+  if (npbadge) {
+    npbadge.classList.toggle('live', isPlaying);
+    npbadge.textContent = isPlaying ? 'PLAYING' : 'READY';
+  }
 }
 
 async function speakCurrent() {
@@ -1067,6 +1090,16 @@ function setTheme(theme) {
   localStorage.setItem('selectedTheme', theme);
   document.querySelectorAll('#themeTabs .vt').forEach(btn =>
     btn.classList.toggle('on', btn.getAttribute('data-theme') === theme)
+  );
+}
+
+const fonts = ['f-garamond', 'f-georgia', 'f-sans', 'f-mono'];
+function setFont(font) {
+  fonts.forEach(f => document.body.classList.remove(f));
+  document.body.classList.add(font);
+  localStorage.setItem('selectedFont', font);
+  document.querySelectorAll('#fontTabs .vt').forEach(btn =>
+    btn.classList.toggle('on', btn.getAttribute('data-font') === font)
   );
 }
 
