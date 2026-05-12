@@ -274,9 +274,9 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
       <div class="sps">
         <div class="spst">朗讀語音</div>
         <div class="vtabs">
-          <button class="vt eon" id="vte" onclick="swvt('en')">English</button>
+          <button class="vt" id="vte" onclick="swvt('en')">English</button>
           <button class="vt" id="vtz" onclick="swvt('zh')">中文</button>
-          <button class="vt" id="vtm" onclick="swvt('mix')">混合</button>
+          <button class="vt mon" id="vtm" onclick="swvt('mix')">混合</button>
         </div>
         <div id="vlist"></div>
       </div>
@@ -290,15 +290,36 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
         </div>
       </div>
 
-      <!-- DeepL API -->
+      <!-- Translation Engine -->
       <div class="sps">
+        <div class="spst">翻譯引擎</div>
+        <div class="vtabs" id="engineTabs">
+          <button class="vt on" onclick="setEngine('deepl')" id="eng_deepl">DeepL</button>
+          <button class="vt" onclick="setEngine('gemini')" id="eng_gemini">Gemini</button>
+        </div>
+      </div>
+
+      <!-- DeepL API -->
+      <div class="sps" id="deepl_section">
         <div class="spst">DeepL 翻譯 API</div>
         <input class="api-input" type="password" id="deeplKey" placeholder="your-deepl-api-key:fx" autocomplete="off">
         <button class="save-btn" onclick="saveApiKey()">儲存 API Key</button>
         <div class="api-note" style="margin-top:8px">
           免費方案：500,000 字/月<br>
           申請：<a href="https://www.deepl.com/pro-api" target="_blank" style="color:var(--ice)">deepl.com/pro-api</a><br>
-          Key 儲存於本機 localStorage，不會上傳
+          Key 儲存於本機 localStorage
+        </div>
+      </div>
+
+      <!-- Gemini API -->
+      <div class="sps" id="gemini_section" style="display:none">
+        <div class="spst">Gemini 翻譯 API</div>
+        <input class="api-input" type="password" id="geminiKey" placeholder="AIzaSy..." autocomplete="off">
+        <button class="save-btn" onclick="saveGeminiKey()">儲存 API Key</button>
+        <div class="api-note" style="margin-top:8px">
+          免費方案：在 Google AI Studio 申請免費 Key<br>
+          申請：<a href="https://aistudio.google.com/" target="_blank" style="color:var(--ice)">aistudio.google.com</a><br>
+          支援完美句句對齊
         </div>
       </div>
 
@@ -331,16 +352,18 @@ const themes = ['t-midnight','t-sepia','t-paper','t-oled','t-forest'];
 
 // Voice
 const SY = window.speechSynthesis;
-let allV=[], enV=null, zhV=null, mixV=null, vtab='en', useMixVoice=false;
+let allV=[], enV=null, zhV=null, mixV=null, vtab='mix', useMixVoice=true;
 
 // Translation
 let deeplKey = localStorage.getItem('deepl_api_key') || '';
+let geminiKey = localStorage.getItem('gemini_api_key') || '';
+let currentEngine = localStorage.getItem('translation_engine') || 'deepl';
 // Cache key: `tl_${bookId}_${chapterId}_${paraIdx}`
 
 // ══ INIT ════════════════════════════════════════════════════
 window.onload = async () => {
   // Theme
-  const savedTheme = localStorage.getItem('selectedTheme') || 't-midnight';
+  const savedTheme = localStorage.getItem('selectedTheme') || 't-sepia';
   setTheme(savedTheme);
 
   // Voice
@@ -350,6 +373,8 @@ window.onload = async () => {
 
   // DeepL key
   if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
+  if (geminiKey) document.getElementById('geminiKey').value = geminiKey;
+  setEngine(currentEngine);
 
   // Load manifest
   try {
@@ -446,15 +471,33 @@ async function loadChapterByIndex(idx, resumePara = 0) {
 }
 
 function parseChapter(raw) {
-  // raw.content_en is a long string with paragraphs separated by \n\n
-  const enBlocks = (raw.content_en || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean);
-  const zhBlocks = raw.content_zh
-    ? (raw.content_zh || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean)
-    : [];
-  return enBlocks.map((en, i) => ({
-    en,
-    zh: zhBlocks[i] || ''  // empty if not translated yet
-  }));
+  // 智慧判斷：如果有雙換行就用雙換行切，否則用單換行（解決 LOTM 只有單換行變成一坨的問題）
+  const hasDoubleNL = (raw.content_en || '').includes('\n\n');
+  const splitRegex = hasDoubleNL ? /\n\n+/ : /\n+/;
+  
+  const enBlocks = (raw.content_en || '').split(splitRegex).map(s => s.trim()).filter(Boolean);
+  
+  // 如果本來就有中文翻譯（代表是預載的段落對照），維持原樣，不切句，避免錯位
+  if (raw.content_zh) {
+    const zhBlocks = (raw.content_zh || '').split(splitRegex).map(s => s.trim()).filter(Boolean);
+    return enBlocks.map((en, i) => ({
+      en,
+      zh: zhBlocks[i] || ''
+    }));
+  }
+  
+  // 沒有預載翻譯，才使用逐句切分（給 DeepL/Gemini 翻譯用）
+  let paragraphs = [];
+  enBlocks.forEach(block => {
+    const enSentences = block.match(/[^.!?]+[.!?]+["”]?|.+$/g) || [block];
+    enSentences.forEach(s => {
+      paragraphs.push({
+        en: s.trim(),
+        zh: '' // 等待翻譯
+      });
+    });
+  });
+  return paragraphs;
 }
 
 function changeChapter(delta) {
@@ -542,8 +585,9 @@ function setCachedTranslation(chId, paraIdx, text) {
 }
 
 async function translatePara(idx, event) {
-  if (!deeplKey) {
-    alert('請先在設定中填入 DeepL API Key');
+  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
+  if (!key) {
+    alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`);
     openS();
     return;
   }
@@ -552,7 +596,10 @@ async function translatePara(idx, event) {
 
   const para = currentChapterData.paragraphs[idx];
   try {
-    const zh = await callDeepL(para.en);
+    const results = currentEngine === 'gemini' 
+      ? await callGeminiBatch([para.en]) 
+      : await callDeepLBatch([para.en]);
+    const zh = results[0];
     setCachedTranslation(currentChapterData.id, idx, zh);
 
     // Update DOM
@@ -570,8 +617,9 @@ async function translatePara(idx, event) {
 }
 
 async function translateChapter() {
-  if (!deeplKey) {
-    alert('請先在設定中填入 DeepL API Key');
+  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
+  if (!key) {
+    alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`);
     openS();
     return;
   }
@@ -588,12 +636,14 @@ async function translateChapter() {
     .filter(({i}) => !getCachedTranslation(currentChapterData.id, i));
 
   let done = 0;
-  const BATCH = 20;
+  const BATCH = currentEngine === 'gemini' ? 10 : 20; // Gemini prompt length limit consideration
   for (let b = 0; b < toTranslate.length; b += BATCH) {
     const batch = toTranslate.slice(b, b + BATCH);
     try {
       const texts = batch.map(x => x.en);
-      const results = await callDeepLBatch(texts);
+      const results = currentEngine === 'gemini' 
+        ? await callGeminiBatch(texts) 
+        : await callDeepLBatch(texts);
       results.forEach((zh, ri) => {
         const paraIdx = batch[ri].i;
         setCachedTranslation(currentChapterData.id, paraIdx, zh);
@@ -624,7 +674,6 @@ async function callDeepL(text) {
 }
 
 async function callDeepLBatch(texts) {
-  // DeepL Free API endpoint
   const isFree = deeplKey.endsWith(':fx');
   const targetUrl = isFree
     ? 'https://api-free.deepl.com/v2/translate'
@@ -650,6 +699,53 @@ async function callDeepLBatch(texts) {
   }
   const data = await res.json();
   return data.translations.map(t => t.text);
+}
+
+async function callGeminiBatch(texts) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+  const prompt = `Translate the following English sentences to Traditional Chinese. Return ONLY a JSON array of strings in the exact same order. Do not include markdown formatting or any other text outside the JSON array.
+  
+Input: ${JSON.stringify(texts)}`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: "application/json"
+      }
+    })
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Gemini ${res.status}: ${err}`);
+  }
+  const data = await res.json();
+  const text = data.candidates[0].content.parts[0].text;
+  // 防呆：有時候 Gemini 還是會吐 ```json ... ```，把 markdown 標記濾掉
+  const cleanJson = text.replace(/^```json\s*|```$/g, '').trim();
+  return JSON.parse(cleanJson);
+}
+
+function saveGeminiKey() {
+  const key = document.getElementById('geminiKey').value.trim();
+  if (!key) { alert('請輸入 API Key'); return; }
+  geminiKey = key;
+  localStorage.setItem('gemini_api_key', key);
+  alert('✓ 已儲存 Gemini API Key');
+}
+
+function setEngine(engine) {
+  currentEngine = engine;
+  localStorage.setItem('translation_engine', engine);
+  document.getElementById('eng_deepl').classList.toggle('on', engine === 'deepl');
+  document.getElementById('eng_gemini').classList.toggle('on', engine === 'gemini');
+  document.getElementById('deepl_section').style.display = engine === 'deepl' ? 'block' : 'none';
+  document.getElementById('gemini_section').style.display = engine === 'gemini' ? 'block' : 'none';
 }
 
 function updateTlStats() {
@@ -794,13 +890,17 @@ function pickV() {
   const savedEn = localStorage.getItem('selectedEnVoice');
   const savedZh = localStorage.getItem('selectedZhVoice');
   const savedMix = localStorage.getItem('selectedMixVoice');
-  useMixVoice = localStorage.getItem('useMixVoice') === 'true';
+  const savedUseMix = localStorage.getItem('useMixVoice');
+  useMixVoice = savedUseMix === null ? true : savedUseMix === 'true';
   if (savedEn) enV = allV.find(v => v.name === savedEn);
   if (savedZh) zhV = allV.find(v => v.name === savedZh);
   if (savedMix) mixV = allV.find(v => v.name === savedMix);
   if (!enV) { for (let n of ENn) { let f=en.find(v=>v.name.toLowerCase().includes(n)); if(f){enV=f;break;} } if(!enV) enV=en.find(v=>v.lang==='en-US')||en[0]||null; }
   if (!zhV) { for (let n of ZHn) { let f=zh.find(v=>v.name.toLowerCase().includes(n)); if(f){zhV=f;break;} } if(!zhV) zhV=zh.find(v=>v.lang==='zh-TW')||zh.find(v=>v.lang==='zh-CN')||zh[0]||null; }
-  if (!mixV) mixV = zhV || enV;
+  if (!mixV) {
+    mixV = allV.find(v => v.name.includes('AndrewMultilingual'));
+    if (!mixV) mixV = zhV || enV;
+  }
 }
 
 function vq(v) {
