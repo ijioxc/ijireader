@@ -767,8 +767,8 @@ Input: ${JSON.stringify(texts)}`;
     },
     body: JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        responseMimeType: "application/json"
+      generation_config: {
+        response_mime_type: "application/json"
       }
     })
   });
