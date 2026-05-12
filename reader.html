@@ -3,10 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bilingual Reader</title>
+<title>Bijingual Library</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="manifest" href="app.webmanifest">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered!', reg))
+      .catch(err => console.log('SW failed!', err));
+  }
+</script>
 <style>
-/* ══ THEMES ══ */
 :root{
   --bg:#0f0f12;--bg2:#131317;--sur:#1a1a20;--card:#212128;
   --b1:#2a2a33;--b2:#363642;
@@ -14,1014 +21,172 @@
   --ice:#8bbfcf;--iced:rgba(139,191,207,.12);
   --t1:#ede6dc;--t2:#8a8490;--t3:#4a4a56;
   --green:#4e9470;--red:#b05555;
-  --sp-en:#d4b87a;--sp-zh:#92c4d4;
-  --purple:#9370db;--purpled:rgba(147,112,219,.12);
 }
-body.t-sepia{--bg:#1c1714;--bg2:#201b17;--sur:#26211c;--card:#2d271f;--b1:#332d25;--b2:#3f372d;--gold:#c49a55;--goldd:rgba(196,154,85,.14);--goldg:rgba(196,154,85,.38);--ice:#a0c4a0;--iced:rgba(160,196,160,.12);--t1:#f0e8d8;--t2:#9a907e;--t3:#5a5044;--sp-en:#d4b07a;--sp-zh:#9ec49e}
-body.t-paper{--bg:#f5f0e8;--bg2:#ede8df;--sur:#e8e2d8;--card:#dfd9ce;--b1:#c8c2b8;--b2:#b0a998;--gold:#8a6a30;--goldd:rgba(138,106,48,.1);--goldg:rgba(138,106,48,.3);--ice:#4a7a8a;--iced:rgba(74,122,138,.1);--t1:#2a2418;--t2:#6a6055;--t3:#9a9088;--green:#2a7a50;--red:#8a3030;--sp-en:#7a5a20;--sp-zh:#2a6070}
-body.t-oled{--bg:#000000;--bg2:#080808;--sur:#101010;--card:#181818;--b1:#202020;--b2:#2c2c2c;--gold:#d4aa6a;--goldd:rgba(212,170,106,.1);--goldg:rgba(212,170,106,.3);--ice:#7ab4c8;--iced:rgba(122,180,200,.1);--t1:#f0ebe4;--t2:#706a64;--t3:#383832;--sp-en:#d4aa6a;--sp-zh:#7ab4c8}
-body.t-forest{--bg:#0d1410;--bg2:#111913;--sur:#172018;--card:#1d2820;--b1:#253228;--b2:#303e32;--gold:#9ebf78;--goldd:rgba(158,191,120,.12);--goldg:rgba(158,191,120,.35);--ice:#78a8b4;--iced:rgba(120,168,180,.12);--t1:#deebd4;--t2:#7a9478;--t3:#3e5040;--green:#5ea870;--red:#a06050;--sp-en:#9ebf78;--sp-zh:#78a8b4}
-
-/* ══ EDGE MODE: hide Legacy-only controls ══ */
-body.m-edge #playBtn,
-body.m-edge #skip-btns,
-body.m-edge #mg-lang,
-body.m-edge #abtn,
-body.m-edge #spdGroup,
-body.m-edge #voice_section,
-body.m-edge #voice_desc_section { display: none !important; }
-body.m-edge #npw { display: none; }
-body.m-edge .sp { cursor: default; opacity: 1 !important; transform: none !important; }
-body.m-edge .sp:hover { background: transparent; border-color: transparent; }
-body.m-edge .sp.on { background: var(--card); border-color: rgba(200,169,110,.2); box-shadow: none; transform: none !important; }
-body.m-edge .sp-zh { font-size: 17px; color: var(--t1); margin-bottom: 6px; }
-body.m-edge .sp-en { font-size: 15px; color: var(--t2); margin-bottom: 0; }
-body.m-edge .sp.on .sp-zh { color: var(--sp-zh); }
-body.m-edge .sp.on .sp-en { color: var(--sp-en); }
-
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
+html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
 
-/* ── Top Bar ── */
-#top{height:48px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--b1);background:var(--bg2);flex-shrink:0}
-.bb{display:flex;align-items:center;gap:9px;padding:5px 12px 5px 10px;background:var(--goldd);border:1px solid rgba(200,169,110,.2);border-radius:7px;text-decoration:none}
-.bt{font-size:14px;font-weight:600;color:var(--gold);font-style:italic;letter-spacing:.04em}
-.sep{width:1px;height:20px;background:var(--b2)}
-#book-title-top{font-family:'DM Mono',monospace;font-size:10px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
-#mode-badge{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.12em;padding:3px 7px;border-radius:3px;border:1px solid rgba(139,191,207,.3);color:var(--ice);background:var(--iced);display:none}
-body.m-edge #mode-badge{display:inline-block}
-.cnav{display:flex;align-items:center;gap:5px}
-.cb{width:26px;height:26px;border-radius:5px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
-.cb:hover{border-color:var(--gold);color:var(--gold)}
-.cb:disabled{opacity:.3;cursor:default}
-.cin{background:var(--sur);border:1px solid var(--b2);border-radius:5px;padding:3px 0;color:var(--t1);font-family:'DM Mono',monospace;font-size:11px;width:44px;text-align:center}
-.cin:focus{outline:none;border-color:var(--gold)}
-.ctot{font-family:'DM Mono',monospace;font-size:10px;color:var(--t3)}
-#tr{margin-left:auto;display:flex;align-items:center;gap:5px}
-.ic{width:28px;height:28px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--t2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
-.ic:hover{background:var(--goldd);border-color:var(--b2);color:var(--gold)}
+/* top bar */
+#top{height:52px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--b1);background:var(--bg2);position:sticky;top:0;z-index:10}
+.logo{font-size:16px;font-weight:600;font-style:italic;color:var(--gold);letter-spacing:.04em}
+.logo-sub{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+.top-right{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:var(--t3)}
 
-/* ── Layout ── */
-#layout{display:flex;flex:1;overflow:hidden}
-#sb{width:185px;flex-shrink:0;border-right:1px solid var(--b1);background:var(--bg2);display:flex;flex-direction:column;overflow:hidden;transition:width .22s}
-#sb.collapsed{width:0}
-#sbhd{padding:10px 13px 7px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase;border-bottom:1px solid var(--b1);flex-shrink:0}
-#sbl{flex:1;overflow-y:auto;padding:3px 0}
-#sbl::-webkit-scrollbar{width:3px}
-#sbl::-webkit-scrollbar-thumb{background:var(--b2);border-radius:2px}
-.si{padding:6px 13px;font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);cursor:pointer;border-left:2px solid transparent;transition:.12s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.si:hover{color:var(--t2)}
-.si.on{color:var(--gold);border-left-color:var(--gold);background:var(--goldd)}
-.si.read::after{content:'✓';margin-left:5px;color:var(--green);font-size:8px}
-#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+/* hero */
+#hero{padding:48px 24px 32px;max-width:900px;margin:0 auto;text-align:center}
+#hero h1{font-size:clamp(28px,5vw,48px);font-style:italic;font-weight:300;color:var(--t1);line-height:1.2;margin-bottom:10px}
+#hero p{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:200;color:var(--t2);letter-spacing:.08em}
 
-/* Now Playing */
-#npw{flex-shrink:0;padding:10px 24px 0}
-#np{max-width:760px;margin:0 auto;background:linear-gradient(135deg,rgba(200,169,110,.05),rgba(139,191,207,.03));border:1px solid var(--b1);border-radius:10px;padding:10px 18px;position:relative;display:flex;flex-direction:column;justify-content:center}
-#np::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),var(--ice));border-radius:10px 0 0 10px}
-#npbadge{position:absolute;top:6px;right:10px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--gold);opacity:.5;text-transform:uppercase}
-#npbadge.live{opacity:1;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:.8}50%{opacity:.25}}
-#npen{font-size:14px;font-style:italic;line-height:1.55;color:var(--sp-en);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:40px}
-#npzh{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:300;line-height:1.55;color:var(--sp-zh);letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:40px}
-.lc{display:inline-block;font-family:'DM Mono',monospace;font-size:8px;padding:1px 4px;border-radius:2px;margin-right:6px;vertical-align:middle;opacity:.7}
-.en-lc{background:rgba(200,169,110,.15);color:var(--gold)}
-.zh-lc{background:rgba(139,191,207,.15);color:var(--ice)}
-#prrow{max-width:760px;margin:8px auto 0;display:flex;align-items:center;gap:10px;padding:0 2px}
-#prbar{flex:1;height:2px;background:var(--b1);border-radius:2px;cursor:pointer}
-#prfill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),#d4b97e);width:0%;transition:width .3s}
-#prtxt{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);white-space:nowrap}
+/* divider */
+.divider{max-width:900px;margin:0 auto 32px;padding:0 24px;display:flex;align-items:center;gap:12px}
+.divider-line{flex:1;height:1px;background:var(--b1)}
+.divider-text{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--t3);text-transform:uppercase}
 
-/* Controls */
-#ctrls{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 24px;max-width:808px;width:100%;margin:0 auto;flex-wrap:wrap}
-.pbig{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c8a96e 0%,#a07840 100%);border:none;color:#0d0d0f;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.psk{padding:5px 12px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:.15s}
-.psk:hover{border-color:var(--goldg);color:var(--gold)}
-.mb{padding:7px 15px;border:none;background:transparent;font-family:'DM Mono',monospace;font-size:10px;color:var(--t2);cursor:pointer;transition:.15s;border-right:1px solid var(--b2);white-space:nowrap}
-.mb:last-child{border-right:none}
-.mb:hover{background:var(--goldd);color:var(--gold)}
-.mb.on{background:var(--gold);color:#0d0d0f;font-weight:700}
-.abtn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:6px;border:1px solid var(--b2);background:transparent;font-family:'DM Mono',monospace;font-size:9px;color:var(--t2);cursor:pointer;transition:.15s}
-.abtn.on{border-color:rgba(78,148,112,.5);color:var(--green);background:rgba(78,148,112,.08)}
-.adot{width:5px;height:5px;border-radius:50%;background:currentColor}
-.spd{display:flex;align-items:center;gap:5px}
-.spd label{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3)}
-input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
-.tl-btn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:6px;border:1px solid var(--b2);background:transparent;font-family:'DM Mono',monospace;font-size:9px;color:var(--t2);cursor:pointer;transition:.15s}
-.tl-btn:hover{border-color:var(--ice);color:var(--ice)}
+/* books grid */
+#books{max-width:900px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
 
-/* Edge hint */
-#edge-hint{display:none;max-width:760px;margin:6px auto 0;padding:8px 16px;background:var(--iced);border:1px solid rgba(139,191,207,.2);border-radius:8px;font-family:'DM Mono',monospace;font-size:9px;color:var(--ice);line-height:1.8}
-body.m-edge #edge-hint{display:block}
+/* book card */
+.book-card{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:24px;cursor:pointer;transition:all .3s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
+.book-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ice));opacity:0;transition:opacity .3s}
+.book-card:hover{border-color:var(--goldg);transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,0,0,.5)}
+.book-card:hover::before{opacity:1}
+.book-meta{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase;margin-bottom:10px}
+.book-title{font-size:20px;font-style:italic;font-weight:600;color:var(--t1);margin-bottom:6px;line-height:1.3}
+.book-desc{font-family:'Noto Serif TC',serif;font-size:12px;font-weight:200;color:var(--t2);line-height:1.8;letter-spacing:.04em;margin-bottom:18px}
+.book-stats{display:flex;gap:12px;margin-bottom:18px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);font-weight:400}
+.stat-lbl{font-family:'DM Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:.15em;text-transform:uppercase}
+.book-progress{margin-bottom:18px}
+.progress-bar{height:2px;background:var(--b1);border-radius:2px;margin-bottom:5px}
+.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),#d4b97e);transition:width .5s}
+.progress-text{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3)}
+.read-btn{width:100%;padding:10px;border:1px solid rgba(200,169,110,.3);background:var(--goldd);border-radius:8px;color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;cursor:pointer;transition:.2s;text-align:center}
+.read-btn:hover{background:rgba(200,169,110,.2);border-color:var(--gold)}
 
-#ch-loading{display:none;padding:10px 24px;font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);text-align:center}
-#ch-loading.show{display:block}
+/* loading state */
+.loading-card{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:24px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.8}}
+.loading-line{height:10px;background:var(--b1);border-radius:4px;margin-bottom:10px}
+.loading-line.short{width:40%}
+.loading-line.medium{width:70%}
 
-/* Paragraph list */
-#scroll{flex:1;overflow-y:auto;padding:6px 24px 50px;min-height:0}
-#slist{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:20px 0}
-.sp{padding:18px 22px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:all .4s cubic-bezier(0.2,0.8,0.2,1);position:relative;opacity:.55;transform:scale(0.96);transform-origin:center}
-.sp:hover{background:rgba(255,255,255,.02);border-color:var(--b1);opacity:.85}
-.sp.on{background:var(--card);border-color:var(--gold);opacity:1;transform:scale(1.05);box-shadow:0 15px 40px rgba(0,0,0,.6);z-index:10}
-.sp-n{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-.sp-en{font-size:18px;font-style:italic;line-height:1.7;color:var(--t1);margin-bottom:7px;transition:color .3s}
-.sp-zh{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:300;line-height:1.85;color:var(--t2);letter-spacing:.05em;transition:color .3s;min-height:1.5em}
-.sp.on .sp-en{color:var(--sp-en)}
-.sp.on .sp-zh{color:var(--sp-zh)}
-.sp-tl{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);background:var(--b1);border:1px solid var(--b2);border-radius:3px;padding:2px 6px;cursor:pointer;transition:.15s;margin-left:6px}
-.sp-tl:hover{color:var(--ice);border-color:var(--ice)}
-.sp-tl.loading{opacity:.5;cursor:wait}
-
-/* Settings Modal */
-#sov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;backdrop-filter:blur(3px)}
-#sov.show{display:flex;align-items:flex-start;justify-content:flex-end}
-#spp{width:300px;height:100vh;background:var(--sur);border-left:1px solid var(--b1);display:flex;flex-direction:column;overflow-y:auto}
-.sphd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--b1);flex-shrink:0;position:sticky;top:0;background:var(--sur);z-index:1}
-.sphd-title{font-family:'DM Mono',monospace;font-size:10px;color:var(--t2);letter-spacing:.1em}
-.spx{width:22px;height:22px;border-radius:4px;background:var(--card);border:1px solid var(--b2);color:var(--t2);cursor:pointer}
-.spb{padding:12px 14px}
-.sps{margin-bottom:20px}
-.spst{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase;margin-bottom:8px}
-.vtabs{display:flex;gap:3px;margin-bottom:6px;flex-wrap:wrap}
-.vt{flex:1;padding:5px;border-radius:4px;border:1px solid var(--b2);background:var(--bg2);font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);cursor:pointer;text-align:center;transition:.15s;white-space:nowrap}
-.vt.eon{background:var(--goldd);border-color:rgba(200,169,110,.4);color:var(--gold)}
-.vt.zon{background:var(--iced);border-color:rgba(139,191,207,.4);color:var(--ice)}
-.vt.mon{background:var(--purpled);border-color:rgba(147,112,219,.4);color:var(--purple)}
-.vt.on{background:var(--goldd);border-color:rgba(200,169,110,.4);color:var(--gold)}
-.vt.ice-on{background:var(--iced);border-color:rgba(139,191,207,.4);color:var(--ice)}
-#vlist{display:flex;flex-direction:column;gap:2px;max-height:220px;overflow-y:auto}
-.vi{display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:5px;border:1px solid transparent;cursor:pointer;background:var(--bg2);transition:.12s}
-.vi.es{background:var(--goldd);border-color:rgba(200,169,110,.35)}
-.vi.zs{background:var(--iced);border-color:rgba(139,191,207,.35)}
-.vi.ms{background:var(--purpled);border-color:rgba(147,112,219,.35)}
-.vi-n{flex:1;font-size:11px;color:var(--t1)}
-.vi-l{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3)}
-.vi-q{font-family:'DM Mono',monospace;font-size:7px;padding:1px 3px;border-radius:2px}
-.vi-q.n{background:rgba(78,148,112,.12);color:var(--green);border:1px solid rgba(78,148,112,.25)}
-.vi-q.p{background:var(--goldd);color:var(--gold);border:1px solid rgba(200,169,110,.25)}
-.vi-q.s{background:var(--b1);color:var(--t2);border:1px solid var(--b2)}
-.pvb{width:18px;height:18px;border-radius:3px;border:1px solid var(--b2);background:transparent;color:var(--t3);font-size:8px;cursor:pointer}
-.spnote{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);line-height:1.8}
-.api-input{width:100%;background:var(--bg);border:1px solid var(--b2);color:var(--t1);padding:6px 8px;border-radius:5px;font-family:'DM Mono',monospace;font-size:10px;margin-bottom:6px}
-.api-input:focus{outline:none;border-color:var(--gold)}
-.api-note{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);line-height:1.7}
-.save-btn{width:100%;padding:7px;border:1px solid rgba(139,191,207,.3);background:var(--iced);border-radius:6px;color:var(--ice);font-family:'DM Mono',monospace;font-size:10px;cursor:pointer;transition:.2s;margin-top:4px}
-.save-btn:hover{background:rgba(139,191,207,.2)}
-.tl-stats{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);background:var(--bg);border:1px solid var(--b1);border-radius:5px;padding:8px;line-height:2}
-
-/* Mobile */
-#sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:50}
-@media(max-width:640px){
-  #sb{position:fixed;left:0;top:48px;bottom:0;z-index:51;width:220px;transform:translateX(-100%);transition:transform .22s}
-  #sb.open{transform:translateX(0)}
-  #sb-overlay.show{display:block}
-  #book-title-top{display:none}
-  .spd{display:none}
-}
+/* empty state */
+#empty{display:none;text-align:center;padding:80px 24px;color:var(--t3);font-family:'DM Mono',monospace;font-size:11px}
 </style>
 </head>
-<body class="t-midnight">
-
+<body>
 <div id="top">
-  <a class="bb" href="index.html"><div class="bt">← Library</div></a>
-  <div class="sep"></div>
-  <div id="book-title-top">Loading...</div>
-  <span id="mode-badge">EDGE</span>
-  <div class="cnav">
-    <button class="cb" id="prevChBtn" onclick="changeChapter(-1)" disabled>‹</button>
-    <input class="cin" id="chInput" type="number" min="1" value="1" onchange="goToChapterInput()">
-    <span class="ctot" id="chTot">/ —</span>
-    <button class="cb" id="nextChBtn" onclick="changeChapter(1)" disabled>›</button>
+  <div>
+    <div class="logo">Bilingual Reader</div>
+    <div class="logo-sub">雙語聆聽學習</div>
   </div>
-  <div id="tr">
-    <button class="ic" onclick="toggleSidebar()" title="Chapters">☰</button>
-    <button class="ic" onclick="openS()" title="Settings">⚙</button>
+  <div class="top-right" id="lib-count">Loading...</div>
+</div>
+
+<div id="hero">
+  <h1>Your Reading Library</h1>
+  <p>雙語朗讀・字幕翻譯・沉浸式英語學習</p>
+</div>
+
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">Books</div>
+  <div class="divider-line"></div>
+</div>
+
+<div id="books">
+  <!-- Loading skeletons -->
+  <div class="loading-card" id="sk1">
+    <div class="loading-line short"></div>
+    <div class="loading-line medium"></div>
+    <div class="loading-line"></div>
+  </div>
+  <div class="loading-card" id="sk2">
+    <div class="loading-line short"></div>
+    <div class="loading-line medium"></div>
+    <div class="loading-line"></div>
   </div>
 </div>
 
-<div id="sb-overlay" onclick="closeSidebar()"></div>
-
-<div id="layout">
-  <div id="sb" aria-label="chapter list">
-    <div id="sbhd">Chapters</div>
-    <div id="sbl"></div>
-  </div>
-
-  <div id="main">
-    <!-- Now Playing — Legacy only (hidden via CSS in Edge mode) -->
-    <div id="npw">
-      <div id="np">
-        <span id="npbadge">READY</span>
-        <div id="npen"><span class="lc en-lc">EN</span>Select a chapter</div>
-        <div id="npzh"><span class="lc zh-lc">中</span>請選擇章節</div>
-      </div>
-      <div id="prrow">
-        <div id="prbar" onclick="seekBar(event)"><div id="prfill"></div></div>
-        <span id="prtxt">0 / 0</span>
-      </div>
-    </div>
-
-    <!-- Edge hint banner -->
-    <div id="edge-hint">
-      ✦ Edge 模式：使用 Edge 瀏覽器內建「大聲朗讀」<kbd>Ctrl+Shift+U</kbd> 朗讀本頁。中文在上・英文在下，雙語字幕對照。
-    </div>
-
-    <!-- Controls -->
-    <div id="ctrls">
-      <button class="pbig" id="playBtn" onclick="togglePlay()">▶</button>
-      <div id="skip-btns" style="display:flex;gap:5px">
-        <button class="psk" onclick="skip(-1)">Prev</button>
-        <button class="psk" onclick="skip(1)">Next</button>
-      </div>
-      <div id="mg-lang" style="display:flex;border:1px solid var(--b2);border-radius:6px;overflow:hidden">
-        <button class="mb on" id="mL_both" onclick="setLang('both')">Ｅ/中</button>
-        <button class="mb" id="mL_en" onclick="setLang('en')">Ｅ</button>
-        <button class="mb" id="mL_zh" onclick="setLang('zh')">中</button>
-      </div>
-      <button class="abtn on" id="abtn" onclick="toggleAuto()"><div class="adot"></div>AUTO</button>
-      <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()">⟳ 翻譯本章</button>
-      <div class="spd" id="spdGroup">
-        <label>SPD</label>
-        <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()">
-      </div>
-    </div>
-
-    <div id="ch-loading">⟳ Loading chapter...</div>
-    <div id="scroll"><div id="slist"></div></div>
-  </div>
-</div>
-
-<!-- Settings Modal -->
-<div id="sov" onclick="if(event.target===this)closeS()">
-  <div id="spp">
-    <div class="sphd">
-      <span class="sphd-title">⚙ 設定</span>
-      <button class="spx" onclick="closeS()">✕</button>
-    </div>
-    <div class="spb">
-
-      <!-- Theme -->
-      <div class="sps">
-        <div class="spst">閱讀主題</div>
-        <div class="vtabs" id="themeTabs">
-          <button class="vt on" onclick="setTheme('t-midnight')" data-theme="t-midnight">深夜</button>
-          <button class="vt" onclick="setTheme('t-sepia')" data-theme="t-sepia">復古</button>
-          <button class="vt" onclick="setTheme('t-paper')" data-theme="t-paper">紙張</button>
-          <button class="vt" onclick="setTheme('t-oled')" data-theme="t-oled">極黑</button>
-          <button class="vt" onclick="setTheme('t-forest')" data-theme="t-forest">森林</button>
-        </div>
-      </div>
-
-      <!-- Read Mode -->
-      <div class="sps">
-        <div class="spst">閱讀模式</div>
-        <div class="vtabs" id="modeTabs">
-          <button class="vt" id="mode_legacy" onclick="setReadMode('legacy')">Legacy 模式</button>
-          <button class="vt" id="mode_edge"   onclick="setReadMode('edge')">Edge 模式</button>
-        </div>
-        <div class="spnote" style="margin-top:6px">
-          <span style="color:var(--gold)">Legacy</span>：Web Speech API，支援速度/語音選擇<br>
-          <span style="color:var(--ice)">Edge</span>：中上英下，配合 Edge 大聲朗讀 (Ctrl+Shift+U)
-        </div>
-      </div>
-
-      <!-- Translation Engine -->
-      <div class="sps">
-        <div class="spst">翻譯引擎</div>
-        <div class="vtabs" id="engineTabs">
-          <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
-          <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
-        </div>
-      </div>
-
-      <!-- Voice (Legacy only) -->
-      <div class="sps" id="voice_section">
-        <div class="spst">朗讀語音</div>
-        <div class="vtabs">
-          <button class="vt eon" id="vte" onclick="swvt('en')">English</button>
-          <button class="vt" id="vtz" onclick="swvt('zh')">中文</button>
-          <button class="vt" id="vtm" onclick="swvt('mix')">混合</button>
-        </div>
-        <div id="vlist"></div>
-      </div>
-
-      <div class="sps" id="voice_desc_section">
-        <div class="spst">語音品質說明</div>
-        <div class="spnote">
-          <span style="color:var(--green)">●</span> neural — 最自然<br>
-          <span style="color:var(--gold)">●</span> premium — 高品質<br>
-          <span style="color:var(--t3)">●</span> std — 標準
-        </div>
-      </div>
-
-      <!-- DeepL API -->
-      <div class="sps" id="deepl_section">
-        <div class="spst">DeepL 翻譯 API</div>
-        <input class="api-input" type="password" id="deeplKey" placeholder="your-deepl-api-key:fx" autocomplete="off">
-        <button class="save-btn" onclick="saveApiKey()">儲存 API Key</button>
-        <div class="api-note" style="margin-top:8px">
-          免費方案：500,000 字/月<br>
-          申請：<a href="https://www.deepl.com/pro-api" target="_blank" style="color:var(--ice)">deepl.com/pro-api</a><br>
-          Key 儲存於本機 localStorage，不會上傳
-        </div>
-      </div>
-
-      <!-- Gemini API -->
-      <div class="sps" id="gemini_section" style="display:none">
-        <div class="spst">Gemini 翻譯 API</div>
-        <input class="api-input" type="password" id="geminiKey" placeholder="AIzaSy..." autocomplete="off">
-        <button class="save-btn" onclick="saveGeminiKey()">儲存 API Key</button>
-        <div class="api-note" style="margin-top:8px">
-          申請：<a href="https://aistudio.google.com/" target="_blank" style="color:var(--ice)">aistudio.google.com</a>
-        </div>
-      </div>
-
-      <!-- Translation stats -->
-      <div class="sps">
-        <div class="spst">翻譯快取統計</div>
-        <div class="tl-stats" id="tlStats">Loading...</div>
-        <button class="save-btn" style="margin-top:6px;border-color:rgba(176,85,85,.3);background:rgba(176,85,85,.1);color:var(--red)" onclick="clearTlCache()">清除翻譯快取</button>
-      </div>
-
-    </div>
-  </div>
-</div>
+<div id="empty">No books found. Check your books/ folder.</div>
 
 <script>
-// ══ STATE ══════════════════════════════════════════════════════
-const P         = new URLSearchParams(location.search);
-const BOOK_ID   = P.get('book') || 'shadow_slave';
-const BOOK_BASE = `books/${BOOK_ID}`;
-
-// READ_MODE is immutable per page-load — changes force reload (no hot-swap)
-const READ_MODE = localStorage.getItem('readMode') || 'edge';
-
-let manifest           = null;
-let currentChapterData = null;
-let currentChIdx       = 0;
-let currentParaIndex   = 0;
-let isPlaying          = false;
-let isAuto             = true;
-let currentLangMode    = 'both';
-let rate               = 1.0;
-const themes = ['t-midnight','t-sepia','t-paper','t-oled','t-forest'];
-
-// Web Speech — only used in Legacy mode
-const SY = window.speechSynthesis;
-let allV=[], enV=null, zhV=null, mixV=null, vtab='en', useMixVoice=false;
-
-let deeplKey = localStorage.getItem('deepl_api_key') || '';
-let geminiKey = localStorage.getItem('gemini_api_key') || '';
-let currentEngine = localStorage.getItem('translation_engine') || 'deepl';
-
-// ══ IndexedDB ══════════════════════════════════════════════════
-const DB_NAME = 'BilingualReader';
-const DB_VER  = 1;
-let db = null;
-
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, DB_VER);
-    req.onupgradeneeded = e => {
-      const d = e.target.result;
-      if (!d.objectStoreNames.contains('translations'))
-        d.createObjectStore('translations', { keyPath: 'id' });
-      if (!d.objectStoreNames.contains('progress'))
-        d.createObjectStore('progress', { keyPath: 'id' });
-    };
-    req.onsuccess = e => resolve(e.target.result);
-    req.onerror   = e => reject(e.target.error);
-  });
-}
-function idbGet(store, key) {
-  return new Promise((res, rej) => {
-    const tx = db.transaction(store, 'readonly');
-    const req = tx.objectStore(store).get(key);
-    req.onsuccess = () => res(req.result);
-    req.onerror   = () => rej(req.error);
-  });
-}
-function idbPut(store, value) {
-  return new Promise((res, rej) => {
-    const tx = db.transaction(store, 'readwrite');
-    const req = tx.objectStore(store).put(value);
-    req.onsuccess = () => res();
-    req.onerror   = () => rej(req.error);
-  });
-}
-function idbCount(store) {
-  return new Promise((res, rej) => {
-    const tx = db.transaction(store, 'readonly');
-    const req = tx.objectStore(store).count();
-    req.onsuccess = () => res(req.result);
-    req.onerror   = () => rej(req.error);
-  });
-}
-function idbClearStore(store) {
-  return new Promise((res, rej) => {
-    const tx = db.transaction(store, 'readwrite');
-    const req = tx.objectStore(store).clear();
-    req.onsuccess = () => res();
-    req.onerror   = () => rej(req.error);
-  });
-}
-
-// Translation helpers
-function tlKey(chId, paraIdx) { return `${BOOK_ID}_${chId}_${paraIdx}`; }
-async function getCachedTranslation(chId, paraIdx) {
-  try { return (await idbGet('translations', tlKey(chId, paraIdx)))?.zh || ''; }
-  catch { return ''; }
-}
-async function setCachedTranslation(chId, paraIdx, zh) {
-  try { await idbPut('translations', { id: tlKey(chId, paraIdx), zh }); }
-  catch(e) { console.error('IDB put:', e); }
-}
-
-// Progress
-async function saveProgress(chId, paraIdx) {
-  localStorage.setItem(`progress_${BOOK_ID}_ch`,   chId);
-  localStorage.setItem(`progress_${BOOK_ID}_para`, paraIdx);
-  try { await idbPut('progress', { id: BOOK_ID, chId, paraIdx }); } catch {}
-}
-async function loadProgress() {
-  try {
-    const row = await idbGet('progress', BOOK_ID);
-    if (row) return { chId: row.chId, paraIdx: row.paraIdx };
-  } catch {}
-  return {
-    chId:    parseInt(localStorage.getItem(`progress_${BOOK_ID}_ch`)   || '1'),
-    paraIdx: parseInt(localStorage.getItem(`progress_${BOOK_ID}_para`) || '0')
-  };
-}
-
-// ══ PWA ════════════════════════════════════════════════════════
-if ('serviceWorker' in navigator)
-  navigator.serviceWorker.register('./sw.js').catch(e => console.warn('SW:', e));
-
-window.addEventListener('online',  () => setOfflineBadge(false));
-window.addEventListener('offline', () => setOfflineBadge(true));
-function setOfflineBadge(offline) {
-  let b = document.getElementById('offlineBadge');
-  if (!b) {
-    b = document.createElement('div');
-    b.id = 'offlineBadge';
-    b.style.cssText = 'position:fixed;bottom:12px;right:12px;background:var(--sur);border:1px solid var(--b2);border-radius:6px;padding:5px 10px;font-family:"DM Mono",monospace;font-size:9px;z-index:200;transition:.3s';
-    document.body.appendChild(b);
+// ── 書目設定（新增書只需在這裡加） ──────────────────
+const BOOK_LIST = [
+  {
+    id: 'shadow_slave',
+    title: 'Shadow Slave',
+    desc: '一個被惡夢咒語選中的少年，在殘酷的夢境試煉中求生……',
+    manifest: 'books/shadow_slave/manifest.json'
+  },
+  {
+    id: 'lotm',
+    title: 'Lord of the Mysteries',
+    desc: '穿越維多利亞時代的神秘世界，在克蘇魯氛圍中探索秘術……',
+    manifest: 'books/lotm/manifest.json'
   }
-  b.textContent  = offline ? '⚡ 離線模式' : '● 已連線';
-  b.style.color  = offline ? 'var(--gold)' : 'var(--green)';
-  b.style.opacity = '1';
-  if (!offline) setTimeout(() => { b.style.opacity = '0'; }, 2000);
-}
-function preCacheNextChapter() {
-  if (!manifest || !navigator.serviceWorker?.controller) return;
-  const ni = currentChIdx + 1;
-  if (ni >= manifest.chapters.length) return;
-  const url = `${location.origin}${location.pathname.replace(/[^/]*$/, '')}${BOOK_BASE}/${manifest.chapters[ni].url}`;
-  navigator.serviceWorker.controller.postMessage({ type: 'CACHE_CHAPTER', url }, [new MessageChannel().port2]);
-}
+];
+// ──────────────────────────────────────────────────
 
-// ══ INIT ═══════════════════════════════════════════════════════
-window.onload = async () => {
-  // Theme
-  const savedTheme = localStorage.getItem('selectedTheme') || 't-midnight';
-  setTheme(savedTheme);
+async function loadLibrary() {
+  const container = document.getElementById('books');
+  container.innerHTML = '';
 
-  // Mode — apply class + settings UI
-  document.body.classList.toggle('m-edge', READ_MODE === 'edge');
-  document.getElementById('mode_legacy').classList.toggle('on',     READ_MODE === 'legacy');
-  document.getElementById('mode_edge').classList.toggle('ice-on',   READ_MODE === 'edge');
-
-  // Legacy-only: init voices
-  if (READ_MODE === 'legacy') {
-    if (SY.onvoiceschanged !== undefined)
-      SY.onvoiceschanged = () => { pickV(); if (document.getElementById('sov').classList.contains('show')) renderV(vtab); };
-    pickV();
-  }
-
-  if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
-  if (geminiKey) document.getElementById('geminiKey').value = geminiKey;
-  setEngine(currentEngine);
-
-  if (!navigator.onLine) setOfflineBadge(true);
-  try { db = await openDB(); } catch(e) { console.warn('IDB unavailable:', e); }
-
-  try {
-    manifest = await fetch(`${BOOK_BASE}/manifest.json`).then(r => r.json());
-    document.getElementById('book-title-top').textContent = manifest.title || BOOK_ID;
-    document.title = manifest.title || 'Bilingual Reader';
-    document.getElementById('chTot').textContent = `/ ${manifest.chapters.length}`;
-    renderSidebar();
-    const { chId, paraIdx } = await loadProgress();
-    const chIdx = manifest.chapters.findIndex(c => c.id === chId);
-    await loadChapterByIndex(chIdx >= 0 ? chIdx : 0, paraIdx);
-  } catch(e) {
-    console.error('Manifest load failed:', e);
-    showError('無法載入書目，請確認 manifest.json 路徑正確。');
-  }
-};
-
-// ══ READ MODE — reload enforced, no hot-swap ════════════════════
-function setReadMode(mode) {
-  if (mode === READ_MODE) return;
-  localStorage.setItem('readMode', mode);
-  window.location.reload();
-}
-
-// ══ SIDEBAR ════════════════════════════════════════════════════
-function renderSidebar() {
-  const sbl = document.getElementById('sbl');
-  sbl.innerHTML = '';
-  const readUpto = parseInt(localStorage.getItem(`progress_${BOOK_ID}_ch`) || '1');
-  manifest.chapters.forEach((ch, idx) => {
-    const div = document.createElement('div');
-    div.className = 'si'; div.id = `si_${idx}`;
-    const short = ch.title.replace(/^.*?Chapter\s*\d+\s*[-–—·]\s*/i, '').substring(0, 40);
-    div.textContent = `${String(ch.id).padStart(4,'0')} ${short}`;
-    if (ch.id < readUpto) div.classList.add('read');
-    div.onclick = () => { loadChapterByIndex(idx); closeSidebar(); };
-    sbl.appendChild(div);
-  });
-}
-
-// ══ CHAPTER LOADING ════════════════════════════════════════════
-async function loadChapterByIndex(idx, resumePara = 0) {
-  if (!manifest || idx < 0 || idx >= manifest.chapters.length) return;
-  currentChIdx = idx;
-  const chMeta = manifest.chapters[idx];
-
-  document.getElementById('chInput').value = chMeta.id;
-  document.getElementById('prevChBtn').disabled = idx === 0;
-  document.getElementById('nextChBtn').disabled = idx === manifest.chapters.length - 1;
-  document.querySelectorAll('#sbl .si').forEach((el, i) => el.classList.toggle('on', i === idx));
-  document.getElementById(`si_${idx}`)?.scrollIntoView({ block: 'nearest' });
-
-  const loader = document.getElementById('ch-loading');
-  loader.classList.add('show');
-  document.getElementById('slist').innerHTML = '';
-
-  try {
-    const cacheKey = `ch_${BOOK_ID}_${chMeta.id}`;
-    let raw = null;
-    const sc = sessionStorage.getItem(cacheKey);
-    if (sc) { raw = JSON.parse(sc); }
-    else { raw = await fetch(`${BOOK_BASE}/${chMeta.url}`).then(r => r.json()); sessionStorage.setItem(cacheKey, JSON.stringify(raw)); }
-
-    const paragraphs = parseChapter(raw);
-    currentChapterData = { id: chMeta.id, title: chMeta.title, paragraphs };
-    loader.classList.remove('show');
-
-    // ── Strategy dispatch ──
-    if (READ_MODE === 'edge') { await renderEdge(); }
-    else                      { await renderLegacy(); }
-
-    await selectPara(Math.min(resumePara, paragraphs.length - 1));
-    await saveProgress(chMeta.id, resumePara);
-
-  } catch(e) {
-    loader.classList.remove('show');
-    console.error('Chapter load failed:', e);
-    showError(`無法載入 Chapter ${chMeta.id}`);
-  }
-}
-
-function parseChapter(raw) {
-  const enBlocks = (raw.content_en || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean);
-  const zhBlocks = raw.content_zh ? (raw.content_zh || '').split(/\n\n+/).map(s => s.trim()).filter(Boolean) : [];
-  return enBlocks.map((en, i) => ({ en, zh: zhBlocks[i] || '' }));
-}
-
-function changeChapter(delta) {
-  const ni = currentChIdx + delta;
-  if (ni >= 0 && ni < manifest.chapters.length) {
-    if (isPlaying && READ_MODE === 'legacy') { isPlaying = false; SY.cancel(); updatePlayBtn(); }
-    loadChapterByIndex(ni);
-  }
-}
-
-function goToChapterInput() {
-  const id  = parseInt(document.getElementById('chInput').value);
-  const idx = manifest.chapters.findIndex(c => c.id === id);
-  if (idx >= 0) loadChapterByIndex(idx);
-  else document.getElementById('chInput').value = manifest.chapters[currentChIdx].id;
-}
-
-// ══ RENDER STRATEGY A — Legacy ════════════════════════════════
-async function renderLegacy() {
-  const slist = document.getElementById('slist');
-  slist.innerHTML = '';
-  if (!currentChapterData) return;
-
-  const cached = await Promise.all(
-    currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
-  );
-  currentChapterData.paragraphs.forEach((para, idx) => {
-    const div = document.createElement('div');
-    div.className = 'sp'; div.id = `sp_${idx}`;
-    const zh = cached[idx] || para.zh || '';
-    div.innerHTML = `
-      <div class="sp-n">
-        <span>${idx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
-      </div>
-      <div class="sp-en">${escHtml(para.en)}</div>
-      <div class="sp-zh" id="spzh_${idx}">${escHtml(zh)}</div>
-    `;
-    div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
-    slist.appendChild(div);
-  });
-  await updateNP();
-  preCacheNextChapter();
-}
-
-// ══ RENDER STRATEGY B — Edge ══════════════════════════════════
-async function renderEdge() {
-  const slist = document.getElementById('slist');
-  slist.innerHTML = '';
-  if (!currentChapterData) return;
-
-  // Isolate chrome from Edge's read-aloud scanner
-  ['top','ctrls','sb','sb-overlay','edge-hint'].forEach(id =>
-    document.getElementById(id)?.setAttribute('aria-hidden', 'true')
-  );
-
-  const cached = await Promise.all(
-    currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
-  );
-  currentChapterData.paragraphs.forEach((para, idx) => {
-    const div = document.createElement('div');
-    div.className = 'sp'; div.id = `sp_${idx}`;
-    const zh = cached[idx] || para.zh || '';
-    div.innerHTML = `
-      <div class="sp-n" aria-hidden="true">
-        <span>${idx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
-      </div>
-      <div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh)}</div>
-      <div class="sp-en" lang="en-US">${escHtml(para.en)}</div>
-    `;
-    div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
-    slist.appendChild(div);
-  });
-  preCacheNextChapter();
-}
-
-// ══ PARAGRAPH SELECTION ════════════════════════════════════════
-async function selectPara(idx) {
-  if (!currentChapterData) return;
-  idx = Math.max(0, Math.min(idx, currentChapterData.paragraphs.length - 1));
-  currentParaIndex = idx;
-  document.querySelectorAll('#slist .sp').forEach((el, i) => el.classList.toggle('on', i === idx));
-  document.getElementById(`sp_${idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  await saveProgress(currentChapterData.id, idx);
-  if (READ_MODE === 'legacy') await updateNP();
-}
-
-async function updateNP() {
-  if (!currentChapterData) return;
-  const para = currentChapterData.paragraphs[currentParaIndex];
-  if (!para) return;
-  const zh = (await getCachedTranslation(currentChapterData.id, currentParaIndex)) || para.zh || '—';
-  document.getElementById('npen').innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
-  document.getElementById('npzh').innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zh.substring(0,120))}${zh.length>120?'…':''}`;
-  document.getElementById('prtxt').textContent = `${currentParaIndex + 1} / ${currentChapterData.paragraphs.length}`;
-  document.getElementById('prfill').style.width = `${((currentParaIndex + 1) / currentChapterData.paragraphs.length) * 100}%`;
-}
-
-// ══ TRANSLATION — DeepL + Gemini + IndexedDB cache ══════════════
-function setEngine(engine) {
-  currentEngine = engine;
-  localStorage.setItem('translation_engine', engine);
-  document.getElementById('eng_deepl').classList.toggle('on', engine === 'deepl');
-  document.getElementById('eng_gemini').classList.toggle('on', engine === 'gemini');
-  document.getElementById('deepl_section').style.display = engine === 'deepl' ? 'block' : 'none';
-  document.getElementById('gemini_section').style.display = engine === 'gemini' ? 'block' : 'none';
-}
-
-function saveGeminiKey() {
-  const key = document.getElementById('geminiKey').value.trim();
-  if (!key) { alert('請輸入 API Key'); return; }
-  geminiKey = key;
-  localStorage.setItem('gemini_api_key', key);
-  alert('✓ 已儲存 Gemini API Key');
-}
-
-async function callGeminiBatch(texts) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
-  const prompt = `Translate the following English sentences to Traditional Chinese. Output ONLY a JSON array of strings. Do not include markdown formatting.\n\nInput: ${JSON.stringify(texts)}`;
-
-  const res = await fetch(`https://corsproxy.io/?${url}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { response_mime_type: "application/json" }
-    })
-  });
-
-  if (!res.ok) throw new Error(`Gemini ${res.status}: ${await res.text()}`);
-  const data = await res.json();
-  const text = data.candidates[0].content.parts[0].text;
-  
-  try {
-    return JSON.parse(text);
-  } catch(e) {
-    console.error('JSON parse failed. Text:', text);
-    const match = text.match(/\[[\s\S]*\]/);
-    if (match) return JSON.parse(match[0]);
-    throw e;
-  }
-}
-
-async function translatePara(idx, event) {
-  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
-  if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
-  const btn = event?.target;
-  if (btn) { btn.textContent = '⟳ ...'; btn.classList.add('loading'); }
-  try {
-    const results = currentEngine === 'gemini' 
-      ? await callGeminiBatch([currentChapterData.paragraphs[idx].en]) 
-      : await callDeepLBatch([currentChapterData.paragraphs[idx].en]);
-    const zh = results[0];
-    await setCachedTranslation(currentChapterData.id, idx, zh);
-    const el = document.getElementById(`spzh_${idx}`);
-    if (el) el.textContent = zh;
-    if (btn) btn.remove();
-    if (READ_MODE === 'legacy' && idx === currentParaIndex) await updateNP();
-    updateTlStats();
-  } catch(e) {
-    if (btn) { btn.textContent = '⟳ 重試'; btn.classList.remove('loading'); }
-    alert('翻譯失敗：' + e.message);
-  }
-}
-
-async function translateChapter() {
-  const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
-  if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
-  if (!currentChapterData) return;
-  const btn = document.getElementById('tlAllBtn');
-  btn.textContent = '⟳ 翻譯中...'; btn.disabled = true;
-
-  const paras   = currentChapterData.paragraphs;
-  const checks  = await Promise.all(paras.map((_, i) => getCachedTranslation(currentChapterData.id, i)));
-  const toTrans = paras.map((p, i) => ({ i, en: p.en })).filter((_, i) => !checks[i]);
-
-  let done = 0;
-  const BATCH = currentEngine === 'gemini' ? 10 : 20;
-  for (let b = 0; b < toTrans.length; b += BATCH) {
-    const batch = toTrans.slice(b, b + BATCH);
+  let loaded = 0;
+  for (const book of BOOK_LIST) {
     try {
-      const results = currentEngine === 'gemini'
-        ? await callGeminiBatch(batch.map(x => x.en))
-        : await callDeepLBatch(batch.map(x => x.en));
-      await Promise.all(results.map(async (zh, ri) => {
-        const pi = batch[ri].i;
-        await setCachedTranslation(currentChapterData.id, pi, zh);
-        const el = document.getElementById(`spzh_${pi}`);
-        if (el) el.textContent = zh;
-        document.querySelector(`#sp_${pi} .sp-tl`)?.remove();
-        done++;
-      }));
-      btn.textContent = `⟳ ${done}/${toTrans.length}`;
-    } catch(e) { console.error('Batch error:', e); break; }
-    await sleep(300);
+      const manifest = await fetch(book.manifest).then(r => r.json());
+      const chapterCount = manifest.chapters?.length || 0;
+
+      // 讀取進度
+      const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
+      const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
+      const totalRead = (savedCh - 1); // 粗估：已讀章數
+      const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
+
+      const card = document.createElement('div');
+      card.className = 'book-card';
+      card.innerHTML = `
+        <div class="book-meta">Novel · English/中文</div>
+        <div class="book-title">${book.title}</div>
+        <div class="book-desc">${book.desc}</div>
+        <div class="book-stats">
+          <div class="stat">
+            <div class="stat-val">${chapterCount}</div>
+            <div class="stat-lbl">Chapters</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">${savedCh}</div>
+            <div class="stat-lbl">Last Read</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">${pct}%</div>
+            <div class="stat-lbl">Progress</div>
+          </div>
+        </div>
+        <div class="book-progress">
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
+        </div>
+        <div class="read-btn">▶ Continue Reading</div>
+      `;
+      card.onclick = () => {
+        window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+      };
+      container.appendChild(card);
+      loaded++;
+    } catch(e) {
+      console.warn(`Failed to load ${book.id}:`, e);
+    }
   }
 
-  if (READ_MODE === 'legacy') await updateNP();
-  updateTlStats();
-  btn.textContent = '⟳ 翻譯本章'; btn.disabled = false;
-}
-
-async function callDeepL(text) { return (await callDeepLBatch([text]))[0]; }
-
-async function callDeepLBatch(texts) {
-  const isFree = deeplKey.endsWith(':fx');
-  const ep = isFree ? 'https://api-free.deepl.com/v2/translate' : 'https://api.deepl.com/v2/translate';
-  const res = await fetch(`https://corsproxy.io/?${ep}`, {
-    method: 'POST',
-    headers: { 'Authorization': `DeepL-Auth-Key ${deeplKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: texts, source_lang: 'EN', target_lang: 'ZH' })
-  });
-  if (!res.ok) throw new Error(`DeepL ${res.status}: ${await res.text()}`);
-  return (await res.json()).translations.map(t => t.text);
-}
-
-async function updateTlStats() {
-  const el = document.getElementById('tlStats');
-  if (!el) return;
-  const count = db ? await idbCount('translations') : '—';
-  el.innerHTML = `已快取段落：${count}<br>儲存位置：IndexedDB（無上限）<br>章節 JSON：Cache API（離線可用）`;
-}
-
-async function clearTlCache() {
-  if (!confirm('確定清除所有翻譯快取？')) return;
-  if (db) await idbClearStore('translations');
-  Object.keys(localStorage).filter(k => k.startsWith('tl_')).forEach(k => localStorage.removeItem(k));
-  if (READ_MODE === 'edge') await renderEdge(); else await renderLegacy();
-  updateTlStats();
-}
-
-function saveApiKey() {
-  const key = document.getElementById('deeplKey').value.trim();
-  if (!key) { alert('請輸入 API Key'); return; }
-  deeplKey = key;
-  localStorage.setItem('deepl_api_key', key);
-  alert('✓ 已儲存 API Key');
-}
-
-// ══ PLAYBACK — Legacy mode only, all calls guarded ═════════════
-function togglePlay() {
-  if (READ_MODE === 'edge') return;
-  isPlaying = !isPlaying;
-  updatePlayBtn();
-  if (isPlaying) speakCurrent(); else SY.cancel();
-}
-
-function updatePlayBtn() {
-  const btn = document.getElementById('playBtn');
-  if (!btn) return;
-  btn.textContent = isPlaying ? '⏸' : '▶';
-  document.getElementById('npbadge').classList.toggle('live', isPlaying);
-  document.getElementById('npbadge').textContent = isPlaying ? 'PLAYING' : 'READY';
-}
-
-async function speakCurrent() {
-  if (READ_MODE === 'edge') return; // hard guard
-  if (!isPlaying || !currentChapterData) return;
-  const para = currentChapterData.paragraphs[currentParaIndex];
-  if (!para) return;
-  SY.cancel();
-  const zh = (await getCachedTranslation(currentChapterData.id, currentParaIndex)) || para.zh || '';
-  if (currentLangMode === 'both') {
-    speakBilingual(para.en, zh);
-  } else {
-    const text  = currentLangMode === 'en' ? para.en : zh;
-    const voice = useMixVoice ? mixV : (currentLangMode === 'en' ? enV : zhV);
-    if (!text) { skip(1); return; }
-    const u = new SpeechSynthesisUtterance(text);
-    u.voice = voice; u.rate = rate;
-    u.lang  = voice ? voice.lang : (currentLangMode === 'en' ? 'en-US' : 'zh-TW');
-    u.onend = () => { if (isPlaying && isAuto) skip(1); };
-    SY.speak(u);
+  document.getElementById('lib-count').textContent = `${loaded} books`;
+  if (loaded === 0) {
+    document.getElementById('empty').style.display = 'block';
   }
 }
 
-function speakBilingual(enText, zhText) {
-  if (READ_MODE === 'edge') return;
-  const uEn = enText ? new SpeechSynthesisUtterance(enText) : null;
-  const uZh = zhText ? new SpeechSynthesisUtterance(zhText) : null;
-  if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
-  if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
-  if (uEn && uZh) {
-    uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
-    uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
-    SY.speak(uEn);
-  } else if (uEn) { uEn.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uEn); }
-  else if (uZh)   { uZh.onend = () => { if (isPlaying && isAuto) skip(1); }; SY.speak(uZh); }
-  else { skip(1); }
-}
-
-function skip(val) {
-  if (READ_MODE === 'edge' || !currentChapterData) return;
-  const next = currentParaIndex + val;
-  if (next >= 0 && next < currentChapterData.paragraphs.length) {
-    selectPara(next); if (isPlaying) speakCurrent();
-  } else if (next >= currentChapterData.paragraphs.length) {
-    if (isAuto && currentChIdx < manifest.chapters.length - 1) { changeChapter(1); }
-    else { isPlaying = false; SY.cancel(); updatePlayBtn(); }
-  }
-}
-
-function seekBar(e) {
-  if (!currentChapterData) return;
-  const bar = document.getElementById('prbar');
-  const rect = bar.getBoundingClientRect();
-  const idx  = Math.floor(((e.clientX - rect.left) / rect.width) * currentChapterData.paragraphs.length);
-  selectPara(Math.max(0, Math.min(idx, currentChapterData.paragraphs.length - 1)));
-}
-
-function setLang(mode) {
-  if (READ_MODE === 'edge') return;
-  currentLangMode = mode;
-  ['both','en','zh'].forEach(m => document.getElementById(`mL_${m}`).classList.toggle('on', m === mode));
-  if (isPlaying) speakCurrent();
-}
-
-function toggleAuto() { isAuto = !isAuto; document.getElementById('abtn').classList.toggle('on', isAuto); }
-function updSpd()      { rate = parseFloat(document.getElementById('spdRange').value); }
-
-// ══ VOICE — Legacy only ════════════════════════════════════════
-function pickV() {
-  if (READ_MODE === 'edge') return;
-  allV = SY.getVoices(); if (!allV.length) return;
-  const en  = allV.filter(v => v.lang.startsWith('en'));
-  const zh  = allV.filter(v => v.lang.startsWith('zh'));
-  const ENn = ['andrew','samantha','karen','daniel','moira','tessa','fiona','aria','jenny','guy','ana','zira','david'];
-  const ZHn = ['yunjian','yunxi','eddy','reed','rocko','grandpa','kangkang','zhiwei','mei-jia','yu-shu','tingting','xiaoxiao','sin-ji','ting-ting','hanhan','huihui'];
-  const savedEn = localStorage.getItem('selectedEnVoice');
-  const savedZh = localStorage.getItem('selectedZhVoice');
-  const savedMix = localStorage.getItem('selectedMixVoice');
-  const savedUseMix = localStorage.getItem('useMixVoice');
-  useMixVoice = savedUseMix === null ? true : savedUseMix === 'true';
-  if (savedEn) enV = allV.find(v => v.name === savedEn);
-  if (savedZh) zhV = allV.find(v => v.name === savedZh);
-  if (savedMix) mixV = allV.find(v => v.name === savedMix);
-  if (!enV) { for (let n of ENn) { let f=en.find(v=>v.name.toLowerCase().includes(n)); if(f){enV=f;break;} } if(!enV) enV=en.find(v=>v.lang==='en-US')||en[0]||null; }
-  if (!zhV) { for (let n of ZHn) { let f=zh.find(v=>v.name.toLowerCase().includes(n)); if(f){zhV=f;break;} } if(!zhV) zhV=zh.find(v=>v.lang==='zh-TW')||zh.find(v=>v.lang==='zh-CN')||zh[0]||null; }
-  if (!mixV) {
-    mixV = allV.find(v => v.name.includes('AndrewMultilingual'));
-    if (!mixV) mixV = zhV || enV;
-  }
-}
-
-function vq(v) {
-  const n = v.name.toLowerCase();
-  if (['samantha','karen','daniel','moira','tessa','fiona','aria','jenny','guy','ana','mei-jia','tingting','xiaoxiao','yunxi'].some(k=>n.includes(k))) return 'n';
-  if (['neural','natural','enhanced'].some(k=>n.includes(k))) return 'n';
-  if (['victoria','tom','fred','zoe','premium'].some(k=>n.includes(k))) return 'p';
-  return 's';
-}
-
-function renderV(lang) {
-  if (READ_MODE === 'edge') return;
-  let vs = lang==='mix' ? allV.filter(v=>v.lang.startsWith('en') || v.lang.startsWith('zh')) : allV.filter(v=>v.lang.startsWith(lang==='en'?'en':'zh'));
-  const el = document.getElementById('vlist');
-  if (!vs.length) { el.innerHTML='<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
-  const s = [...vs].sort((a,b)=>['n','p','s'].indexOf(vq(a))-['n','p','s'].indexOf(vq(b)));
-  el.innerHTML = '';
-  s.forEach(v => {
-    const q=vq(v), ql={n:'neural',p:'premium',s:'std'}[q];
-    const sel = lang==='en'?(enV&&enV.name===v.name):lang==='zh'?(zhV&&zhV.name===v.name):(mixV&&mixV.name===v.name);
-    const cls = sel?(lang==='en'?' es':lang==='zh'?' zs':' ms'):'';
-    const d = document.createElement('div');
-    d.className = 'vi'+cls;
-    d.innerHTML = `<div style="flex:1"><div class="vi-n">${v.name}</div><div class="vi-l">${v.lang}</div></div><span class="vi-q ${q}">${ql}</span><button class="pvb">▶</button>`;
-    d.querySelector('.pvb').onclick = ev => { ev.stopPropagation(); pvV(v,lang); };
-    d.onclick = () => {
-      if(lang==='en'){enV=v;useMixVoice=false;localStorage.setItem('selectedEnVoice',v.name);}
-      else if(lang==='zh'){zhV=v;useMixVoice=false;localStorage.setItem('selectedZhVoice',v.name);}
-      else{mixV=v;useMixVoice=true;localStorage.setItem('selectedMixVoice',v.name);}
-      localStorage.setItem('useMixVoice',useMixVoice);
-      renderV(lang);
-    };
-    el.appendChild(d);
-  });
-}
-
-function swvt(lang) {
-  vtab = lang;
-  document.getElementById('vte').className = 'vt' + (lang==='en' ? ' eon' : '');
-  document.getElementById('vtz').className = 'vt' + (lang==='zh' ? ' zon' : '');
-  document.getElementById('vtm').className = 'vt' + (lang==='mix' ? ' mon' : '');
-  renderV(lang);
-}
-
-function pvV(v, lang) {
-  if (READ_MODE === 'edge') return;
-  SY.cancel();
-  const u = new SpeechSynthesisUtterance(lang==='en' ? 'Hello, welcome to use the reader.' : '你好，歡迎使用小說閱讀器。');
-  u.voice=v; u.rate=rate; u.lang=v.lang; SY.speak(u);
-}
-
-// ══ SETTINGS ═══════════════════════════════════════════════════
-function setTheme(theme) {
-  themes.forEach(t => document.body.classList.remove(t));
-  document.body.classList.add(theme);
-  localStorage.setItem('selectedTheme', theme);
-  document.querySelectorAll('#themeTabs .vt').forEach(btn =>
-    btn.classList.toggle('on', btn.getAttribute('data-theme') === theme)
-  );
-}
-
-function openS() {
-  document.getElementById('sov').classList.add('show');
-  if (READ_MODE === 'legacy') { if (!allV.length) pickV(); renderV(vtab); }
-  updateTlStats();
-}
-function closeS() { document.getElementById('sov').classList.remove('show'); }
-
-function toggleSidebar() {
-  if (window.innerWidth <= 640) {
-    document.getElementById('sb').classList.toggle('open');
-    document.getElementById('sb-overlay').classList.toggle('show');
-  } else {
-    document.getElementById('sb').classList.toggle('collapsed');
-  }
-}
-function closeSidebar() {
-  document.getElementById('sb').classList.remove('open');
-  document.getElementById('sb-overlay').classList.remove('show');
-}
-
-// ══ UTILS ══════════════════════════════════════════════════════
-function escHtml(str) {
-  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function showError(msg) {
-  document.getElementById('slist').innerHTML =
-    `<div style="padding:40px;text-align:center;font-family:'DM Mono',monospace;font-size:11px;color:var(--red)">${msg}</div>`;
-}
+loadLibrary();
 </script>
 </body>
 </html>
