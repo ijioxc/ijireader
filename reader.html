@@ -710,7 +710,7 @@ async function callGeminiBatch(texts) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
   const prompt = `Translate the following English sentences to Traditional Chinese. Output ONLY a JSON array of strings. Do not include markdown formatting.\n\nInput: ${JSON.stringify(texts)}`;
 
-  const res = await fetch(url, {
+  const res = await fetch(`https://corsproxy.io/?${url}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -797,7 +797,7 @@ async function callDeepL(text) { return (await callDeepLBatch([text]))[0]; }
 async function callDeepLBatch(texts) {
   const isFree = deeplKey.endsWith(':fx');
   const ep = isFree ? 'https://api-free.deepl.com/v2/translate' : 'https://api.deepl.com/v2/translate';
-  const res = await fetch(ep, {
+  const res = await fetch(`https://corsproxy.io/?${ep}`, {
     method: 'POST',
     headers: { 'Authorization': `DeepL-Auth-Key ${deeplKey}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ text: texts, source_lang: 'EN', target_lang: 'ZH' })
