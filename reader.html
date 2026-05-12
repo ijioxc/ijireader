@@ -23,7 +23,8 @@ body.t-oled{--bg:#000000;--bg2:#080808;--sur:#101010;--card:#181818;--b1:#202020
 body.t-forest{--bg:#0d1410;--bg2:#111913;--sur:#172018;--card:#1d2820;--b1:#253228;--b2:#303e32;--gold:#9ebf78;--goldd:rgba(158,191,120,.12);--goldg:rgba(158,191,120,.35);--ice:#78a8b4;--iced:rgba(120,168,180,.12);--t1:#deebd4;--t2:#7a9478;--t3:#3e5040;--green:#5ea870;--red:#a06050;--sp-en:#9ebf78;--sp-zh:#78a8b4}
 
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
+html,body{height:100%;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
+body{display:flex;flex-direction:column;overflow:hidden}
 
 /* ── Top Bar ── */
 #top{height:48px;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--b1);background:var(--bg2);flex-shrink:0}
