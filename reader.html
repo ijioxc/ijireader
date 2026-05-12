@@ -82,7 +82,11 @@ body{display:flex;flex-direction:column;overflow:hidden}
 #prrow{max-width:760px;margin:8px auto 0;display:flex;align-items:center;gap:10px;padding:0 2px}
 #prbar{flex:1;height:2px;background:var(--b1);border-radius:2px;cursor:pointer}
 #prfill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),#d4b97e);width:0%;transition:width .3s}
-#prtxt{font-family:'DM Mono',monospace;font-size:9px;color:var(--t3);white-space:nowrap}
+#prtxt{display:none}
+
+/* Header Area for Collapsing */
+#ha{flex-shrink:0;transition:max-height 0.3s ease, opacity 0.3s ease;overflow:hidden;max-height:200px;}
+#ha.collapsed{max-height:0;opacity:0;pointer-events:none;}
 
 /* Controls */
 #ctrls{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:10px 24px;max-width:808px;width:100%;margin:0 auto;flex-wrap:wrap}
@@ -210,35 +214,37 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
   </div>
 
   <div id="main">
-    <div id="npw">
-      <div id="np">
-        <span id="npbadge">READY</span>
-        <div id="npen"><span class="lc en-lc">EN</span>Select a chapter</div>
-        <div id="npzh"><span class="lc zh-lc">中</span>請選擇章節</div>
-      </div>
-      <div id="prrow">
-        <div id="prbar" onclick="seekBar(event)"><div id="prfill"></div></div>
-        <span id="prtxt">0 / 0</span>
-      </div>
-    </div>
-
-    <div id="ctrls">
-      <button class="pbig" id="playBtn" onclick="togglePlay()">▶</button>
-      <button class="psk" onclick="skip(-1)">Prev</button>
-      <button class="psk" onclick="skip(1)">Next</button>
-
-      <div id="mg-lang" style="display:flex;border:1px solid var(--b2);border-radius:6px;overflow:hidden">
-        <button class="mb on" id="mL_both" onclick="setLang('both')">Ｅ/中</button>
-        <button class="mb" id="mL_en" onclick="setLang('en')">Ｅ</button>
-        <button class="mb" id="mL_zh" onclick="setLang('zh')">中</button>
+    <div id="ha">
+      <div id="npw">
+        <div id="np">
+          <span id="npbadge">READY</span>
+          <div id="npen"><span class="lc en-lc">EN</span>Select a chapter</div>
+          <div id="npzh"><span class="lc zh-lc">中</span>請選擇章節</div>
+        </div>
+        <div id="prrow">
+          <div id="prbar" onclick="seekBar(event)"><div id="prfill"></div></div>
+          <span id="prtxt">0 / 0</span>
+        </div>
       </div>
 
-      <button class="abtn on" id="abtn" onclick="toggleAuto()"><div class="adot"></div>AUTO</button>
-      <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()">⟳ 翻譯本章</button>
+      <div id="ctrls">
+        <button class="pbig" id="playBtn" onclick="togglePlay()">▶</button>
+        <button class="psk" onclick="skip(-1)">Prev</button>
+        <button class="psk" onclick="skip(1)">Next</button>
 
-      <div class="spd">
-        <label>SPD</label>
-        <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()">
+        <div id="mg-lang" style="display:flex;border:1px solid var(--b2);border-radius:6px;overflow:hidden">
+          <button class="mb on" id="mL_both" onclick="setLang('both')">Ｅ/中</button>
+          <button class="mb" id="mL_en" onclick="setLang('en')">Ｅ</button>
+          <button class="mb" id="mL_zh" onclick="setLang('zh')">中</button>
+        </div>
+
+        <button class="abtn on" id="abtn" onclick="toggleAuto()"><div class="adot"></div>AUTO</button>
+        <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()">⟳ 翻譯本章</button>
+
+        <div class="spd">
+          <label>SPD</label>
+          <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()">
+        </div>
       </div>
     </div>
 
@@ -366,6 +372,22 @@ window.onload = async () => {
   const savedTheme = localStorage.getItem('selectedTheme') || 't-sepia';
   setTheme(savedTheme);
 
+  // Scroll listener for collapsing header
+  const scrollEl = document.getElementById('scroll');
+  const ha = document.getElementById('ha');
+  let lastScrollTop = 0;
+  if (scrollEl && ha) {
+    scrollEl.addEventListener('scroll', () => {
+      let scrollTop = scrollEl.scrollTop;
+      if (scrollTop > lastScrollTop && scrollTop > 100) {
+        ha.classList.add('collapsed');
+      } else {
+        ha.classList.remove('collapsed');
+      }
+      lastScrollTop = scrollTop;
+    });
+  }
+
   // Voice
   if (SY.onvoiceschanged !== undefined)
     SY.onvoiceschanged = () => { pickV(); if(document.getElementById('sov').classList.contains('show')) renderV(vtab); };
@@ -489,12 +511,9 @@ function parseChapter(raw) {
   // 沒有預載翻譯，才使用逐句切分（給 DeepL/Gemini 翻譯用）
   let paragraphs = [];
   enBlocks.forEach(block => {
-    const enSentences = block.match(/[^.!?]+[.!?]+["”]?|.+$/g) || [block];
-    enSentences.forEach(s => {
-      paragraphs.push({
-        en: s.trim(),
-        zh: '' // 等待翻譯
-      });
+    paragraphs.push({
+      en: block.trim(),
+      zh: '' // 等待翻譯
     });
   });
   return paragraphs;
@@ -568,7 +587,7 @@ function updateNP() {
   const zhText = getCachedTranslation(currentChapterData.id, currentParaIndex) || para.zh || '—';
   document.getElementById('npen').innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
   document.getElementById('npzh').innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zhText.substring(0,120))}${zhText.length>120?'…':''}`;
-  document.getElementById('prtxt').textContent = `${currentParaIndex + 1} / ${currentChapterData.paragraphs.length}`;
+  // document.getElementById('prtxt').textContent = `${currentParaIndex + 1} / ${currentChapterData.paragraphs.length}`;
   const progress = ((currentParaIndex + 1) / currentChapterData.paragraphs.length) * 100;
   document.getElementById('prfill').style.width = `${progress}%`;
 }
