@@ -394,14 +394,28 @@ window.onload = async () => {
   pickV();
 
   // ─── [手機版語音防呆重抓] ───
-  // 原因：手機版瀏覽器在剛載入時 getVoices() 可能為空且不會觸發 onvoiceschanged。一秒後強制重抓。
+  // 原因：手機版瀏覽器在剛載入時 getVoices() 可能為空且不會觸發 onvoiceschanged。啟動短暫輪詢。
   // 如果未來瀏覽器原生支援改善，此段可刪除。
-  setTimeout(() => {
-    if (!allV || !allV.length) {
+  const checkVoices = () => {
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) {
       pickV();
-      if(document.getElementById('sov') && document.getElementById('sov').classList.contains('show')) renderV(vtab);
+      if (document.getElementById('sov') && document.getElementById('sov').classList.contains('show')) renderV(vtab);
+      return true;
     }
-  }, 1000);
+    return false;
+  };
+
+  if (!checkVoices()) {
+    const timer = setInterval(() => {
+      if (checkVoices()) clearInterval(timer);
+    }, 200);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      if (!allV || !allV.length) pickV(); // 3秒後硬幹
+    }, 3000);
+  }
 
   // DeepL key
   if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
@@ -560,7 +574,6 @@ function renderChapter() {
 
     div.innerHTML = `
       <div class="sp-n">
-        <span>${idx + 1}</span>
         ${!hasTl ? `<span class="sp-tl" onclick="translatePara(${idx}, event)">⟳ 翻譯</span>` : ''}
       </div>
       <div class="sp-en">${escHtml(para.en)}</div>
