@@ -305,6 +305,15 @@ input[type=range]{width:62px;accent-color:var(--gold);cursor:pointer}
         </div>
       </div>
 
+      <!-- Order -->
+      <div class="sps">
+        <div class="spst">語音與顯示順序</div>
+        <div class="vtabs" id="orderTabs">
+          <button class="vt on" onclick="setOrder('zh_last')" id="order_zh_last">譯文後</button>
+          <button class="vt" onclick="setOrder('zh_first')" id="order_zh_first">譯文先</button>
+        </div>
+      </div>
+
       <!-- DeepL API -->
       <div class="sps" id="deepl_section">
         <div class="spst">DeepL 翻譯 API</div>
@@ -364,6 +373,7 @@ let allV=[], enV=null, zhV=null, mixV=null, vtab='mix', useMixVoice=true;
 let deeplKey = localStorage.getItem('deepl_api_key') || '';
 let geminiKey = localStorage.getItem('gemini_api_key') || '';
 let currentEngine = localStorage.getItem('translation_engine') || 'deepl';
+let displayOrder = localStorage.getItem('display_order') || 'zh_last';
 // Cache key: `tl_${bookId}_${chapterId}_${paraIdx}`
 
 // ══ INIT ════════════════════════════════════════════════════
@@ -421,6 +431,7 @@ window.onload = async () => {
   if (deeplKey) document.getElementById('deeplKey').value = deeplKey;
   if (geminiKey) document.getElementById('geminiKey').value = geminiKey;
   setEngine(currentEngine);
+  setOrder(displayOrder);
 
   // Load manifest
   try {
@@ -572,12 +583,14 @@ function renderChapter() {
     const zhText = getCachedTranslation(currentChapterData.id, idx) || para.zh || '';
     const hasTl = !!zhText;
 
+    const enHtml = `<div class="sp-en">${escHtml(para.en)}</div>`;
+    const zhHtml = `<div class="sp-zh" id="spzh_${idx}">${escHtml(zhText)}</div>`;
+
     div.innerHTML = `
       <div class="sp-n">
         ${!hasTl ? `<span class="sp-tl" onclick="translatePara(${idx}, event)">⟳ 翻譯</span>` : ''}
       </div>
-      <div class="sp-en">${escHtml(para.en)}</div>
-      <div class="sp-zh" id="spzh_${idx}">${escHtml(zhText)}</div>
+      ${displayOrder === 'zh_first' ? zhHtml + enHtml : enHtml + zhHtml}
     `;
     div.onclick = (e) => {
       if (e.target.classList.contains('sp-tl')) return;
@@ -608,9 +621,23 @@ function updateNP() {
   const para = currentChapterData.paragraphs[currentParaIndex];
   if (!para) return;
   const zhText = getCachedTranslation(currentChapterData.id, currentParaIndex) || para.zh || '—';
-  document.getElementById('npen').innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
-  document.getElementById('npzh').innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zhText.substring(0,120))}${zhText.length>120?'…':''}`;
-  // document.getElementById('prtxt').textContent = `${currentParaIndex + 1} / ${currentChapterData.paragraphs.length}`;
+  const npen = document.getElementById('npen');
+  const npzh = document.getElementById('npzh');
+  
+  npen.innerHTML = `<span class="lc en-lc">EN</span>${escHtml(para.en.substring(0,120))}${para.en.length>120?'…':''}`;
+  npzh.innerHTML = `<span class="lc zh-lc">中</span>${escHtml(zhText.substring(0,120))}${zhText.length>120?'…':''}`;
+  
+  const npEl = document.getElementById('np');
+  if (displayOrder === 'zh_first') {
+    if (npen.nextSibling === npzh) {
+      npEl.insertBefore(npzh, npen);
+    }
+  } else {
+    if (npzh.nextSibling === npen) {
+      npEl.insertBefore(npen, npzh);
+    }
+  }
+  
   const progress = ((currentParaIndex + 1) / currentChapterData.paragraphs.length) * 100;
   document.getElementById('prfill').style.width = `${progress}%`;
 }
@@ -742,7 +769,7 @@ async function callDeepLBatch(texts) {
     body: JSON.stringify({
       text: texts,
       source_lang: 'EN',
-      target_lang: 'ZH'
+      target_lang: 'ZH-HANT'
     })
   });
 
@@ -802,6 +829,17 @@ function setEngine(engine) {
   document.getElementById('eng_gemini').classList.toggle('on', engine === 'gemini');
   document.getElementById('deepl_section').style.display = engine === 'deepl' ? 'block' : 'none';
   document.getElementById('gemini_section').style.display = engine === 'gemini' ? 'block' : 'none';
+}
+
+function setOrder(order) {
+  displayOrder = order;
+  localStorage.setItem('display_order', order);
+  document.getElementById('order_zh_last').classList.toggle('on', order === 'zh_last');
+  document.getElementById('order_zh_first').classList.toggle('on', order === 'zh_first');
+  const slist = document.getElementById('slist');
+  if (slist.children.length > 0) {
+    renderChapter(); // Re-render to update text order
+  }
 }
 
 function updateTlStats() {
@@ -881,9 +919,15 @@ function speakBilingual(enText, zhText) {
   if (uEn) { uEn.voice=useMixVoice?mixV:enV; uEn.rate=rate; uEn.lang=uEn.voice?.lang||'en-US'; }
   if (uZh) { uZh.voice=useMixVoice?mixV:zhV; uZh.rate=rate; uZh.lang=uZh.voice?.lang||'zh-TW'; }
   if (uEn && uZh) {
-    uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
-    uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
-    SY.speak(uEn);
+    if (displayOrder === 'zh_first') {
+      uZh.onend = () => { if (isPlaying) SY.speak(uEn); };
+      uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
+      SY.speak(uZh);
+    } else {
+      uEn.onend = () => { if (isPlaying) SY.speak(uZh); };
+      uZh.onend = () => { if (isPlaying && isAuto) skip(1); };
+      SY.speak(uEn);
+    }
   } else if (uEn) {
     uEn.onend = () => { if (isPlaying && isAuto) skip(1); };
     SY.speak(uEn);
