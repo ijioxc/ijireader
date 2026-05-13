@@ -936,7 +936,7 @@
       cursor: pointer;
       z-index: 999; /* 確保在最上層 */
       transition: opacity 0.3s ease;
-      animation: halo-random-float 8s infinite ease-in-out;
+      /* 動畫改由 JS 控制初始進場，以達成從中心漂移至目標位置 */
     }
     
     /* 放大點擊熱區 */
@@ -950,13 +950,13 @@
     /* 滑鼠懸停：增強亮度、放大、停止飄移 */
     .sp-tl-halo:hover {
       box-shadow: 0 0 50px var(--gold), inset 0 0 25px var(--gold);
-      transform: scale(1.3);
+      transform: translate(-50%, -50%) scale(1.3);
       animation-play-state: paused; /* 暫停隨機飄移 */
     }
     
     /* 按下去的立體感特效（縮小且內發光加深） */
     .sp-tl-halo:active {
-      transform: scale(0.95) !important;
+      transform: translate(-50%, -50%) scale(0.95) !important;
       box-shadow: 0 0 15px var(--gold), inset 0 0 40px var(--gold);
       transition: transform 0.1s ease;
     }
@@ -1027,6 +1027,23 @@
       60% { transform: translate(20px, 30px); }
       80% { transform: translate(-15px, -15px); }
       100% { transform: translate(0, 0); }
+    }
+    
+    @keyframes halo-entry {
+      0% { transform: scale(10); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes entry-wave {
+      0% { margin: 0 0; }
+      25% { margin: -15px 20px; } /* 隨機偏移，製造不規則漂浮感 */
+      50% { margin: 15px -15px; }
+      75% { margin: -5px 15px; }
+      100% { margin: 0 0; }
+    }
+    
+    .sp-tl-halo.wave-active {
+      animation: entry-wave 1.5s ease-in-out;
     }
     
     @keyframes hover-ripple {
@@ -1674,7 +1691,7 @@
     const BOOK_BASE = `books/${BOOK_ID}`;
 
     // READ_MODE is immutable per page-load — changes force reload (no hot-swap)
-    const READ_MODE = localStorage.getItem('readMode') || 'edge';
+    const READ_MODE = localStorage.getItem('readMode') || 'legacy'; // 預設改為 legacy
     const DISPLAY_ORDER = localStorage.getItem('displayOrder') || 'zh';
 
     let manifest = null;
@@ -1815,7 +1832,7 @@
     // ══ INIT ═══════════════════════════════════════════════════════
     window.onload = async () => {
       // Theme
-      const savedTheme = localStorage.getItem('selectedTheme') || 't-midnight';
+      const savedTheme = localStorage.getItem('selectedTheme') || 't-sepia'; // 預設改為復古 (t-sepia)
       setTheme(savedTheme);
 
       // Font Scale
@@ -1823,7 +1840,7 @@
       updateFontScale(savedScale);
 
       // Font
-      const savedFont = localStorage.getItem('selectedFont') || 'f-garamond';
+      const savedFont = localStorage.getItem('selectedFont') || 'f-merriweather'; // 預設改為 Merriweather
       setFont(savedFont);
 
       // Chinese Font
@@ -2174,49 +2191,53 @@
             <span class="halo-tooltip t-8">翻譯全篇</span>
           `;
           
-          // 滑鼠吸附跟隨
-          halo.onmouseenter = () => {
-            document.addEventListener('mousemove', followMouse);
+          document.body.appendChild(halo);
+          
+          // 初始設定：螢幕正中心，特大
+          halo.style.position = 'fixed';
+          halo.style.top = '50%';
+          halo.style.left = '50%';
+          halo.style.transform = 'translate(-50%, -50%) scale(15)';
+          halo.style.opacity = '0';
+          halo.style.transition = 'none';
+          
+          // 追蹤滑鼠位置的變數
+          let currentX = window.innerWidth / 2;
+          let currentY = window.innerHeight / 2;
+          let targetX = currentX;
+          let targetY = currentY;
+          
+          // 全域監聽滑鼠移動
+          document.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+          });
+          
+          // 絲滑跟隨函式
+          const follow = () => {
+            // 動作慢，絲滑：每次移動剩餘距離的 5%
+            currentX += (targetX - currentX) * 0.05;
+            currentY += (targetY - currentY) * 0.05;
+            
+            halo.style.left = `${currentX}px`;
+            halo.style.top = `${currentY}px`;
+            
+            requestAnimationFrame(follow);
           };
-          halo.onmouseleave = () => {
-            document.removeEventListener('mousemove', followMouse);
-            // 移開後平滑回到預設位置
-            const haloEl = document.getElementById('global-halo');
-            if (haloEl && haloEl.style.position !== 'fixed') {
-              haloEl.style.transition = 'all 1.2s cubic-bezier(0.1, 0.8, 0.3, 1)'; // 飛回慢一點
-              haloEl.style.top = '100px'; // 改到90 100
-              haloEl.style.left = '65%';
-              setTimeout(() => { 
-                if (haloEl) haloEl.style.transition = 'opacity 0.3s ease'; 
-              }, 1200);
-            }
-          };
+          
+          // 觸發進場動畫：由特大變小，並開啟絲滑跟隨
+          setTimeout(() => {
+            halo.style.transition = 'transform 1.5s cubic-bezier(0.65, 0, 0.35, 1), opacity 1s ease';
+            halo.style.opacity = '1';
+            halo.style.transform = 'translate(-50%, -50%) scale(1)';
+            
+            // 開始跟隨滑鼠
+            follow();
+          }, 50);
         }
-        
-        // 尋找第一個未翻譯的段落（帶有 30px 最小高度的 div）
-        const firstUntranslatedDiv = document.querySelector('#slist .sp [style="min-height:30px;"]');
-        if (firstUntranslatedDiv) {
-          const parentSp = firstUntranslatedDiv.closest('.sp');
-          if (parentSp) {
-            parentSp.appendChild(halo);
-            halo.style.position = 'absolute';
-            halo.style.top = '100px'; // 改到90 100
-            halo.style.left = '65%';
-            halo.style.right = 'auto';
-            halo.style.bottom = 'auto';
-            halo.style.display = 'block';
-            return;
-          }
-        }
-        
-        // 備用方案：固定在畫面右下角
-        document.body.appendChild(halo);
-        halo.style.position = 'fixed';
-        halo.style.bottom = '100px';
-        halo.style.right = '50px';
-        halo.style.top = 'auto';
-        halo.style.left = 'auto';
-        halo.style.display = 'block';
+      } else {
+        const halo = document.getElementById('global-halo');
+        if (halo) halo.style.display = 'none';
       }
     }
 

@@ -325,6 +325,72 @@
       font-family: 'DM Mono', monospace;
       font-size: 11px
     }
+    
+    #portal-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(15, 15, 18, 0.3) 0%, var(--bg) 80%); /* 傳送門中間半透明 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    
+    #portal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .portal-circle {
+      width: 140px;
+      height: 140px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      position: relative;
+      transform: scale(0.2);
+      opacity: 0;
+      transition: transform 1s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.5s ease;
+      box-shadow: 0 0 60px var(--gold), inset 0 0 30px var(--gold);
+    }
+    
+    #portal-overlay.active .portal-circle {
+      opacity: 1;
+      animation: portal-bloom 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    
+    @keyframes portal-bloom {
+      0% { transform: scale(0.2) rotate(0deg); opacity: 0; }
+      40% { transform: scale(15) rotate(180deg); opacity: 1; } /* 開啟 */
+      100% { transform: scale(1) rotate(540deg); opacity: 0.8; } /* 收斂 */
+    }
+    
+    .portal-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-family: 'DM Mono', 'Noto Sans TC', sans-serif;
+      font-size: 8px;
+      font-weight: 500;
+      color: var(--gold);
+      white-space: nowrap;
+      transform-origin: 0 50%;
+      opacity: 0.8;
+      text-shadow: 0 0 5px var(--gold);
+    }
+    
+    @keyframes portal-spin {
+      0% { transform: scale(15) rotate(0deg); }
+      100% { transform: scale(15) rotate(360deg); }
+    }
+    
+    /* 卡片點擊微動態 */
+    .book-card:active {
+      transform: scale(0.96) !important;
+      transition: transform 0.1s;
+    }
   </style>
 </head>
 
@@ -429,7 +495,32 @@
           <div class="read-btn">▶ Continue Reading</div>
         `;
         card.onclick = () => {
-          window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+          // 建立傳送門 Overlay
+          let portal = document.getElementById('portal-overlay');
+          if (!portal) {
+            portal = document.createElement('div');
+            portal.id = 'portal-overlay';
+            portal.innerHTML = `
+              <div class="portal-circle">
+                ${Array.from({length: 8}, (_, i) => `
+                  <div class="portal-text" style="transform: rotate(${i * 45}deg) translateX(70px)">
+                    ${i % 2 === 0 ? 'SYSTEM LOADING' : '進入世界'}
+                  </div>
+                `).join('')}
+              </div>
+            `;
+            document.body.appendChild(portal);
+          }
+          
+          // 啟動動畫
+          setTimeout(() => {
+            portal.classList.add('active');
+          }, 10);
+          
+          // 延遲跳轉
+          setTimeout(() => {
+            window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+          }, 1000); // 1秒後跳轉
         };
         container.appendChild(card);
         loaded++;
