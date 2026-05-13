@@ -384,54 +384,55 @@
 
     async function loadLibrary() {
       const container = document.getElementById('books');
-      container.innerHTML = '';
 
-      let loaded = 0;
-      for (const book of BOOK_LIST) {
+      // 平行發送所有請求
+      const promises = BOOK_LIST.map(async (book) => {
         try {
           const manifest = await fetch(book.manifest).then(r => r.json());
-          const chapterCount = manifest.chapters?.length || 0;
-
-          // 讀取進度
-          const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
-          const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
-          const totalRead = (savedCh - 1); // 粗估：已讀章數
-          const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
-
-          const card = document.createElement('div');
-          card.className = 'book-card';
-          card.innerHTML = `
-        <div class="book-meta">Novel · English/中文</div>
-        <div class="book-title">${book.title}</div>
-        <div class="book-desc">${book.desc}</div>
-        <div class="book-stats">
-          <div class="stat">
-            <div class="stat-val">${chapterCount}</div>
-            <div class="stat-lbl">Chapters</div>
-          </div>
-          <div class="stat">
-            <div class="stat-val">${savedCh}</div>
-            <div class="stat-lbl">Last Read</div>
-          </div>
-          <div class="stat">
-            <div class="stat-val">${pct}%</div>
-            <div class="stat-lbl">Progress</div>
-          </div>
-        </div>
-        <div class="book-progress">
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-          <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
-        </div>
-        <div class="read-btn">▶ Continue Reading</div>
-      `;
-          card.onclick = () => {
-            window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
-          };
-          container.appendChild(card);
-          loaded++;
+          return { book, manifest };
         } catch (e) {
           console.warn(`Failed to load ${book.id}:`, e);
+          return null;
         }
+      });
+
+      const results = await Promise.all(promises);
+
+      // 資料全部回來後才清空骨架屏
+      container.innerHTML = '';
+      let loaded = 0;
+
+      for (const res of results) {
+        if (!res) continue;
+        const { book, manifest } = res;
+        const chapterCount = manifest.chapters?.length || 0;
+        const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
+        const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
+        const totalRead = (savedCh - 1);
+        const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
+
+        const card = document.createElement('div');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <div class="book-meta">Novel · English/中文</div>
+          <div class="book-title">${book.title}</div>
+          <div class="book-desc">${book.desc}</div>
+          <div class="book-stats">
+            <div class="stat"><div class="stat-val">${chapterCount}</div><div class="stat-lbl">Chapters</div></div>
+            <div class="stat"><div class="stat-val">${savedCh}</div><div class="stat-lbl">Last Read</div></div>
+            <div class="stat"><div class="stat-val">${pct}%</div><div class="stat-lbl">Progress</div></div>
+          </div>
+          <div class="book-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
+          </div>
+          <div class="read-btn">▶ Continue Reading</div>
+        `;
+        card.onclick = () => {
+          window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+        };
+        container.appendChild(card);
+        loaded++;
       }
 
       document.getElementById('lib-count').textContent = `${loaded} books`;

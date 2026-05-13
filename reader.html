@@ -31,6 +31,7 @@
       --sp-zh: #92c4d4;
       --purple: #9370db;
       --purpled: rgba(147, 112, 219, .12);
+      --font-scale: 1.0;
     }
 
     body.t-sepia {
@@ -168,47 +169,47 @@
     body.f-merriweather .sp-en {
       font-family: 'Merriweather', serif;
       font-style: normal;
-      font-size: 20px;
+      font-size: calc(20px * var(--font-scale));
     }
 
     body.f-inter .sp-en {
       font-family: 'Inter', sans-serif;
       font-style: normal;
-      font-size: 21px;
+      font-size: calc(21px * var(--font-scale));
     }
 
     body.f-georgia .sp-en {
       font-family: Georgia, serif;
-      font-size: 21px;
+      font-size: calc(21px * var(--font-scale));
     }
 
     body.f-jetbrains .sp-en {
       font-family: 'JetBrains Mono', monospace;
       font-style: normal;
-      font-size: 19px;
+      font-size: calc(19px * var(--font-scale));
     }
 
     body.f-sans .sp-en {
       font-family: system-ui, -apple-system, sans-serif;
       font-style: normal;
-      font-size: 21px;
+      font-size: calc(21px * var(--font-scale));
     }
 
     body.f-lora .sp-en {
       font-family: 'Lora', serif;
       font-style: normal;
-      font-size: 21px;
+      font-size: calc(21px * var(--font-scale));
     }
 
     body.f-garamond .sp-en {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 23px;
+      font-size: calc(23px * var(--font-scale));
     }
 
     body.f-mono .sp-en {
       font-family: 'DM Mono', monospace;
       font-style: normal;
-      font-size: 19px;
+      font-size: calc(19px * var(--font-scale));
     }
 
     * {
@@ -231,13 +232,9 @@
     /* ── Top Bar ── */
     #top {
       height: 48px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 16px;
       border-bottom: 1px solid var(--b1);
       background: var(--bg2);
-      flex-shrink: 0
+      flex-shrink: 0;
     }
 
     .bb {
@@ -779,9 +776,9 @@
     }
 
     .sp-en {
-      font-size: 22px;
+      font-size: calc(22px * var(--font-scale));
       font-style: italic;
-      line-height: 1.8;
+      line-height: calc(40px * var(--font-scale));
       color: var(--t1);
       margin-bottom: 10px;
       transition: color .3s;
@@ -790,14 +787,21 @@
 
     .sp-zh {
       font-family: 'Noto Serif TC', serif;
-      font-size: 18px;
+      font-size: calc(18px * var(--font-scale));
       font-weight: 300;
-      line-height: 2.1;
+      line-height: calc(40px * var(--font-scale));
       color: var(--t2);
       letter-spacing: .05em;
       transition: color .3s;
       min-height: 1.5em;
       padding-left: 40px;
+    }
+
+    body.order-zh .sp-zh {
+      text-align: right;
+      padding-left: 40px;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }
 
     .sp.on .sp-en {
@@ -809,9 +813,12 @@
     }
 
     /* ══ 旁白調暗與對話高亮 ══ */
-    .sp-en,
-    .sp-zh {
+    .sp-en {
       opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+    .sp-zh {
+      opacity: 1.0;
       transition: opacity 0.3s ease;
     }
 
@@ -849,7 +856,11 @@
         align-items: flex-start;
       }
 
-      .sp-en,
+      .sp-en {
+        flex: 1.3;
+        margin-bottom: 0 !important;
+      }
+
       .sp-zh {
         flex: 1;
         margin-bottom: 0 !important;
@@ -860,10 +871,7 @@
         flex-direction: row;
       }
 
-      /* 如果是 DISPLAY_ORDER === 'zh' */
-      body.order-zh .sen-row {
-        flex-direction: row-reverse;
-      }
+
     }
 
     .sp-tl {
@@ -952,7 +960,11 @@
     }
 
     .sps {
-      margin-bottom: 20px
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--b1);
+      border-radius: 8px;
     }
 
     .spst {
@@ -1228,21 +1240,24 @@
 <body class="t-midnight">
 
   <div id="top">
-    <a class="bb" href="index.html">
-      <div class="bt">← Library</div>
-    </a>
-    <div class="sep"></div>
-    <div id="book-title-top">Loading...</div>
-    <span id="mode-badge">EDGE</span>
-    <div class="cnav">
-      <button class="cb" id="prevChBtn" onclick="changeChapter(-1)" disabled>‹</button>
-      <input class="cin" id="chInput" type="number" min="1" value="1" onchange="goToChapterInput()">
-      <span class="ctot" id="chTot">/ —</span>
-      <button class="cb" id="nextChBtn" onclick="changeChapter(1)" disabled>›</button>
-    </div>
-    <div id="tr">
-      <button class="ic" onclick="toggleSidebar()" title="Chapters">☰</button>
-      <button class="ic" onclick="openS()" title="Settings">⚙</button>
+    <div
+      style="max-width: 1400px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
+      <a class="bb" href="index.html">
+        <div class="bt">← Library</div>
+      </a>
+      <div class="sep"></div>
+      <div id="book-title-top">Loading...</div>
+      <span id="mode-badge">EDGE</span>
+      <div class="cnav">
+        <button class="cb" id="prevChBtn" onclick="changeChapter(-1)" disabled>‹</button>
+        <input class="cin" id="chInput" type="number" min="1" value="1" onchange="goToChapterInput()">
+        <span class="ctot" id="chTot">/ —</span>
+        <button class="cb" id="nextChBtn" onclick="changeChapter(1)" disabled>›</button>
+      </div>
+      <div id="tr">
+        <button class="ic" onclick="toggleSidebar()" title="Chapters">☰</button>
+        <button class="ic" onclick="openS()" title="Settings">⚙</button>
+      </div>
     </div>
   </div>
 
@@ -1318,6 +1333,18 @@
           </div>
         </div>
 
+        <!-- Font Size Scale -->
+        <div class="sps">
+          <div class="spst">文字大小</div>
+          <div class="vtabs" id="fontScaleTabs">
+            <button class="vt" onclick="updateFontScale('0.8')" data-scale="0.8">0.8x</button>
+            <button class="vt" onclick="updateFontScale('1.0')" data-scale="1.0">1.0x</button>
+            <button class="vt" onclick="updateFontScale('1.2')" data-scale="1.2">1.2x</button>
+            <button class="vt" onclick="updateFontScale('1.4')" data-scale="1.4">1.4x</button>
+            <button class="vt" onclick="updateFontScale('1.6')" data-scale="1.6">1.6x</button>
+          </div>
+        </div>
+
         <!-- Font Family -->
         <div class="sps">
           <div class="spst">英文字體</div>
@@ -1373,15 +1400,6 @@
           </div>
         </div>
 
-        <!-- Translation Engine -->
-        <div class="sps">
-          <div class="spst">翻譯引擎</div>
-          <div class="vtabs" id="engineTabs">
-            <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
-            <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
-          </div>
-        </div>
-
         <!-- Voice (Legacy only) -->
         <div class="sps" id="voice_section">
           <div class="spst">朗讀語音</div>
@@ -1399,6 +1417,15 @@
             <span style="color:var(--green)">●</span> neural — 最自然<br>
             <span style="color:var(--gold)">●</span> premium — 高品質<br>
             <span style="color:var(--t3)">●</span> std — 標準
+          </div>
+        </div>
+
+        <!-- Translation Engine -->
+        <div class="sps">
+          <div class="spst">翻譯引擎</div>
+          <div class="vtabs" id="engineTabs">
+            <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
+            <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
           </div>
         </div>
 
@@ -1579,6 +1606,10 @@
       const savedTheme = localStorage.getItem('selectedTheme') || 't-midnight';
       setTheme(savedTheme);
 
+      // Font Scale
+      const savedScale = localStorage.getItem('fontScale') || '1.0';
+      updateFontScale(savedScale);
+
       // Font
       const savedFont = localStorage.getItem('selectedFont') || 'f-garamond';
       setFont(savedFont);
@@ -1728,60 +1759,55 @@
     }
 
 
-function smartZhSplit(text, percentages) {
-  const len = text.length;
-  let lines = [];
-  let lastIdx = 0;
-  
-  percentages.forEach(p => {
-    const targetIdx = Math.round(len * p);
-    const searchRange = Math.round(len * 0.15); // ±15%
-    const start = Math.max(lastIdx + 1, targetIdx - searchRange);
-    const end = Math.min(len - 1, targetIdx + searchRange);
-    
-    let bestIdx = targetIdx;
-    let minDiff = Infinity;
-    
-    for (let i = start; i <= end; i++) {
-      if (/[，。、！？；…]/.test(text[i])) {
-        const diff = Math.abs(i - targetIdx);
-        if (diff < minDiff) {
-          minDiff = diff;
-          bestIdx = i + 1; // Break after punctuation
-        }
-      }
-    }
-    
-    lines.push(text.substring(lastIdx, bestIdx));
-    lastIdx = bestIdx;
-  });
-  
-  lines.push(text.substring(lastIdx));
-  return lines;
-}
+    function smartZhSplit(rawZh, lineCount) {
+      const ZH_PUNCT = /[，。、！？；…：]/;
+      const total = rawZh.length;
+      const lines = [];
+      let lastIdx = 0;
 
-function wrapDialogue(text, lang) {
-  const regex = lang === 'en' 
-    ? /(“[^”]+”|"[^"]+")/g 
-    : /(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g;
-    
-  return text.replace(regex, (match, offset) => {
-    const content = match.slice(1, -1);
-    if (content.length >= 8) {
-      return `<span class="dialogue">${match}</span>`;
+      for (let i = 1; i < lineCount; i++) {
+        const target = Math.round(total * (i / lineCount));
+        const radius = Math.round(total * 0.2); // 搜尋半徑放大到 ±20%
+        const lo = Math.max(lastIdx + 1, target - radius);
+        const hi = Math.min(total - 1, target + radius);
+
+        let bestIdx = target;
+        let minDiff = Infinity;
+        for (let j = lo; j <= hi; j++) {
+          if (ZH_PUNCT.test(rawZh[j])) {
+            const diff = Math.abs(j - target);
+            if (diff < minDiff) { minDiff = diff; bestIdx = j + 1; }
+          }
+        }
+        lines.push(rawZh.substring(lastIdx, bestIdx));
+        lastIdx = bestIdx;
+      }
+      lines.push(rawZh.substring(lastIdx));
+      return lines;
     }
-    
-    const before = text.substring(Math.max(0, offset - 5), offset);
-    const after = text.substring(offset + match.length, Math.min(text.length, offset + match.length + 5));
-    
-    const verbs = /[說道喊問想聽答笑]/;
-    if (verbs.test(before) || verbs.test(after)) {
-      return `<span class="dialogue">${match}</span>`;
+
+    function wrapDialogue(text, lang) {
+      const regex = lang === 'en'
+        ? /(“[^”]+”|"[^"]+")/g
+        : /(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g;
+
+      return text.replace(regex, (match, offset) => {
+        const content = match.slice(1, -1);
+        if (content.length >= 8) {
+          return `<span class="dialogue">${match}</span>`;
+        }
+
+        const before = text.substring(Math.max(0, offset - 5), offset);
+        const after = text.substring(offset + match.length, Math.min(text.length, offset + match.length + 5));
+
+        const verbs = /[說道喊問想聽答笑]/;
+        if (verbs.test(before) || verbs.test(after)) {
+          return `<span class="dialogue">${match}</span>`;
+        }
+
+        return `<span class="emphasis">${match}</span>`;
+      });
     }
-    
-    return `<span class="emphasis">${match}</span>`;
-  });
-}
 
     // ══ RENDER STRATEGY A — Legacy ════════════════════════════════
     async function renderLegacy() {
@@ -1796,21 +1822,19 @@ function wrapDialogue(text, lang) {
       currentChapterData.paragraphs.forEach((para, pIdx) => {
         const zh = cached[pIdx] || para.zh || '';
 
-        // Use \n for line breaks and restore dialogue tags
-        const enText = wrapDialogue(escHtml(para.en).replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n'), 'en');
-        
-        const rawEn = para.en;
-        const enLines = rawEn.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
-        const totalEnLen = rawEn.length;
-        let currentLen = 0;
-        const percentages = enLines.map(line => {
-          currentLen += line.length;
-          return currentLen / totalEnLen;
-        });
-        percentages.pop();
-        
-        const zhLines = smartZhSplit(zh, percentages);
-        const zhText = wrapDialogue(escHtml(zhLines.join('\n')), 'zh');
+        const rawEnLines = para.en.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
+        const enLines = rawEnLines.reduce((acc, line) => {
+          if (/^(and|or|but|nor)\s/i.test(line) && acc.length > 0) {
+            acc[acc.length - 1] += ' ' + line;
+          } else {
+            acc.push(line);
+          }
+          return acc;
+        }, []);
+        const enText = enLines.map(line => wrapDialogue(escHtml(line), 'en')).join('\n');
+
+        const zhLines = smartZhSplit(zh, enLines.length);
+        const zhText = zhLines.map(line => wrapDialogue(escHtml(line), 'zh')).join('\n');
 
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
@@ -1850,21 +1874,19 @@ function wrapDialogue(text, lang) {
       currentChapterData.paragraphs.forEach((para, pIdx) => {
         const zh = cached[pIdx] || para.zh || '';
 
-        // Use \n for line breaks and restore dialogue tags
-        const enText = wrapDialogue(escHtml(para.en).replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n'), 'en');
-        
-        const rawEn = para.en;
-        const enLines = rawEn.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
-        const totalEnLen = rawEn.length;
-        let currentLen = 0;
-        const percentages = enLines.map(line => {
-          currentLen += line.length;
-          return currentLen / totalEnLen;
-        });
-        percentages.pop();
-        
-        const zhLines = smartZhSplit(zh, percentages);
-        const zhText = wrapDialogue(escHtml(zhLines.join('\n')), 'zh');
+        const rawEnLines = para.en.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
+        const enLines = rawEnLines.reduce((acc, line) => {
+          if (/^(and|or|but|nor)\s/i.test(line) && acc.length > 0) {
+            acc[acc.length - 1] += ' ' + line;
+          } else {
+            acc.push(line);
+          }
+          return acc;
+        }, []);
+        const enText = enLines.map(line => wrapDialogue(escHtml(line), 'en')).join('\n');
+
+        const zhLines = smartZhSplit(zh, enLines.length);
+        const zhText = zhLines.map(line => wrapDialogue(escHtml(line), 'zh')).join('\n');
 
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
@@ -1966,20 +1988,20 @@ function wrapDialogue(text, lang) {
         const zh = results[0];
         await setCachedTranslation(currentChapterData.id, idx, zh);
         const rawEn = currentChapterData.paragraphs[idx].en;
-        const enLines = rawEn.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
-        const totalEnLen = rawEn.length;
-        let currentLen = 0;
-        const percentages = enLines.map(line => {
-          currentLen += line.length;
-          return currentLen / totalEnLen;
-        });
-        percentages.pop();
-        
-        const zhLines = smartZhSplit(zh, percentages);
-        
+        const rawEnLines = rawEn.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1\n').split('\n').filter(Boolean);
+        const enLines = rawEnLines.reduce((acc, line) => {
+          if (/^(and|or|but|nor)\s/i.test(line) && acc.length > 0) {
+            acc[acc.length - 1] += ' ' + line;
+          } else {
+            acc.push(line);
+          }
+          return acc;
+        }, []);
+        const zhLines = smartZhSplit(zh, enLines.length);
+
         const el = document.querySelector(`#sp_${idx} .sp-zh`);
         if (el) {
-          const zhText = wrapDialogue(escHtml(zhLines.join('\n')), 'zh');
+          const zhText = zhLines.map(line => wrapDialogue(escHtml(line), 'zh')).join('\n');
           el.innerHTML = zhText;
         }
         if (btn) btn.remove();
@@ -2314,7 +2336,13 @@ function wrapDialogue(text, lang) {
         btn.classList.toggle('on', btn.getAttribute('data-theme') === theme)
       );
     }
-
+    function updateFontScale(val) {
+      document.documentElement.style.setProperty('--font-scale', val);
+      localStorage.setItem('fontScale', val);
+      document.querySelectorAll('#fontScaleTabs .vt').forEach(btn =>
+        btn.classList.toggle('on', btn.getAttribute('data-scale') === val)
+      );
+    }
     const fonts = ['f-merriweather', 'f-inter', 'f-georgia', 'f-jetbrains', 'f-sans', 'f-lora', 'f-garamond', 'f-mono'];
     function setFont(font) {
       fonts.forEach(f => document.body.classList.remove(f));
