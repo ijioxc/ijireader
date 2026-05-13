@@ -1579,6 +1579,16 @@
 
     window.addEventListener('online', () => setOfflineBadge(false));
     window.addEventListener('offline', () => setOfflineBadge(true));
+
+    // 空白鍵控制播放/暫停
+    window.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.code === 'Space') {
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+        e.preventDefault(); // 防止空白鍵滾動頁面
+        togglePlay();
+      }
+    });
+
     function setOfflineBadge(offline) {
       let b = document.getElementById('offlineBadge');
       if (!b) {
