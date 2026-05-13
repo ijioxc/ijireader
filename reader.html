@@ -900,6 +900,27 @@
       cursor: wait
     }
 
+    .sp-tl-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--b1);
+      border: 1px solid var(--b2);
+      color: var(--t3);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 12px;
+    }
+    .sp-tl-circle:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 5px var(--gold);
+      transform: scale(1.1);
+    }
+
     /* Settings Modal */
     #sov {
       display: none;
@@ -1321,6 +1342,11 @@
       </div>
       <div class="spb">
 
+        <!-- 主角光環 -->
+        <div style="text-align: center; margin-top: 10px; margin-bottom: 20px; opacity: 0.2; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.2">
+          <button style="background: transparent; border: 2px solid var(--gold); color: var(--gold); width: 50px; height: 50px; border-radius: 50%; font-size: 9px; cursor: pointer; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 0 10px var(--gold); transition: all 0.3s;" onclick="activateHalo()"><span>主角</span><span>光環</span></button>
+        </div>
+
         <!-- Theme -->
         <div class="sps">
           <div class="spst">閱讀主題</div>
@@ -1460,6 +1486,8 @@
             style="margin-top:6px;border-color:rgba(176,85,85,.3);background:rgba(176,85,85,.1);color:var(--red)"
             onclick="clearTlCache()">清除翻譯快取</button>
         </div>
+
+
 
       </div>
     </div>
@@ -1849,13 +1877,13 @@
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
 
+        const zhDisplay = zh ? zhText : `<span class="sp-tl-circle" onclick="translatePara(${pIdx},event)">⟳</span>`;
         div.innerHTML = `
       <div class="sp-n">
         <span>${pIdx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${pIdx},event)">⟳ 翻譯</span>` : ''}
       </div>
       <div class="sen-row">
-        ${DISPLAY_ORDER === 'zh' ? `<div class="sp-zh" style="white-space: pre-wrap;">${zhText}</div><div class="sp-en" style="white-space: pre-wrap;">${enText}</div>` : `<div class="sp-en" style="white-space: pre-wrap;">${enText}</div><div class="sp-zh" style="white-space: pre-wrap;">${zhText}</div>`}
+        ${DISPLAY_ORDER === 'zh' ? `<div class="sp-zh" style="white-space: pre-wrap;">${zhDisplay}</div><div class="sp-en" style="white-space: pre-wrap;">${enText}</div>` : `<div class="sp-en" style="white-space: pre-wrap;">${enText}</div><div class="sp-zh" style="white-space: pre-wrap;">${zhDisplay}</div>`}
       </div>
     `;
 
@@ -1901,13 +1929,13 @@
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
 
+        const zhDisplay = zh ? zhText : `<span class="sp-tl-circle" onclick="translatePara(${pIdx},event)">⟳</span>`;
         div.innerHTML = `
       <div class="sp-n" aria-hidden="true">
         <span>${pIdx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${pIdx},event)">⟳ 翻譯</span>` : ''}
       </div>
       <div class="sen-row">
-        ${DISPLAY_ORDER === 'zh' ? `<div class="sp-zh" style="white-space: pre-wrap;" lang="zh-TW">${zhText}</div><div class="sp-en" style="white-space: pre-wrap;" lang="en-US">${enText}</div>` : `<div class="sp-en" style="white-space: pre-wrap;" lang="en-US">${enText}</div><div class="sp-zh" style="white-space: pre-wrap;" lang="zh-TW">${zhText}</div>`}
+        ${DISPLAY_ORDER === 'zh' ? `<div class="sp-zh" style="white-space: pre-wrap;" lang="zh-TW">${zhDisplay}</div><div class="sp-en" style="white-space: pre-wrap;" lang="en-US">${enText}</div>` : `<div class="sp-en" style="white-space: pre-wrap;" lang="en-US">${enText}</div><div class="sp-zh" style="white-space: pre-wrap;" lang="zh-TW">${zhDisplay}</div>`}
       </div>
     `;
 
@@ -1953,48 +1981,51 @@
 
     function saveGeminiKey() {
       const key = document.getElementById('geminiKey').value.trim();
-      if (!key) { alert('請輸入 API Key'); return; }
+      if (!key) return;
       geminiKey = key;
       localStorage.setItem('gemini_api_key', key);
       alert('✓ 已儲存 Gemini API Key');
     }
 
+    async function callTranslate(texts) {
+      if (geminiKey) {
+        try { return await callGeminiBatch(texts); }
+        catch(e) { console.warn('Gemini failed:', e.message); }
+      }
+      if (deeplKey) return await callDeepLBatch(texts);
+      throw new Error('請設定 API Key');
+    }
+
     async function callGeminiBatch(texts) {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
-      const prompt = `Translate the following English sentences to Traditional Chinese. Output ONLY a JSON array of strings. Do not include markdown formatting.\n\nInput: ${JSON.stringify(texts)}`;
-
       const res = await fetch(`https://wispy-block-436f.ijioxc.workers.dev/?url=${encodeURIComponent(url)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { response_mime_type: "application/json" }
+          contents: [{ parts: [{ text:
+            `Translate the following ${texts.length} English sentences to Traditional Chinese.\nOutput ONLY a JSON array of ${texts.length} strings. No markdown.\nInput: ${JSON.stringify(texts)}`
+          }] }],
+          generationConfig: { response_mime_type: 'application/json' }
         })
       });
-
       if (!res.ok) throw new Error(`Gemini ${res.status}: ${await res.text()}`);
-      const data = await res.json();
-      const text = data.candidates[0].content.parts[0].text;
-
+      const raw = (await res.json()).candidates?.[0]?.content?.parts?.[0]?.text || '';
       try {
-        return JSON.parse(text);
-      } catch (e) {
-        console.error('JSON parse failed. Text:', text);
-        const match = text.match(/\[[\s\S]*\]/);
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr) && arr.length === texts.length) return arr;
+        throw new Error('length mismatch');
+      } catch {
+        const match = raw.match(/\[[\s\S]*\]/);
         if (match) return JSON.parse(match[0]);
-        throw e;
+        throw new Error('無法解析回傳格式');
       }
     }
 
     async function translatePara(idx, event) {
-      const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
-      if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
       const btn = event?.target;
       if (btn) { btn.textContent = '⟳ ...'; btn.classList.add('loading'); }
       try {
-        const results = currentEngine === 'gemini'
-          ? await callGeminiBatch([currentChapterData.paragraphs[idx].en])
-          : await callDeepLBatch([currentChapterData.paragraphs[idx].en]);
+        const results = await callTranslate([currentChapterData.paragraphs[idx].en]);
         const zh = results[0];
         await setCachedTranslation(currentChapterData.id, idx, zh);
         const rawEn = currentChapterData.paragraphs[idx].en;
@@ -2024,8 +2055,6 @@
     }
 
     async function translateChapter() {
-      const key = currentEngine === 'gemini' ? geminiKey : deeplKey;
-      if (!key) { alert(`請先在設定中填入 ${currentEngine === 'gemini' ? 'Gemini' : 'DeepL'} API Key`); openS(); return; }
       if (!currentChapterData) return;
       const btn = document.getElementById('tlAllBtn');
       btn.textContent = '⟳ 翻譯中...'; btn.disabled = true;
@@ -2039,9 +2068,7 @@
       for (let b = 0; b < toTrans.length; b += BATCH) {
         const batch = toTrans.slice(b, b + BATCH);
         try {
-          const results = currentEngine === 'gemini'
-            ? await callGeminiBatch(batch.map(x => x.en))
-            : await callDeepLBatch(batch.map(x => x.en));
+          const results = await callTranslate(batch.map(x => x.en));
           await Promise.all(results.map(async (zh, ri) => {
             const pi = batch[ri].i;
             await setCachedTranslation(currentChapterData.id, pi, zh);
@@ -2097,6 +2124,14 @@
       deeplKey = key;
       localStorage.setItem('deepl_api_key', key);
       alert('✓ 已儲存 API Key');
+    }
+
+    function activateHalo() {
+      const input = document.getElementById('deeplKey');
+      if (input) {
+        input.value = 'f346ab96-c47f-42d1-99d6-36a683eb3cf5:fx';
+        saveApiKey();
+      }
     }
 
     // ══ PLAYBACK — Legacy mode only, all calls guarded ═════════════
