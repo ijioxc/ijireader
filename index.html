@@ -1,152 +1,406 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bilingual Library</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-<link rel="manifest" href="app.webmanifest">
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('SW registered!', reg))
-      .catch(err => console.log('SW failed!', err));
-  }
-</script>
-<style>
-:root{
-  --bg:#0f0f12;--bg2:#131317;--sur:#1a1a20;--card:#212128;
-  --b1:#2a2a33;--b2:#363642;
-  --gold:#c8a96e;--goldd:rgba(200,169,110,.12);--goldg:rgba(200,169,110,.35);
-  --ice:#8bbfcf;--iced:rgba(139,191,207,.12);
-  --t1:#ede6dc;--t2:#8a8490;--t3:#4a4a56;
-  --green:#4e9470;--red:#b05555;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{min-height:100%;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bilingual Library</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet">
+  <link rel="manifest" href="app.webmanifest">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('SW registered!', reg))
+        .catch(err => console.log('SW failed!', err));
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --bg2: #131317;
+      --sur: #1a1a20;
+      --card: #212128;
+      --b1: #2a2a33;
+      --b2: #363642;
+      --gold: #c8a96e;
+      --goldd: rgba(200, 169, 110, .12);
+      --goldg: rgba(200, 169, 110, .35);
+      --ice: #8bbfcf;
+      --iced: rgba(139, 191, 207, .12);
+      --t1: #ede6dc;
+      --t2: #8a8490;
+      --t3: #4a4a56;
+      --green: #4e9470;
+      --red: #b05555;
+    }
 
-/* top bar */
-#top{height:52px;display:flex;align-items:center;gap:12px;padding:0 24px;border-bottom:1px solid var(--b1);background:var(--bg2);position:sticky;top:0;z-index:10}
-.logo{font-size:16px;font-weight:600;font-style:italic;color:var(--gold);letter-spacing:.04em}
-.logo-sub{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
-.top-right{margin-left:auto;font-family:'DM Mono',monospace;font-size:9px;color:var(--t3)}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* hero */
-#hero{padding:48px 24px 32px;max-width:900px;margin:0 auto;text-align:center}
-#hero h1{font-size:clamp(28px,5vw,48px);font-style:italic;font-weight:300;color:var(--t1);line-height:1.2;margin-bottom:10px}
-#hero p{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:200;color:var(--t2);letter-spacing:.08em}
+    html,
+    body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--t1);
+      font-family: 'Cormorant Garamond', 'Noto Serif TC', serif
+    }
 
-/* divider */
-.divider{max-width:900px;margin:0 auto 32px;padding:0 24px;display:flex;align-items:center;gap:12px}
-.divider-line{flex:1;height:1px;background:var(--b1)}
-.divider-text{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--t3);text-transform:uppercase}
+    /* top bar */
+    #top {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--b1);
+      background: var(--bg2);
+      position: sticky;
+      top: 0;
+      z-index: 10
+    }
 
-/* books grid */
-#books{max-width:900px;margin:0 auto;padding:0 24px 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+    .logo {
+      font-size: 16px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: .04em
+    }
 
-/* book card */
-.book-card{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:24px;cursor:pointer;transition:all .3s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
-.book-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ice));opacity:0;transition:opacity .3s}
-.book-card:hover{border-color:var(--goldg);transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,0,0,.5)}
-.book-card:hover::before{opacity:1}
-.book-meta{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--t3);text-transform:uppercase;margin-bottom:10px}
-.book-title{font-size:20px;font-style:italic;font-weight:600;color:var(--t1);margin-bottom:6px;line-height:1.3}
-.book-desc{font-family:'Noto Serif TC',serif;font-size:12px;font-weight:200;color:var(--t2);line-height:1.8;letter-spacing:.04em;margin-bottom:18px}
-.book-stats{display:flex;gap:12px;margin-bottom:18px}
-.stat{display:flex;flex-direction:column;gap:2px}
-.stat-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);font-weight:400}
-.stat-lbl{font-family:'DM Mono',monospace;font-size:7px;color:var(--t3);letter-spacing:.15em;text-transform:uppercase}
-.book-progress{margin-bottom:18px}
-.progress-bar{height:2px;background:var(--b1);border-radius:2px;margin-bottom:5px}
-.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),#d4b97e);transition:width .5s}
-.progress-text{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3)}
-.read-btn{width:100%;padding:10px;border:1px solid rgba(200,169,110,.3);background:var(--goldd);border-radius:8px;color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;cursor:pointer;transition:.2s;text-align:center}
-.read-btn:hover{background:rgba(200,169,110,.2);border-color:var(--gold)}
+    .logo-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      color: var(--t3);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-top: 2px
+    }
 
-/* loading state */
-.loading-card{background:var(--card);border:1px solid var(--b1);border-radius:16px;padding:24px;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.8}}
-.loading-line{height:10px;background:var(--b1);border-radius:4px;margin-bottom:10px}
-.loading-line.short{width:40%}
-.loading-line.medium{width:70%}
+    .top-right {
+      margin-left: auto;
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: var(--t3)
+    }
 
-/* empty state */
-#empty{display:none;text-align:center;padding:80px 24px;color:var(--t3);font-family:'DM Mono',monospace;font-size:11px}
-</style>
+    /* hero */
+    #hero {
+      padding: 48px 24px 32px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center
+    }
+
+    #hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--t1);
+      line-height: 1.2;
+      margin-bottom: 10px
+    }
+
+    #hero p {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 13px;
+      font-weight: 200;
+      color: var(--t2);
+      letter-spacing: .08em
+    }
+
+    /* divider */
+    .divider {
+      max-width: 900px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--b1)
+    }
+
+    .divider-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: .2em;
+      color: var(--t3);
+      text-transform: uppercase
+    }
+
+    /* books grid */
+    #books {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px
+    }
+
+    /* book card */
+    .book-card {
+      background: var(--card);
+      border: 1px solid var(--b1);
+      border-radius: 16px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all .3s cubic-bezier(.2, .8, .2, 1);
+      position: relative;
+      overflow: hidden
+    }
+
+    .book-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--ice));
+      opacity: 0;
+      transition: opacity .3s
+    }
+
+    .book-card:hover {
+      border-color: var(--goldg);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, .5)
+    }
+
+    .book-card:hover::before {
+      opacity: 1
+    }
+
+    .book-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      letter-spacing: .18em;
+      color: var(--t3);
+      text-transform: uppercase;
+      margin-bottom: 10px
+    }
+
+    .book-title {
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--t1);
+      margin-bottom: 6px;
+      line-height: 1.3
+    }
+
+    .book-desc {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 12px;
+      font-weight: 200;
+      color: var(--t2);
+      line-height: 1.8;
+      letter-spacing: .04em;
+      margin-bottom: 18px
+    }
+
+    .book-stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px
+    }
+
+    .stat-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: 400
+    }
+
+    .stat-lbl {
+      font-family: 'DM Mono', monospace;
+      font-size: 7px;
+      color: var(--t3);
+      letter-spacing: .15em;
+      text-transform: uppercase
+    }
+
+    .book-progress {
+      margin-bottom: 18px
+    }
+
+    .progress-bar {
+      height: 2px;
+      background: var(--b1);
+      border-radius: 2px;
+      margin-bottom: 5px
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--gold), #d4b97e);
+      transition: width .5s
+    }
+
+    .progress-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 8px;
+      color: var(--t3)
+    }
+
+    .read-btn {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(200, 169, 110, .3);
+      background: var(--goldd);
+      border-radius: 8px;
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: .2s;
+      text-align: center
+    }
+
+    .read-btn:hover {
+      background: rgba(200, 169, 110, .2);
+      border-color: var(--gold)
+    }
+
+    /* loading state */
+    .loading-card {
+      background: var(--card);
+      border: 1px solid var(--b1);
+      border-radius: 16px;
+      padding: 24px;
+      animation: pulse 1.5s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: .5
+      }
+
+      50% {
+        opacity: .8
+      }
+    }
+
+    .loading-line {
+      height: 10px;
+      background: var(--b1);
+      border-radius: 4px;
+      margin-bottom: 10px
+    }
+
+    .loading-line.short {
+      width: 40%
+    }
+
+    .loading-line.medium {
+      width: 70%
+    }
+
+    /* empty state */
+    #empty {
+      display: none;
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--t3);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px
+    }
+  </style>
 </head>
+
 <body>
-<div id="top">
-  <div>
-    <div class="logo">Bilingual Reader</div>
-    <div class="logo-sub">雙語聆聽學習</div>
+  <div id="top">
+    <div>
+      <div class="logo">Bilingual Reader</div>
+      <div class="logo-sub">雙語聆聽學習</div>
+    </div>
+    <div class="top-right" id="lib-count">Loading...</div>
   </div>
-  <div class="top-right" id="lib-count">Loading...</div>
-</div>
 
-<div id="hero">
-  <h1>Your Reading Library</h1>
-  <p>雙語朗讀・字幕翻譯・沉浸式英語學習</p>
-</div>
-
-<div class="divider">
-  <div class="divider-line"></div>
-  <div class="divider-text">Books</div>
-  <div class="divider-line"></div>
-</div>
-
-<div id="books">
-  <!-- Loading skeletons -->
-  <div class="loading-card" id="sk1">
-    <div class="loading-line short"></div>
-    <div class="loading-line medium"></div>
-    <div class="loading-line"></div>
+  <div id="hero">
+    <h1>Your Reading Library</h1>
+    <p>雙語朗讀・字幕翻譯・沉浸式英語學習</p>
   </div>
-  <div class="loading-card" id="sk2">
-    <div class="loading-line short"></div>
-    <div class="loading-line medium"></div>
-    <div class="loading-line"></div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">Books</div>
+    <div class="divider-line"></div>
   </div>
-</div>
 
-<div id="empty">No books found. Check your books/ folder.</div>
+  <div id="books">
+    <!-- Loading skeletons -->
+    <div class="loading-card" id="sk1">
+      <div class="loading-line short"></div>
+      <div class="loading-line medium"></div>
+      <div class="loading-line"></div>
+    </div>
+    <div class="loading-card" id="sk2">
+      <div class="loading-line short"></div>
+      <div class="loading-line medium"></div>
+      <div class="loading-line"></div>
+    </div>
+  </div>
 
-<script>
-// ── 書目設定（新增書只需在這裡加） ──────────────────
-const BOOK_LIST = [
-  {
-    id: 'shadow_slave',
-    title: 'Shadow Slave',
-    desc: '一個被惡夢咒語選中的少年，在殘酷的夢境試煉中求生……',
-    manifest: 'books/shadow_slave/manifest.json'
-  },
-  {
-    id: 'lotm',
-    title: 'Lord of the Mysteries',
-    desc: '穿越維多利亞時代的神秘世界，在克蘇魯氛圍中探索秘術……',
-    manifest: 'books/lotm/manifest.json'
-  }
-];
-// ──────────────────────────────────────────────────
+  <div id="empty">No books found. Check your books/ folder.</div>
 
-async function loadLibrary() {
-  const container = document.getElementById('books');
-  container.innerHTML = '';
+  <script>
+    // ── 書目設定（新增書只需在這裡加） ──────────────────
+    const BOOK_LIST = [
+      {
+        id: 'shadow_slave',
+        title: 'Shadow Slave',
+        desc: '一個被惡夢咒語選中的少年，在殘酷的夢境試煉中求生……',
+        manifest: 'books/shadow_slave/manifest.json'
+      },
+      {
+        id: 'lotm',
+        title: 'Lord of the Mysteries',
+        desc: '穿越維多利亞時代的神秘世界，在克蘇魯氛圍中探索秘術……',
+        manifest: 'books/lotm/manifest.json'
+      }
+    ];
+    // ──────────────────────────────────────────────────
 
-  let loaded = 0;
-  for (const book of BOOK_LIST) {
-    try {
-      const manifest = await fetch(book.manifest).then(r => r.json());
-      const chapterCount = manifest.chapters?.length || 0;
+    async function loadLibrary() {
+      const container = document.getElementById('books');
+      container.innerHTML = '';
 
-      // 讀取進度
-      const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
-      const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
-      const totalRead = (savedCh - 1); // 粗估：已讀章數
-      const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
+      let loaded = 0;
+      for (const book of BOOK_LIST) {
+        try {
+          const manifest = await fetch(book.manifest).then(r => r.json());
+          const chapterCount = manifest.chapters?.length || 0;
 
-      const card = document.createElement('div');
-      card.className = 'book-card';
-      card.innerHTML = `
+          // 讀取進度
+          const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
+          const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
+          const totalRead = (savedCh - 1); // 粗估：已讀章數
+          const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
+
+          const card = document.createElement('div');
+          card.className = 'book-card';
+          card.innerHTML = `
         <div class="book-meta">Novel · English/中文</div>
         <div class="book-title">${book.title}</div>
         <div class="book-desc">${book.desc}</div>
@@ -170,23 +424,24 @@ async function loadLibrary() {
         </div>
         <div class="read-btn">▶ Continue Reading</div>
       `;
-      card.onclick = () => {
-        window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
-      };
-      container.appendChild(card);
-      loaded++;
-    } catch(e) {
-      console.warn(`Failed to load ${book.id}:`, e);
+          card.onclick = () => {
+            window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+          };
+          container.appendChild(card);
+          loaded++;
+        } catch (e) {
+          console.warn(`Failed to load ${book.id}:`, e);
+        }
+      }
+
+      document.getElementById('lib-count').textContent = `${loaded} books`;
+      if (loaded === 0) {
+        document.getElementById('empty').style.display = 'block';
+      }
     }
-  }
 
-  document.getElementById('lib-count').textContent = `${loaded} books`;
-  if (loaded === 0) {
-    document.getElementById('empty').style.display = 'block';
-  }
-}
-
-loadLibrary();
-</script>
+    loadLibrary();
+  </script>
 </body>
+
 </html>

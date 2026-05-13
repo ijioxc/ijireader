@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bilingual Reader</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 /* ══ THEMES ══ */
 :root{
@@ -38,10 +38,14 @@ body.m-edge .sp.on { background: transparent; border-color: transparent; box-sha
 body.m-edge .sp-zh { font-size: 16px; line-height: 1.8; color: var(--t2); margin-bottom: 10px; }
 body.m-edge .sp-en { font-size: 22px; line-height: 1.8; color: var(--t1); margin-bottom: 0; }
 
-body.f-garamond .sp-en { font-family: 'Cormorant Garamond', serif; }
-body.f-georgia .sp-en { font-family: Georgia, serif; }
-body.f-sans .sp-en { font-family: system-ui, -apple-system, sans-serif; font-style: normal; }
-body.f-mono .sp-en { font-family: 'DM Mono', monospace; font-style: normal; }
+body.f-merriweather .sp-en { font-family: 'Merriweather', serif; font-style: normal; font-size: 20px; }
+body.f-inter .sp-en { font-family: 'Inter', sans-serif; font-style: normal; font-size: 21px; }
+body.f-georgia .sp-en { font-family: Georgia, serif; font-size: 21px; }
+body.f-jetbrains .sp-en { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 19px; }
+body.f-sans .sp-en { font-family: system-ui, -apple-system, sans-serif; font-style: normal; font-size: 21px; }
+body.f-lora .sp-en { font-family: 'Lora', serif; font-style: normal; font-size: 21px; }
+body.f-garamond .sp-en { font-family: 'Cormorant Garamond', serif; font-size: 23px; }
+body.f-mono .sp-en { font-family: 'DM Mono', monospace; font-style: normal; font-size: 19px; }
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;display:flex;flex-direction:column;background:var(--bg);color:var(--t1);font-family:'Cormorant Garamond','Noto Serif TC',serif}
@@ -143,20 +147,52 @@ body.m-edge #mode-badge{display:inline-block}
 /* Paragraph list */
 #scroll{flex:1;overflow-y:auto;padding:6px 24px 50px;min-height:0}
 #slist{max-width:850px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:20px 0}
-.sp{padding:24px 28px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:all .4s cubic-bezier(0.2,0.8,0.2,1);position:relative;opacity:.55;transform:scale(0.96);transform-origin:center}
-.sp:hover{background:rgba(255,255,255,.02);border-color:var(--b1);opacity:.85}
-.sp.on{background:var(--card);border-color:var(--gold);opacity:1;transform:scale(1.02);box-shadow:0 15px 40px rgba(0,0,0,.6);z-index:10}
+.sp{background:var(--card);border:1px solid var(--b1);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;position:relative;opacity:.55;transition:all .3s ease}
+.sp:hover{opacity:.85;border-color:var(--b2)}
+.sp.on{opacity:1;border-color:var(--gold);box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:10}
 .sp-n{font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .sp-en{font-size:22px;font-style:italic;line-height:1.8;color:var(--t1);margin-bottom:10px;transition:color .3s}
-.sp-zh{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;line-height:1.85;color:var(--t2);letter-spacing:.05em;transition:color .3s;min-height:1.5em}
+.sp-zh{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;line-height:2.1;color:var(--t2);letter-spacing:.05em;transition:color .3s;min-height:1.5em}
 .sp.on .sp-en{color:var(--sp-en)}
 .sp.on .sp-zh{color:var(--sp-zh)}
+
+/* ══ 旁白調暗與對話高亮 ══ */
+.sp-en, .sp-zh { opacity: 0.7; transition: opacity 0.3s ease; }
+.sp:hover .sp-en, .sp:hover .sp-zh { opacity: 1; }
+.sp.on .sp-en, .sp.on .sp-zh { opacity: 1; }
+.dialogue {
+  display: block;
+  text-align: center;
+  font-family: "Kaiti", "楷體", Georgia, serif;
+  margin: 8px 0;
+}
+
+.sen-row {
+  display: block;
+}
+
+/* 寬螢幕自動雙欄對照 */
+@media (min-width: 800px) {
+  .sen-row {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  }
+  .sp-en, .sp-zh {
+    flex: 1;
+    margin-bottom: 0 !important;
+  }
+  /* 預設 row */
+  .sen-row { flex-direction: row; }
+  /* 如果是 DISPLAY_ORDER === 'zh' */
+  body.order-zh .sen-row { flex-direction: row-reverse; }
+}
 .sp-tl{display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;font-size:8px;color:var(--t3);background:var(--b1);border:1px solid var(--b2);border-radius:3px;padding:2px 6px;cursor:pointer;transition:.15s;margin-left:6px}
 .sp-tl:hover{color:var(--ice);border-color:var(--ice)}
 .sp-tl.loading{opacity:.5;cursor:wait}
 
 /* Settings Modal */
-#sov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;backdrop-filter:blur(3px)}
+#sov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.15);z-index:100;}
 #sov.show{display:flex;align-items:flex-start;justify-content:flex-end}
 #spp{width:300px;height:100vh;background:var(--sur);border-left:1px solid var(--b1);display:flex;flex-direction:column;overflow-y:auto}
 .sphd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--b1);flex-shrink:0;position:sticky;top:0;background:var(--sur);z-index:1}
@@ -297,11 +333,25 @@ body.m-edge #mode-badge{display:inline-block}
       <!-- Font Family -->
       <div class="sps">
         <div class="spst">英文字體</div>
-        <div class="vtabs" id="fontTabs">
-          <button class="vt on" onclick="setFont('f-garamond')" data-font="f-garamond">Garamond</button>
-          <button class="vt" onclick="setFont('f-georgia')" data-font="f-georgia">Georgia</button>
-          <button class="vt" onclick="setFont('f-sans')" data-font="f-sans">Sans-Serif</button>
-          <button class="vt" onclick="setFont('f-mono')" data-font="f-mono">Monospace</button>
+        
+        <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 襯線體 (Serif)</div>
+        <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
+          <button class="vt on" onclick="setFont('f-merriweather')" data-font="f-merriweather" title="螢幕專用，字高大且長讀不累。舒適度第一。">Merriweather</button>
+          <button class="vt" onclick="setFont('f-georgia')" data-font="f-georgia" title="數位經典，深色模式下表現極佳。">Georgia</button>
+          <button class="vt" onclick="setFont('f-lora')" data-font="f-lora" title="文學氣息濃厚，適合奇幻或古典題材。">Lora</button>
+          <button class="vt" onclick="setFont('f-garamond')" data-font="f-garamond" title="傳統紙質感，適合追求實體書氛圍。">Garamond</button>
+        </div>
+
+        <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 無襯線體 (Sans-Serif)</div>
+        <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
+          <button class="vt" onclick="setFont('f-inter')" data-font="f-inter" title="辨識度極高，字母 I/l 區分明顯。學習首選。">Inter</button>
+          <button class="vt" onclick="setFont('f-sans')" data-font="f-sans" title="簡潔現代，視覺干擾最小。">Sans-Serif</button>
+        </div>
+
+        <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 等寬體 (Monospace)</div>
+        <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;">
+          <button class="vt" onclick="setFont('f-jetbrains')" data-font="f-jetbrains" title="單字空間獨立，最適合拼字精讀。">JetBrains</button>
+          <button class="vt" onclick="setFont('f-mono')" data-font="f-mono" title="復古感強烈，適合呈現系統音或書信。">Monospace</button>
         </div>
       </div>
 
@@ -540,6 +590,7 @@ window.onload = async () => {
   document.getElementById('mode_edge').classList.toggle('ice-on',   READ_MODE === 'edge');
 
   // Order UI
+  document.body.classList.toggle('order-zh', DISPLAY_ORDER === 'zh');
   document.getElementById('ord_en').classList.toggle('on', DISPLAY_ORDER === 'en');
   document.getElementById('ord_zh').classList.toggle('on', DISPLAY_ORDER === 'zh');
 
@@ -686,21 +737,38 @@ async function renderLegacy() {
   const cached = await Promise.all(
     currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
   );
-  currentChapterData.paragraphs.forEach((para, idx) => {
-    const div = document.createElement('div');
-    div.className = 'sp'; div.id = `sp_${idx}`;
-    const zh = cached[idx] || para.zh || '';
-    const enHtml = `<div class="sp-en">${escHtml(para.en)}</div>`;
-    const zhHtml = `<div class="sp-zh" id="spzh_${idx}">${escHtml(zh)}</div>`;
-    div.innerHTML = `
-      <div class="sp-n">
-        <span>${idx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
-      </div>
-      ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
-    `;
-    div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
-    slist.appendChild(div);
+  let cardIdx = 0;
+  currentChapterData.paragraphs.forEach((para, pIdx) => {
+    const zh = cached[pIdx] || para.zh || '';
+    const enSens = para.en.replace(/([^.!?]{15,}[.!?])\s+([A-Z])/g, '$1###BREAK###$2').split('###BREAK###').filter(Boolean);
+    const zhSens = zh.replace(/([^，。！？]{5,}[，。！？][」』\]）"']*)/g, '$1###BREAK###').split('###BREAK###').filter(Boolean);
+    const max = Math.max(enSens.length, zhSens.length);
+    
+    for (let i = 0; i < max; i++) {
+      const enSen = enSens[i] || '';
+      const zhSen = zhSens[i] || '';
+      
+      const div = document.createElement('div');
+      div.className = 'sp'; div.id = `sp_${cardIdx}`;
+      
+      const enHtml = `<div class="sp-en">${escHtml(enSen).replace(/(“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
+      const zhHtml = `<div class="sp-zh">${escHtml(zhSen).replace(/(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
+      
+      div.innerHTML = `
+        <div class="sp-n">
+          <span>${pIdx + 1}.${i + 1}</span>
+          ${!zh && i === 0 ? `<span class="sp-tl" onclick="translatePara(${pIdx},event)">⟳ 翻譯</span>` : ''}
+        </div>
+        <div class="sen-row">
+          ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
+        </div>
+      `;
+      
+      const currentCardIdx = cardIdx;
+      div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(currentCardIdx); };
+      slist.appendChild(div);
+      cardIdx++;
+    }
   });
   await updateNP();
   preCacheNextChapter();
@@ -720,29 +788,46 @@ async function renderEdge() {
   const cached = await Promise.all(
     currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
   );
-  currentChapterData.paragraphs.forEach((para, idx) => {
-    const div = document.createElement('div');
-    div.className = 'sp'; div.id = `sp_${idx}`;
-    const zh = cached[idx] || para.zh || '';
-    const zhHtml = `<div class="sp-zh" id="spzh_${idx}" lang="zh-TW">${escHtml(zh).replace(/([。！？][\p{Pe}\p{Pf}"']*)/gu, '$1<br>')}</div>`;
-    const enHtml = `<div class="sp-en" lang="en-US">${escHtml(para.en).replace(/([.!?])\s+([A-Z])/g, '$1<br>$2')}</div>`;
-    div.innerHTML = `
-      <div class="sp-n" aria-hidden="true">
-        <span>${idx + 1}</span>
-        ${!zh ? `<span class="sp-tl" onclick="translatePara(${idx},event)">⟳ 翻譯</span>` : ''}
-      </div>
-      ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
-    `;
-    div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(idx); };
-    slist.appendChild(div);
+  let cardIdx = 0;
+  currentChapterData.paragraphs.forEach((para, pIdx) => {
+    const zh = cached[pIdx] || para.zh || '';
+    const enSens = para.en.replace(/([^.!?]{15,}[.!?])\s+([A-Z])/g, '$1###BREAK###$2').split('###BREAK###').filter(Boolean);
+    const zhSens = zh.replace(/([^，。！？]{5,}[，。！？][」』\]）"']*)/g, '$1###BREAK###').split('###BREAK###').filter(Boolean);
+    const max = Math.max(enSens.length, zhSens.length);
+    
+    for (let i = 0; i < max; i++) {
+      const enSen = enSens[i] || '';
+      const zhSen = zhSens[i] || '';
+      
+      const div = document.createElement('div');
+      div.className = 'sp'; div.id = `sp_${cardIdx}`;
+      
+      const enHtml = `<div class="sp-en" lang="en-US">${escHtml(enSen).replace(/(“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
+      const zhHtml = `<div class="sp-zh" lang="zh-TW">${escHtml(zhSen).replace(/(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
+      
+      div.innerHTML = `
+        <div class="sp-n" aria-hidden="true">
+          <span>${pIdx + 1}.${i + 1}</span>
+          ${!zh && i === 0 ? `<span class="sp-tl" onclick="translatePara(${pIdx},event)">⟳ 翻譯</span>` : ''}
+        </div>
+        <div class="sen-row">
+          ${DISPLAY_ORDER === 'zh' ? zhHtml + enHtml : enHtml + zhHtml}
+        </div>
+      `;
+      
+      const currentCardIdx = cardIdx;
+      div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(currentCardIdx); };
+      slist.appendChild(div);
+      cardIdx++;
+    }
   });
   preCacheNextChapter();
 }
 
 // ══ PARAGRAPH SELECTION ════════════════════════════════════════
 async function selectPara(idx) {
-  if (!currentChapterData) return;
-  idx = Math.max(0, Math.min(idx, currentChapterData.paragraphs.length - 1));
+  const totalCards = document.querySelectorAll('#slist .sp').length;
+  idx = Math.max(0, Math.min(idx, totalCards - 1));
   currentParaIndex = idx;
   document.querySelectorAll('#slist .sp').forEach((el, i) => el.classList.toggle('on', i === idx));
   document.getElementById(`sp_${idx}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1135,7 +1220,7 @@ function setTheme(theme) {
   );
 }
 
-const fonts = ['f-garamond', 'f-georgia', 'f-sans', 'f-mono'];
+const fonts = ['f-merriweather', 'f-inter', 'f-georgia', 'f-jetbrains', 'f-sans', 'f-lora', 'f-garamond', 'f-mono'];
 function setFont(font) {
   fonts.forEach(f => document.body.classList.remove(f));
   document.body.classList.add(font);
