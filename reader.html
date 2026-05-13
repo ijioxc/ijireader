@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Bilingual Reader</title>
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=DM+Mono:wght@300;400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Noto+Serif+TC:wght@200;300;400&family=Noto+Sans+TC:wght@400;700&family=DM+Mono:wght@300;400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;700&family=JetBrains+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet">
   <style>
     /* ══ THEMES ══ */
@@ -189,6 +189,18 @@
       font-size: calc(19px * var(--font-scale));
     }
 
+    body.fz-serif .sp-zh {
+      font-family: 'Noto Serif TC', serif;
+    }
+
+    body.fz-sans .sp-zh {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    body.fz-kai .sp-zh {
+      font-family: 'Kaiti TC', '標楷體', 'DFKai-SB', serif;
+    }
+
     body.f-sans .sp-en {
       font-family: system-ui, -apple-system, sans-serif;
       font-style: normal;
@@ -350,13 +362,13 @@
     }
 
     .ic {
-      width: 28px;
-      height: 28px;
-      border-radius: 5px;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
       border: 1px solid transparent;
       background: transparent;
       color: var(--t2);
-      font-size: 13px;
+      font-size: 18px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -597,12 +609,13 @@
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 24px;
-      max-width: 808px;
+      gap: 12px;
+      padding: 12px 24px;
+      max-width: 900px;
       width: 100%;
       margin: 0 auto;
-      flex-wrap: wrap
+      background: var(--bg1);
+      border-bottom: 1px solid var(--b1);
     }
 
     #ctrls button,
@@ -694,6 +707,7 @@
       align-items: center;
       gap: 5px;
       height: 34px;
+      margin-left: auto;
     }
 
     #ctrls .spd label {
@@ -866,6 +880,15 @@
         margin-bottom: 0 !important;
       }
 
+      /* 左右欄向中間靠攏的對稱排版 */
+      .sen-row > div:first-child {
+        text-align: right;
+      }
+      .sen-row > div:last-child {
+        text-align: left;
+      }
+    }
+
       /* 預設 row */
       .sen-row {
         flex-direction: row;
@@ -900,25 +923,137 @@
       cursor: wait
     }
 
-    .sp-tl-circle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
+    /* 全域懸浮光環（整張只有一個，亂飄） */
+    .sp-tl-halo {
+      position: fixed;
+      bottom: 100px;
+      right: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: var(--b1);
-      border: 1px solid var(--b2);
-      color: var(--t3);
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 20px var(--gold), inset 0 0 10px var(--gold);
       cursor: pointer;
-      transition: all 0.2s;
-      font-size: 12px;
+      z-index: 999; /* 確保在最上層 */
+      transition: opacity 0.3s ease;
+      animation: halo-random-float 8s infinite ease-in-out;
     }
-    .sp-tl-circle:hover {
+    
+    /* 放大點擊熱區 */
+    .sp-tl-halo::after {
+      content: "";
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+    }
+    
+    /* 滑鼠懸停：增強亮度、放大、停止飄移 */
+    .sp-tl-halo:hover {
+      box-shadow: 0 0 50px var(--gold), inset 0 0 25px var(--gold);
+      transform: scale(1.3);
+      animation-play-state: paused; /* 暫停隨機飄移 */
+    }
+    
+    /* 按下去的立體感特效（縮小且內發光加深） */
+    .sp-tl-halo:active {
+      transform: scale(0.95) !important;
+      box-shadow: 0 0 15px var(--gold), inset 0 0 40px var(--gold);
+      transition: transform 0.1s ease;
+    }
+    
+    /* 滑鼠碰到的連續漣漪效果 */
+    .sp-tl-halo:hover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      animation: hover-ripple 1.5s infinite linear;
+    }
+    
+    /* 設計感文字：從中心輻射（十字或星芒狀） */
+    .halo-tooltip {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      white-space: nowrap;
+      font-family: 'DM Mono', 'Noto Sans TC', sans-serif;
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
       color: var(--gold);
-      border-color: var(--gold);
-      box-shadow: 0 0 5px var(--gold);
-      transform: scale(1.1);
+      text-shadow: 0 0 5px rgba(200, 169, 110, 0.6);
+      transition: all 0.5s cubic-bezier(0.1, 0.8, 0.3, 1);
+      pointer-events: none;
+      transform-origin: 0 50%; /* 以光環中心為原點輻射 */
+    }
+    
+    /* 8個方向輻射（魔法陣效果）- 散開更大 (80px) */
+    .t-1 { transform: rotate(0deg) translateX(20px); }
+    .sp-tl-halo:hover .t-1 { transform: rotate(0deg) translateX(80px); opacity: 1; }
+    
+    .t-2 { transform: rotate(45deg) translateX(20px); }
+    .sp-tl-halo:hover .t-2 { transform: rotate(45deg) translateX(80px); opacity: 1; }
+    
+    .t-3 { transform: rotate(90deg) translateX(20px); }
+    .sp-tl-halo:hover .t-3 { transform: rotate(90deg) translateX(80px); opacity: 1; }
+    
+    .t-4 { transform: rotate(135deg) translateX(20px); }
+    .sp-tl-halo:hover .t-4 { transform: rotate(135deg) translateX(80px); opacity: 1; }
+    
+    .t-5 { transform: rotate(180deg) translateX(20px); }
+    .sp-tl-halo:hover .t-5 { transform: rotate(180deg) translateX(80px); opacity: 1; }
+    
+    .t-6 { transform: rotate(225deg) translateX(20px); }
+    .sp-tl-halo:hover .t-6 { transform: rotate(225deg) translateX(80px); opacity: 1; }
+    
+    .t-7 { transform: rotate(270deg) translateX(20px); }
+    .sp-tl-halo:hover .t-7 { transform: rotate(270deg) translateX(80px); opacity: 1; }
+    
+    .t-8 { transform: rotate(315deg) translateX(20px); }
+    .sp-tl-halo:hover .t-8 { transform: rotate(315deg) translateX(80px); opacity: 1; }
+    
+    /* 點擊後的漣漪散開效果 - 延長時間以容納收斂動畫 */
+    .sp-tl-halo.ripple-active {
+      animation: ripple-out 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+      pointer-events: none;
+    }
+    
+    @keyframes halo-random-float {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(15px, -25px); }
+      40% { transform: translate(-25px, 15px); }
+      60% { transform: translate(20px, 30px); }
+      80% { transform: translate(-15px, -15px); }
+      100% { transform: translate(0, 0); }
+    }
+    
+    @keyframes hover-ripple {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+    
+    @keyframes ripple-out {
+      0% { 
+        transform: scale(1); 
+        opacity: 1; 
+        box-shadow: 0 0 20px var(--gold), inset 0 0 10px var(--gold); 
+      }
+      40% { 
+        transform: scale(12); /* 散開超大 */
+        opacity: 0.8; 
+        box-shadow: 0 0 120px var(--gold), inset 0 0 60px var(--gold); 
+      }
+      80% { 
+        transform: scale(0.1); /* 再收斂 */
+        opacity: 0.5; 
+        box-shadow: 0 0 20px var(--gold), inset 0 0 10px var(--gold); 
+      }
+      100% { 
+        transform: scale(0); 
+        opacity: 0; /* 消失 */
+      }
     }
 
     /* Settings Modal */
@@ -937,7 +1072,7 @@
     }
 
     #spp {
-      width: 300px;
+      width: 360px; /* 稍微大一點 */
       height: 100vh;
       background: var(--sur);
       border-left: 1px solid var(--b1);
@@ -987,14 +1122,25 @@
       border: 1px solid var(--b1);
       border-radius: 8px;
     }
+    
+    /* 設定列內的底框，增強對比度與懸浮感 */
+    #spp .sps {
+      background: #25252d; /* 比原底色稍微亮一點，拉開對比 */
+      border-color: rgba(200, 169, 110, 0.15); /* 淡淡的金色邊框 */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 懸浮陰影 */
+    }
 
     .spst {
       font-family: 'DM Mono', monospace;
-      font-size: 8px;
+      font-size: 10px;
       letter-spacing: .18em;
-      color: var(--t3);
+      color: var(--t2);
       text-transform: uppercase;
-      margin-bottom: 8px
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .spst:hover {
+      color: var(--gold);
     }
 
     .vtabs {
@@ -1134,9 +1280,13 @@
 
     .spnote {
       font-family: 'DM Mono', monospace;
-      font-size: 9px;
-      color: var(--t3);
-      line-height: 1.8
+      font-size: 10px;
+      color: var(--t2);
+      line-height: 1.8;
+      transition: color 0.2s;
+    }
+    .spnote:hover {
+      color: var(--t1);
     }
 
     .api-input {
@@ -1262,23 +1412,35 @@
 
   <div id="top">
     <div
-      style="max-width: 1400px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; padding: 0 16px;">
-      <a class="bb" href="index.html">
-        <div class="bt">← Library</div>
-      </a>
-      <div class="sep"></div>
-      <div id="book-title-top">Loading...</div>
-      <span id="mode-badge">EDGE</span>
-      <div class="cnav">
-        <button class="cb" id="prevChBtn" onclick="changeChapter(-1)" disabled>‹</button>
-        <input class="cin" id="chInput" type="number" min="1" value="1" onchange="goToChapterInput()">
-        <span class="ctot" id="chTot">/ —</span>
-        <button class="cb" id="nextChBtn" onclick="changeChapter(1)" disabled>›</button>
-      </div>
-      <div id="tr">
+      style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; height: 100%;">
+      
+      <!-- Left: Menu & Library -->
+      <div style="flex: 1; display: flex; align-items: center; gap: 10px;">
         <button class="ic" onclick="toggleSidebar()" title="Chapters">☰</button>
-        <button class="ic" onclick="openS()" title="Settings">⚙</button>
+        <a class="bb" href="index.html">
+          <div class="bt">← Library</div>
+        </a>
       </div>
+      
+      <!-- Center: Title & Nav -->
+      <div style="flex: 0 1 auto; display: flex; align-items: center; gap: 15px; justify-content: center;">
+        <div id="book-title-top">Loading...</div>
+        <span id="mode-badge">EDGE</span>
+        <div class="cnav">
+          <button class="cb" id="prevChBtn" onclick="changeChapter(-1)" disabled>‹</button>
+          <input class="cin" id="chInput" type="number" min="1" value="1" onchange="goToChapterInput()">
+          <span class="ctot" id="chTot">/ —</span>
+          <button class="cb" id="nextChBtn" onclick="changeChapter(1)" disabled>›</button>
+        </div>
+      </div>
+      
+      <!-- Right: Settings -->
+      <div style="flex: 1; display: flex; align-items: center; justify-content: flex-end;">
+        <div id="tr">
+          <button class="ic" onclick="openS()" title="Settings">⚙</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1319,7 +1481,7 @@
         <button class="abtn on" id="abtn" onclick="toggleAuto()">
           <div class="adot"></div>AUTO
         </button>
-        <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()">⟳ 翻譯本章</button>
+        <button class="tl-btn" id="tlAllBtn" onclick="translateChapter()" style="display:none">⟳ 翻譯本章</button>
         <div class="spd" id="spdGroup">
           <label>SPD</label>
           <input type="range" id="spdRange" min="0.5" max="2" step="0.1" value="1" oninput="updSpd()">
@@ -1359,48 +1521,48 @@
           </div>
         </div>
 
-        <!-- Font Size Scale -->
+        <!-- 文字與字體設定（合併在同一個底框） -->
         <div class="sps">
-          <div class="spst">文字大小</div>
-          <div class="vtabs" id="fontScaleTabs">
+          <div class="spst">文字與字體</div>
+          
+          <!-- 文字大小 -->
+          <div class="spst" style="font-size: 11px; color: var(--t3); margin-top: 8px; margin-bottom: 4px;">◆ 文字大小</div>
+          <div class="vtabs" id="fontScaleTabs" style="margin-bottom: 12px;">
             <button class="vt" onclick="updateFontScale('0.8')" data-scale="0.8">0.8x</button>
             <button class="vt" onclick="updateFontScale('1.0')" data-scale="1.0">1.0x</button>
             <button class="vt" onclick="updateFontScale('1.2')" data-scale="1.2">1.2x</button>
             <button class="vt" onclick="updateFontScale('1.4')" data-scale="1.4">1.4x</button>
             <button class="vt" onclick="updateFontScale('1.6')" data-scale="1.6">1.6x</button>
           </div>
-        </div>
-
-        <!-- Font Family -->
-        <div class="sps">
-          <div class="spst">英文字體</div>
-
-          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 襯線體 (Serif)</div>
-          <div class="vtabs"
-            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
-            <button class="vt on" onclick="setFont('f-merriweather')" data-font="f-merriweather"
-              title="螢幕專用，字高大且長讀不累。舒適度第一。">Merriweather</button>
-            <button class="vt" onclick="setFont('f-georgia')" data-font="f-georgia"
-              title="數位經典，深色模式下表現極佳。">Georgia</button>
+          
+          <!-- 英文字體 -->
+          <div class="spst" style="font-size: 11px; color: var(--t3); margin-bottom: 4px;">◆ 英文字體</div>
+          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">襯線體 (Serif)</div>
+          <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
+            <button class="vt on" onclick="setFont('f-merriweather')" data-font="f-merriweather" title="螢幕專用，字高大且長讀不累。舒適度第一。">Merriweather</button>
+            <button class="vt" onclick="setFont('f-georgia')" data-font="f-georgia" title="數位經典，深色模式下表現極佳。">Georgia</button>
             <button class="vt" onclick="setFont('f-lora')" data-font="f-lora" title="文學氣息濃厚，適合奇幻或古典題材。">Lora</button>
-            <button class="vt" onclick="setFont('f-garamond')" data-font="f-garamond"
-              title="傳統紙質感，適合追求實體書氛圍。">Garamond</button>
+            <button class="vt" onclick="setFont('f-garamond')" data-font="f-garamond" title="傳統紙質感，適合追求實體書氛圍。">Garamond</button>
           </div>
-
-          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 無襯線體 (Sans-Serif)</div>
-          <div class="vtabs"
-            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
-            <button class="vt" onclick="setFont('f-inter')" data-font="f-inter"
-              title="辨識度極高，字母 I/l 區分明顯。學習首選。">Inter</button>
+          
+          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">無襯線體 (Sans-Serif)</div>
+          <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 10px;">
+            <button class="vt" onclick="setFont('f-inter')" data-font="f-inter" title="辨識度極高，字母 I/l 區分明顯。學習首選。">Inter</button>
             <button class="vt" onclick="setFont('f-sans')" data-font="f-sans" title="簡潔現代，視覺干擾最小。">Sans-Serif</button>
           </div>
-
-          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">◆ 等寬體 (Monospace)</div>
-          <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;">
-            <button class="vt" onclick="setFont('f-jetbrains')" data-font="f-jetbrains"
-              title="單字空間獨立，最適合拼字精讀。">JetBrains</button>
-            <button class="vt" onclick="setFont('f-mono')" data-font="f-mono"
-              title="復古感強烈，適合呈現系統音或書信。">Monospace</button>
+          
+          <div class="spst" style="font-size: 7px; color: var(--t3); margin-bottom: 4px;">等寬體 (Monospace)</div>
+          <div class="vtabs" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-bottom: 12px;">
+            <button class="vt" onclick="setFont('f-jetbrains')" data-font="f-jetbrains" title="單字空間獨立，最適合拼字精讀。">JetBrains</button>
+            <button class="vt" onclick="setFont('f-mono')" data-font="f-mono" title="復古感強烈，適合呈現系統音或書信。">Monospace</button>
+          </div>
+          
+          <!-- 中文字體 -->
+          <div class="spst" style="font-size: 11px; color: var(--t3); margin-bottom: 4px;">◆ 中文字體</div>
+          <div class="vtabs" id="zhFontTabs" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+            <button class="vt on" onclick="setZhFont('fz-serif')" data-font="fz-serif" title="報紙、小說經典字體，長讀最舒適。">明體</button>
+            <button class="vt" onclick="setZhFont('fz-sans')" data-font="fz-sans" title="現代感、雜誌風格，清晰俐落。">黑體</button>
+            <button class="vt" onclick="setZhFont('fz-kai')" data-font="fz-kai" title="書法感，適合引言或特殊排版。">楷體</button>
           </div>
         </div>
 
@@ -1429,26 +1591,38 @@
         <!-- Voice (Legacy only) -->
         <div class="sps" id="voice_section">
           <div class="spst">朗讀語音</div>
-          <div class="vtabs">
-            <button class="vt eon" id="vte" onclick="swvt('en')">English</button>
-            <button class="vt" id="vtz" onclick="swvt('zh')">中文</button>
-            <button class="vt" id="vtm" onclick="swvt('mix')">混合</button>
+          <div class="vtabs" style="display: flex; gap: 10px;">
+            <!-- 中英綑綁的大框框 -->
+            <div style="display: flex; flex: 2; border: 1px solid var(--b2); border-radius: 6px; overflow: hidden;">
+              <button class="vt eon" id="vte" onclick="swvt('en')" style="border: none; border-radius: 0; margin: 0;">English</button>
+              <div style="width: 1px; background: var(--b2);"></div>
+              <button class="vt" id="vtz" onclick="swvt('zh')" style="border: none; border-radius: 0; margin: 0;">中文</button>
+            </div>
+            <!-- 混合獨立的大框框 -->
+            <button class="vt" id="vtm" onclick="swvt('mix')" style="flex: 1; border-radius: 6px;">混合</button>
           </div>
           <div id="vlist"></div>
-        </div>
-
-        <div class="sps" id="voice_desc_section">
-          <div class="spst">語音品質說明</div>
-          <div class="spnote">
-            <span style="color:var(--green)">●</span> neural — 最自然<br>
-            <span style="color:var(--gold)">●</span> premium — 高品質<br>
-            <span style="color:var(--t3)">●</span> std — 標準
+          
+          <!-- 說明區塊（合併在同一個底框） -->
+          <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--b1);">
+            <div class="spst" style="font-size: 11px; color: var(--t3); margin-bottom: 4px;">運作模式</div>
+            <div class="spnote" style="margin-bottom: 12px;">
+              • 於 <strong>English / 中文</strong> 選取：中英拆段各自用專屬語音，高亮精準。<br>
+              • 於 <strong>混合</strong> 選取：中英整串合併丟給語音，播放最流暢。
+            </div>
+            
+            <div class="spst" style="font-size: 11px; color: var(--t3); margin-bottom: 4px;">語音品質</div>
+            <div class="spnote">
+              <span style="color:var(--green)">●</span> neural — 最自然 &nbsp;&nbsp;
+              <span style="color:var(--gold)">●</span> premium — 高品質 &nbsp;&nbsp;
+              <span style="color:var(--t3)">●</span> std — 標準
+            </div>
           </div>
         </div>
 
         <!-- Translation Engine -->
         <div class="sps">
-          <div class="spst">翻譯引擎</div>
+          <div class="spst">翻譯模型</div>
           <div class="vtabs" id="engineTabs">
             <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
             <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
@@ -1501,7 +1675,7 @@
 
     // READ_MODE is immutable per page-load — changes force reload (no hot-swap)
     const READ_MODE = localStorage.getItem('readMode') || 'edge';
-    const DISPLAY_ORDER = localStorage.getItem('displayOrder') || 'en';
+    const DISPLAY_ORDER = localStorage.getItem('displayOrder') || 'zh';
 
     let manifest = null;
     let currentChapterData = null;
@@ -1651,6 +1825,10 @@
       // Font
       const savedFont = localStorage.getItem('selectedFont') || 'f-garamond';
       setFont(savedFont);
+
+      // Chinese Font
+      const savedZhFont = localStorage.getItem('selectedZhFont') || 'fz-serif';
+      setZhFont(savedZhFont);
 
       // Mode — apply class + settings UI
       document.body.classList.toggle('m-edge', READ_MODE === 'edge');
@@ -1857,6 +2035,7 @@
         currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
       );
       let cardIdx = 0;
+      window.hasUntranslated = false;
       currentChapterData.paragraphs.forEach((para, pIdx) => {
         const zh = cached[pIdx] || para.zh || '';
 
@@ -1877,7 +2056,8 @@
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
 
-        const zhDisplay = zh ? zhText : `<span class="sp-tl-circle" onclick="translatePara(${pIdx},event)">⟳</span>`;
+        const zhDisplay = zh ? zhText : `<div style="min-height:30px;"></div>`;
+        if (!zh) { window.hasUntranslated = true; }
         div.innerHTML = `
       <div class="sp-n">
         <span>${pIdx + 1}</span>
@@ -1890,6 +2070,7 @@
         div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(pIdx); };
         slist.appendChild(div);
       });
+      checkAndShowHalo();
       await updateNP();
       preCacheNextChapter();
     }
@@ -1909,6 +2090,7 @@
         currentChapterData.paragraphs.map((_, i) => getCachedTranslation(currentChapterData.id, i))
       );
       let cardIdx = 0;
+      window.hasUntranslated = false;
       currentChapterData.paragraphs.forEach((para, pIdx) => {
         const zh = cached[pIdx] || para.zh || '';
 
@@ -1929,7 +2111,8 @@
         const div = document.createElement('div');
         div.className = 'sp'; div.id = `sp_${pIdx}`;
 
-        const zhDisplay = zh ? zhText : `<span class="sp-tl-circle" onclick="translatePara(${pIdx},event)">⟳</span>`;
+        const zhDisplay = zh ? zhText : `<div style="min-height:30px;"></div>`;
+        if (!zh) { window.hasUntranslated = true; }
         div.innerHTML = `
       <div class="sp-n" aria-hidden="true">
         <span>${pIdx + 1}</span>
@@ -1942,6 +2125,7 @@
         div.onclick = e => { if (!e.target.classList.contains('sp-tl')) selectPara(pIdx); };
         slist.appendChild(div);
       });
+      checkAndShowHalo();
       preCacheNextChapter();
     }
 
@@ -1970,6 +2154,112 @@
     }
 
     // ══ TRANSLATION — DeepL + Gemini + IndexedDB cache ══════════════
+    
+    function checkAndShowHalo() {
+      if (window.hasUntranslated) {
+        let halo = document.getElementById('global-halo');
+        if (!halo) {
+          halo = document.createElement('div');
+          halo.id = 'global-halo';
+          halo.className = 'sp-tl-halo';
+          halo.onclick = handleHaloClick;
+          halo.innerHTML = `
+            <span class="halo-tooltip t-1">TRANSLATE CHAPTER</span>
+            <span class="halo-tooltip t-2">翻譯全篇</span>
+            <span class="halo-tooltip t-3">TRANSLATE CHAPTER</span>
+            <span class="halo-tooltip t-4">翻譯全篇</span>
+            <span class="halo-tooltip t-5">TRANSLATE CHAPTER</span>
+            <span class="halo-tooltip t-6">翻譯全篇</span>
+            <span class="halo-tooltip t-7">TRANSLATE CHAPTER</span>
+            <span class="halo-tooltip t-8">翻譯全篇</span>
+          `;
+          
+          // 滑鼠吸附跟隨
+          halo.onmouseenter = () => {
+            document.addEventListener('mousemove', followMouse);
+          };
+          halo.onmouseleave = () => {
+            document.removeEventListener('mousemove', followMouse);
+            // 移開後平滑回到預設位置
+            const haloEl = document.getElementById('global-halo');
+            if (haloEl && haloEl.style.position !== 'fixed') {
+              haloEl.style.transition = 'all 1.2s cubic-bezier(0.1, 0.8, 0.3, 1)'; // 飛回慢一點
+              haloEl.style.top = '100px'; // 改到90 100
+              haloEl.style.left = '65%';
+              setTimeout(() => { 
+                if (haloEl) haloEl.style.transition = 'opacity 0.3s ease'; 
+              }, 1200);
+            }
+          };
+        }
+        
+        // 尋找第一個未翻譯的段落（帶有 30px 最小高度的 div）
+        const firstUntranslatedDiv = document.querySelector('#slist .sp [style="min-height:30px;"]');
+        if (firstUntranslatedDiv) {
+          const parentSp = firstUntranslatedDiv.closest('.sp');
+          if (parentSp) {
+            parentSp.appendChild(halo);
+            halo.style.position = 'absolute';
+            halo.style.top = '100px'; // 改到90 100
+            halo.style.left = '65%';
+            halo.style.right = 'auto';
+            halo.style.bottom = 'auto';
+            halo.style.display = 'block';
+            return;
+          }
+        }
+        
+        // 備用方案：固定在畫面右下角
+        document.body.appendChild(halo);
+        halo.style.position = 'fixed';
+        halo.style.bottom = '100px';
+        halo.style.right = '50px';
+        halo.style.top = 'auto';
+        halo.style.left = 'auto';
+        halo.style.display = 'block';
+      }
+    }
+
+    function followMouse(e) {
+      const halo = document.getElementById('global-halo');
+      if (!halo) return;
+      
+      const parentCard = halo.parentElement;
+      if (!parentCard) return;
+      
+      // 吸附慢一點：加上微弱的過渡效果，產生平滑跟隨（延緩）感
+      halo.style.transition = 'left 0.3s ease-out, top 0.3s ease-out';
+      
+      if (halo.style.position === 'fixed') {
+        halo.style.left = `${e.clientX - 20}px`;
+        halo.style.top = `${e.clientY - 20}px`;
+        return;
+      }
+      
+      const rect = parentCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      halo.style.left = `${x - 20}px`;
+      halo.style.top = `${y - 20}px`;
+    }
+
+    function handleHaloClick() {
+      const halo = document.getElementById('global-halo');
+      if (!halo) return;
+      
+      // 觸發漣漪動畫
+      halo.classList.add('ripple-active');
+      
+      // 執行翻譯
+      translateChapter();
+      
+      // 動畫結束後隱藏
+      setTimeout(() => {
+        halo.style.display = 'none';
+        halo.classList.remove('ripple-active');
+      }, 800);
+    }
     function setEngine(engine) {
       currentEngine = engine;
       localStorage.setItem('translation_engine', engine);
@@ -2186,30 +2476,67 @@
       const cleanZh = zhText.replace(/[\[\]]/g, ' ');
 
       const isZhFirst = DISPLAY_ORDER === 'zh';
-      const firstText = isZhFirst ? cleanZh : cleanEn;
-      const secondText = isZhFirst ? cleanEn : cleanZh;
-      const combinedText = `${firstText} 。 ${secondText}`;
 
-      const u = new SpeechSynthesisUtterance(combinedText);
-      u.voice = mixV;
-      u.rate = rate;
-      u.lang = mixV ? mixV.lang : (isZhFirst ? 'zh-TW' : 'en-US');
-
-      u.onend = () => { if (isPlaying && isAuto) skip(1); };
-
-      u.onboundary = (event) => {
-        if (event.name === 'word') {
-          const firstLen = firstText.length + 2;
-
-          if (event.charIndex < firstLen) {
+      if (useMixVoice) {
+        const combinedText = isZhFirst ? `${cleanZh} ${cleanEn}` : `${cleanEn} ${cleanZh}`;
+        const u = new SpeechSynthesisUtterance(combinedText);
+        u.voice = mixV;
+        u.rate = rate;
+        u.lang = mixV ? mixV.lang : (isZhFirst ? 'zh-TW' : 'en-US');
+        u.onend = () => { if (isPlaying && isAuto) skip(1); };
+        u.onboundary = (event) => {
+          if (event.name === 'word') {
             highlightWord(currentParaIndex, event.charIndex, event.charLength, isZhFirst ? 'zh' : 'en');
-          } else {
-            highlightWord(currentParaIndex, event.charIndex - firstLen, event.charLength, isZhFirst ? 'en' : 'zh');
           }
-        }
-      };
+        };
+        SY.speak(u);
+        return;
+      }
+      
+      const firstText = isZhFirst ? cleanZh : cleanEn;
+      const firstVoice = useMixVoice ? mixV : (isZhFirst ? zhV : enV);
+      const firstLang = isZhFirst ? 'zh-TW' : 'en-US';
+      const firstMode = isZhFirst ? 'zh' : 'en';
 
-      SY.speak(u);
+      const secondText = isZhFirst ? cleanEn : cleanZh;
+      const secondVoice = useMixVoice ? mixV : (isZhFirst ? enV : zhV);
+      const secondLang = isZhFirst ? 'en-US' : 'zh-TW';
+      const secondMode = isZhFirst ? 'en' : 'zh';
+
+      if (!firstText && !secondText) { if (isPlaying && isAuto) skip(1); return; }
+
+      function speakPart(text, voice, lang, mode, isLast) {
+        if (!text) {
+          if (isLast && isPlaying && isAuto) skip(1);
+          return;
+        }
+        const u = new SpeechSynthesisUtterance(text);
+        u.voice = voice;
+        u.rate = rate;
+        u.lang = voice ? voice.lang : lang;
+        
+        u.onend = () => {
+          if (!isPlaying) return;
+          if (!isLast) {
+            // 唸完第一段，接著唸第二段
+            speakPart(secondText, secondVoice, secondLang, secondMode, true);
+          } else if (isAuto) {
+            // 兩段都唸完了，跳下一句
+            skip(1);
+          }
+        };
+
+        u.onboundary = (event) => {
+          if (event.name === 'word') {
+            highlightWord(currentParaIndex, event.charIndex, event.charLength, mode);
+          }
+        };
+
+        SY.speak(u);
+      }
+
+      // 開始唸第一段
+      speakPart(firstText, firstVoice, firstLang, firstMode, false);
     }
 
     function highlightWord(paraIdx, charIndex, charLength, lang) {
@@ -2335,7 +2662,14 @@
 
     function renderV(lang) {
       if (READ_MODE === 'edge') return;
-      let vs = lang === 'mix' ? allV.filter(v => v.lang.startsWith('en') || v.lang.startsWith('zh')) : allV.filter(v => v.lang.startsWith(lang === 'en' ? 'en' : 'zh'));
+      let vs;
+      if (lang === 'en') {
+        vs = allV.filter(v => v.lang.startsWith('en-US') || v.lang.startsWith('en-GB'));
+      } else if (lang === 'zh') {
+        vs = allV.filter(v => v.lang.startsWith('zh'));
+      } else {
+        vs = allV.filter(v => v.lang.startsWith('en') || v.lang.startsWith('zh'));
+      }
       const el = document.getElementById('vlist');
       if (!vs.length) { el.innerHTML = '<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
       const s = [...vs].sort((a, b) => ['n', 'p', 's'].indexOf(vq(a)) - ['n', 'p', 's'].indexOf(vq(b)));
@@ -2396,6 +2730,16 @@
       document.body.classList.add(font);
       localStorage.setItem('selectedFont', font);
       document.querySelectorAll('#fontTabs .vt').forEach(btn =>
+        btn.classList.toggle('on', btn.getAttribute('data-font') === font)
+      );
+    }
+
+    const zhFonts = ['fz-serif', 'fz-sans', 'fz-kai'];
+    function setZhFont(font) {
+      zhFonts.forEach(f => document.body.classList.remove(f));
+      document.body.classList.add(font);
+      localStorage.setItem('selectedZhFont', font);
+      document.querySelectorAll('#zhFontTabs .vt').forEach(btn =>
         btn.classList.toggle('on', btn.getAttribute('data-font') === font)
       );
     }
