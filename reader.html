@@ -2035,7 +2035,7 @@
           await Promise.all(results.map(async (zh, ri) => {
             const pi = batch[ri].i;
             await setCachedTranslation(currentChapterData.id, pi, zh);
-            const el = document.getElementById(`spzh_${pi}`);
+            const el = document.querySelector(`#sp_${pi} .sp-zh`);
             if (el) el.textContent = zh;
             document.querySelector(`#sp_${pi} .sp-tl`)?.remove();
             done++;
@@ -2045,6 +2045,8 @@
         await sleep(300);
       }
 
+      // 全部翻譯完後重新渲染整章，套用排版
+      if (READ_MODE === 'edge') await renderEdge(); else await renderLegacy();
       if (READ_MODE === 'legacy') await updateNP();
       updateTlStats();
       btn.textContent = '⟳ 翻譯本章'; btn.disabled = false;
