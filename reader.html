@@ -750,6 +750,7 @@ async function renderLegacy() {
       
       const div = document.createElement('div');
       div.className = 'sp'; div.id = `sp_${cardIdx}`;
+      div.dataset.para = pIdx;
       
       const enHtml = `<div class="sp-en">${escHtml(enSen).replace(/(“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
       const zhHtml = `<div class="sp-zh">${escHtml(zhSen).replace(/(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
@@ -801,6 +802,7 @@ async function renderEdge() {
       
       const div = document.createElement('div');
       div.className = 'sp'; div.id = `sp_${cardIdx}`;
+      div.dataset.para = pIdx;
       
       const enHtml = `<div class="sp-en" lang="en-US">${escHtml(enSen).replace(/(“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
       const zhHtml = `<div class="sp-zh" lang="zh-TW">${escHtml(zhSen).replace(/(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>')}</div>`;
@@ -904,8 +906,16 @@ async function translatePara(idx, event) {
       : await callDeepLBatch([currentChapterData.paragraphs[idx].en]);
     const zh = results[0];
     await setCachedTranslation(currentChapterData.id, idx, zh);
-    const el = document.getElementById(`spzh_${idx}`);
-    if (el) el.textContent = zh;
+    const cards = document.querySelectorAll(`.sp[data-para="${idx}"]`);
+    const zhSens = zh.replace(/([^，。！？]{5,}[，。！？][」』\]）"']*)/g, '$1###BREAK###').split('###BREAK###').filter(Boolean);
+    
+    cards.forEach((card, i) => {
+      const el = card.querySelector('.sp-zh');
+      if (el) {
+        const zhSen = zhSens[i] || '';
+        el.innerHTML = escHtml(zhSen).replace(/(「[^」]+」|『[^』]+』|“[^”]+”|"[^"]+")/g, '<span class="dialogue">$1</span>');
+      }
+    });
     if (btn) btn.remove();
     if (READ_MODE === 'legacy' && idx === currentParaIndex) await updateNP();
     updateTlStats();
