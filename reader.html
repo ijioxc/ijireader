@@ -256,10 +256,12 @@
   }
 
   /* ── DESKTOP TWO-COLUMN ── */
-  @media (min-width: 900px) {
+  /* ── 雙欄對照：580px 起啟用（手機橫持、平板、桌面皆適用） ── */
+  @media (min-width: 580px) {
     #reading-area {
-      max-width: 1080px;
-      padding: 80px 48px 160px;
+      max-width: none;
+      width: 100%;
+      padding: 80px 32px 180px;
     }
 
     .paragraph-block {
@@ -267,20 +269,11 @@
       border-left: none;
       border-top: 0.5px solid transparent;
       border-radius: 8px;
-      padding: 24px;
+      padding: 16px;
     }
+    .paragraph-block:hover { border-left: none; border-top-color: var(--b2); }
+    .paragraph-block.current-playing { border-left: none; border-top: 1px solid var(--gold); }
 
-    .paragraph-block:hover {
-      border-left: none;
-      border-top-color: var(--b2);
-    }
-
-    .paragraph-block.current-playing {
-      border-left: none;
-      border-top: 1px solid var(--gold);
-    }
-
-    /* 每一句的左右網格行 */
     .sentence-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -292,39 +285,45 @@
     }
     .sentence-row:last-child { border-bottom: none; }
 
-    /* 預設：英文在左靠右、中文在右靠左，分隔線在正中央 */
     .en-cell {
       order: 1;
       text-align: right;
-      font-size: var(--en-size, 17px);
+      font-size: var(--en-size, 15px);
       margin-bottom: 0;
-      padding-right: 32px;
+      padding-right: 20px;
       border-right: 0.5px solid var(--b1);
     }
     .zh-cell {
       order: 2;
       text-align: left;
-      padding-left: 32px;
-      font-size: var(--zh-size, 14px);
+      padding-left: 20px;
+      font-size: var(--zh-size, 13px);
+      border-top: none;
+      margin-top: 0;
+      color: var(--t2);
     }
 
-    /* trans-first：中文在左靠右、英文在右靠左 */
     body.trans-first .en-cell {
-      order: 2;
-      text-align: left;
-      padding-left: 32px;
-      padding-right: 0;
-      border-right: none;
-      border-left: 0.5px solid var(--b1);
+      order: 2; text-align: left;
+      padding-left: 20px; padding-right: 0;
+      border-right: none; border-left: 0.5px solid var(--b1);
     }
     body.trans-first .zh-cell {
-      order: 1;
-      text-align: right;
-      padding-right: 32px;
-      padding-left: 0;
+      order: 1; text-align: right;
+      padding-right: 20px; padding-left: 0;
     }
 
     .para-num { display: block; }
+  }
+
+  /* ── 桌面：900px 以上放大間距 ── */
+  @media (min-width: 900px) {
+    #reading-area { max-width: 1080px; padding: 80px 48px 160px; }
+    .paragraph-block { padding: 24px; }
+    .en-cell { font-size: var(--en-size, 17px); padding-right: 32px; }
+    .zh-cell { font-size: var(--zh-size, 14px); padding-left: 32px; }
+    body.trans-first .en-cell { padding-left: 32px; }
+    body.trans-first .zh-cell { padding-right: 32px; }
   }
 
   /* ── BOTTOM PLAYER ── */
@@ -484,39 +483,48 @@
     background: rgba(200,169,110,0.22);
   }
 
-  /* Speed pills — 與左側語言切換群組一致 */
-  .speed-pills {
-    display: flex;
-    border: 0.5px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.04);
-  }
-
-  .speed-pill {
-    height: 32px;
-    padding: 0 10px;
-    background: transparent;
-    border: none;
-    border-right: 0.5px solid rgba(255,255,255,0.08);
-    color: var(--t3);
+  /* Speed slider */
+  .speed-label {
     font-family: var(--mono);
     font-size: 10px;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .speed-pill:last-child {
-    border-right: none;
-  }
-
-  .speed-pill.active, .speed-pill:hover {
-    background: var(--gold-dim);
     color: var(--gold);
+    letter-spacing: 0.04em;
+    min-width: 32px;
+    text-align: right;
+  }
+
+  #speed-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 2px;
+    background: var(--b2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  #speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  #speed-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+  }
+
+  #speed-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gold);
+    cursor: pointer;
   }
 
   .font-controls {
@@ -554,19 +562,210 @@
     margin-top: 10px;
   }
 
-  /* Divider between progress and controls on mobile */
+  /* ── MOBILE UI ── */
   @media (max-width: 768px) {
-    .ctrl-group.side-controls {
-      display: none;
-    }
+    /* 1. Player bar — 隱藏展開設計 */
     .controls {
-      justify-content: center;
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: auto auto;
+      gap: 0;
+      align-items: center;
     }
+
+    /* 工具列預設隱藏，展開後滑入 */
+    .ctrl-left {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.25s ease,
+                  margin 0.3s ease;
+      margin-bottom: 0;
+    }
+    #player.expanded .ctrl-left {
+      max-height: 60px;
+      opacity: 1;
+      pointer-events: auto;
+      margin-bottom: 10px;
+    }
+
+    .ctrl-center {
+      grid-column: 2;
+      grid-row: 2;
+    }
+    .ctrl-right {
+      grid-column: 3;
+      grid-row: 2;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    /* 速度滑桿預設隱藏，點 1.0× 展開 */
+    #speed-slider {
+      max-width: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+      overflow: hidden;
+    }
+    #player.speed-open #speed-slider {
+      max-width: 80px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .speed-label {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+      border: 0.5px solid var(--b1);
+    }
+    .speed-label:hover, #player.speed-open .speed-label {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* 展開按鈕 — 圓形 */
+    #mobile-expand {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      padding: 0;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s, transform 0.3s;
+    }
+    #player.expanded #mobile-expand {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* 2. Progress bar — taller touch area */
+    .progress-wrap {
+      height: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 4px;
+      background: transparent;
+      border-radius: 0;
+    }
+    .progress-wrap::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--b1);
+      border-radius: 2px;
+    }
+    .progress-fill {
+      height: 3px;
+    }
+    .progress-thumb {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* 3. Settings & Voice popovers — bottom sheet */
+    .popover {
+      top: auto !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      border-radius: 20px 20px 0 0 !important;
+      max-height: 75vh !important;
+      display: flex !important;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 1 !important;
+      transform: translateY(100%) !important;
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1) !important;
+      animation: none !important;
+    }
+    .popover.show {
+      transform: translateY(0) !important;
+    }
+    .popover::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: var(--b2);
+      border-radius: 2px;
+      margin: 12px auto 8px;
+      flex-shrink: 0;
+      order: -1;
+    }
+
+    /* 4. Sidebar — full-width */
+    #sidebar {
+      width: 100%;
+      left: -100%;
+    }
+    #sidebar.open {
+      transform: translateX(100%);
+    }
+
+    /* 5. Reading area — mobile typography */
+    #reading-area {
+      padding: 72px 20px 200px;
+    }
+    .paragraph-block {
+      padding: 16px 0;
+      margin-bottom: 4px;
+    }
+    .en-cell {
+      font-size: var(--en-size, 18px);
+      line-height: 1.9;
+      margin-bottom: 8px;
+    }
+    .zh-cell {
+      font-size: var(--zh-size, 14px);
+      line-height: 2.0;
+      color: var(--t2);
+      padding-top: 2px;
+      border-top: 0.5px solid var(--b1);
+      margin-top: 4px;
+    }
+    .sentence-row {
+      padding: 10px 0;
+    }
+
+    /* 7. Speed slider — better touch target */
+    #speed-slider {
+      width: 70px;
+      height: 20px;
+    }
+    #speed-slider::-webkit-slider-thumb {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* 8. Player padding for 2-row layout */
+    #player {
+      padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
+    }
+
     .extra-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 10px;
+    }
+    .ctrl-group.side-controls {
+      display: none;
     }
   }
 
@@ -574,6 +773,11 @@
     .extra-controls { display: none; }
     #player { padding: 14px 32px 18px; }
     .progress-wrap { margin-bottom: 16px; }
+    #mobile-expand { display: none; }
+    /* 桌面版速度滑桿永遠可見 */
+    #speed-slider { max-width: 80px; opacity: 1; pointer-events: auto; }
+    .speed-label { cursor: default; border: none; padding: 0; }
+    .speed-label:hover { background: none; color: var(--gold); border: none; }
   }
 
   /* ── 玻璃質感側邊欄 (Chapter) ── */
@@ -868,14 +1072,11 @@
       <button class="ctrl-btn" aria-label="下一句">›</button>
     </div>
 
-    <!-- 右下: 播放速度 -->
+    <!-- 右下: 播放速度 + 手機展開鍵 -->
     <div class="ctrl-right">
-      <span style="font-family: var(--mono); font-size: 9px; color: var(--t3);">播放速度</span>
-      <div class="speed-pills">
-        <button class="speed-pill">0.8×</button>
-        <button class="speed-pill active">1.0×</button>
-        <button class="speed-pill">1.2×</button>
-      </div>
+      <span class="speed-label" id="speed-label-btn">1.0×</span>
+      <input type="range" id="speed-slider" min="0.5" max="2" step="0.1" value="1.0">
+      <button class="ctrl-btn" id="mobile-expand" aria-label="更多控制">···</button>
     </div>
   </div>
 
@@ -1045,7 +1246,8 @@
 
   const btnPrev = document.querySelector('.ctrl-btn[aria-label="上一句"]');
   const btnNext = document.querySelector('.ctrl-btn[aria-label="下一句"]');
-  const speedPills = document.querySelectorAll('.speed-pill');
+  const speedSlider = document.getElementById('speed-slider');
+  const speedLabel = document.querySelector('.speed-label');
 
   const readingArea = document.getElementById('reading-area');
   let paragraphs = [];
@@ -1095,6 +1297,13 @@
     }
   }
 
+  function cleanChapterTitle(title) {
+    let t = title.replace(/\[.*?\]/g, '').trim();           // 去掉 [ ... words ]
+    t = t.replace(/^.+?\s+-\s+(Chapter\s+\d+)/i, '$1');    // 去掉書名前綴
+    t = t.replace(/(Chapter\s+\d+)\s+-\s+\d+:\s*/i, '$1 - '); // 去掉重複數字
+    return t.trim();
+  }
+
   function populateSidebar() {
     const listEl = document.getElementById('chapter-list');
     if (!listEl || !manifest) return;
@@ -1108,7 +1317,7 @@
         a.style.color = "var(--gold)";
         a.style.fontWeight = "bold";
       }
-      a.textContent = ch.title;
+      a.textContent = cleanChapterTitle(ch.title);
       a.onclick = (e) => {
         e.preventDefault();
         currentChapterId = ch.id;
@@ -1289,9 +1498,8 @@
 
     let done = 0;
 
-    // 逐段翻譯（每段的句子陣列一次送入 API）
-    for (let b = 0; b < toTrans.length; b++) {
-      const item = toTrans[b];
+    // 並行翻譯所有段落，誰先回來誰先顯示
+    await Promise.all(toTrans.map(async (item) => {
       try {
         const zhArr = await callTranslate(item.enSentences);
         const cacheKey = `v2_${currentBookId}_${currentChapterId}_${item.i}`;
@@ -1303,8 +1511,7 @@
         console.error('Batch error:', e);
         blocks[item.i].querySelectorAll('.zh-cell').forEach(c => { c.textContent = `翻譯失敗 (${e.message})`; });
       }
-      await new Promise(resolve => setTimeout(resolve, 300));
-    }
+    }));
 
     if (btn) {
       btn.textContent = '⟳ 翻譯本章';
@@ -1531,8 +1738,8 @@ function saveGeminiKey() {
 
       // 絲滑跟隨函式
       const follow = () => {
-        currentX += (targetX - currentX) * 0.05;
-        currentY += (targetY - currentY) * 0.05;
+        currentX += (targetX - currentX) * 0.12;
+        currentY += (targetY - currentY) * 0.12;
 
         halo.style.left = `${currentX}px`;
         halo.style.top = `${currentY}px`;
@@ -1909,13 +2116,52 @@ function saveGeminiKey() {
     if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
   });
 
-  speedPills.forEach(p => {
-    p.addEventListener('click', () => {
-      speedPills.forEach(b => b.classList.remove('active'));
-      p.classList.add('active');
-      rate = parseFloat(p.textContent);
+  // 6. Touch swipe for paragraph navigation
+  let touchStartX = 0, touchStartY = 0;
+  document.getElementById('reading-area').addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.getElementById('reading-area').addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) {
+        // swipe left → next paragraph
+        if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
+      } else {
+        // swipe right → previous paragraph
+        if (currentParaIndex > 0) { currentParaIndex--; speakCurrent(); updateUI(); }
+      }
+    }
+  }, { passive: true });
+
+  if (speedSlider) {
+    speedSlider.addEventListener('input', () => {
+      rate = parseFloat(speedSlider.value);
+      if (speedLabel) speedLabel.textContent = rate.toFixed(1) + '×';
     });
-  });
+  }
+
+  // ── 手機：展開/收起工具列 ──
+  const mobileExpandBtn = document.getElementById('mobile-expand');
+  const playerEl = document.getElementById('player');
+  if (mobileExpandBtn && playerEl) {
+    mobileExpandBtn.addEventListener('click', () => {
+      playerEl.classList.toggle('expanded');
+    });
+  }
+
+  // ── 手機：點速度標籤展開滑桿 ──
+  const speedLabelBtn = document.getElementById('speed-label-btn');
+  if (speedLabelBtn && playerEl) {
+    speedLabelBtn.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        playerEl.classList.toggle('speed-open');
+      }
+    });
+  }
 
   // ── Highlight Sentence ──
   function highlightSentence(paraIdx, charIndex) {
