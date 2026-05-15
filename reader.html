@@ -212,6 +212,11 @@
     padding: 0 2px;
   }
 
+  .zh-cell.active {
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+
   /* ── Sentence row (mobile 預設垂直堆疊) ── */
   .sentence-row {
     padding: 6px 0;
@@ -231,9 +236,9 @@
 
   .zh-cell {
     font-family: var(--serif-zh);
-    font-size: var(--zh-size, 14px);
+    font-size: var(--zh-size, 15px);
     font-weight: 300;
-    line-height: 1.9;
+    line-height: 2.1;
     color: var(--t3);
     letter-spacing: 0.05em;
     display: block;
@@ -312,7 +317,7 @@
 
     .sentence-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.05fr 0.95fr;
       gap: 0;
       align-items: start;
       padding: 5px 0;
@@ -333,7 +338,7 @@
       order: 2;
       text-align: left;
       padding-left: 20px;
-      font-size: var(--zh-size, 13px);
+      font-size: var(--zh-size, 14px);
       border-top: none;
       margin-top: 0;
       color: var(--t2);
@@ -348,6 +353,9 @@
       order: 1; text-align: right;
       padding-right: 20px; padding-left: 0;
     }
+    body.trans-first .sentence-row {
+      grid-template-columns: 0.95fr 1.05fr;
+    }
 
     .para-num { display: block; }
   }
@@ -357,7 +365,7 @@
     #reading-area { max-width: 1080px; padding: 80px 48px 160px; }
     .paragraph-block { padding: 24px; }
     .en-cell { font-size: var(--en-size, 17px); padding-right: 32px; }
-    .zh-cell { font-size: var(--zh-size, 14px); padding-left: 32px; }
+    .zh-cell { font-size: var(--zh-size, 15px); padding-left: 32px; }
     body.trans-first .en-cell { padding-left: 32px; }
     body.trans-first .zh-cell { padding-right: 32px; }
   }
@@ -890,7 +898,9 @@
 
   /* ── 你要求的文字排版對齊 ── */
   .en-cell, .zh-cell {
-    white-space: pre-wrap; /* 保留分行方式 */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   
   .dialogue {
@@ -1882,7 +1892,7 @@ function saveGeminiKey() {
     for (const sent of sentences) {
       const s = sent.trim();
       if (!s) continue;
-      if (s.split(' ').length > 14) {
+      if (s.split(' ').length > 10) {
         // 長句進一步按逗號/分號切子句，讓中英行數對齊
         splitAtClauses(s).forEach(c => chunks.push(c));
       } else {
@@ -1901,13 +1911,51 @@ function saveGeminiKey() {
     }, []);
   }
 
+  // 雙向對齊：估算 EN/ZH 視覺行數，插入 <br> 讓兩欄高度盡量相符
+  // EN_WORDS_PER_LINE 以 17px Cormorant Garamond ~459px 欄寬校準（約 8 字/行）
+  // ZH_CHARS_PER_LINE 以 15px Noto Serif TC ~413px 欄寬校準（約 28 字/行）
+  function alignZhToEn(zhText, enWordCount) {
+    const cleanText = zhText.replace(/<br\s*\/?>/gi, '');
+    const EN_WORDS_PER_LINE = 8;
+    const ZH_CHARS_PER_LINE = 28;
+    const enLines = Math.max(1, Math.ceil(enWordCount / EN_WORDS_PER_LINE));
+    const zhChars = (cleanText.match(/[一-鿿㐀-䶿]/g) || []).length;
+    const zhLines = Math.max(1, Math.ceil(zhChars / ZH_CHARS_PER_LINE));
+    const breaksNeeded = enLines - zhLines;
+    if (breaksNeeded <= 0) return cleanText;
+    return _insertZhBreaks(cleanText, breaksNeeded);
+  }
+
+  // 貪婪遞迴：每次在剩餘文字的最佳中點附近找標點，切完再遞迴右半
+  // 找不到合法標點就停止，不強插任意位置
+  function _insertZhBreaks(text, count) {
+    if (count <= 0 || !text) return text;
+    const target = Math.floor(text.length / (count + 1));
+    let best = -1;
+    for (let d = 0; d <= 12; d++) {
+      for (const pos of [target + d, target - d]) {
+        if (pos <= 0 || pos >= text.length - 1) continue;
+        if (!'，。；！？'.includes(text[pos])) continue;
+        const beforeCJK = (text.slice(0, pos + 1).match(/[一-鿿㐀-䶿]/g) || []).length;
+        const afterCJK = (text.slice(pos + 1).match(/[一-鿿㐀-䶿]/g) || []).length;
+        if (beforeCJK >= 5 && afterCJK >= 5) { best = pos; break; }
+      }
+      if (best !== -1) break;
+    }
+    if (best === -1) return text; // 找不到合法斷點，不強行切割
+    const left = text.slice(0, best + 1);
+    const right = text.slice(best + 1).trimStart();
+    return left + '<br>' + _insertZhBreaks(right, count - 1);
+  }
+
   // ── 將翻譯結果填入對應的 zh-cell ──
   function applyZhToBlock(block, zhArr) {
     const rows = block.querySelectorAll('.sentence-row');
     rows.forEach((row, i) => {
       const zhCell = row.querySelector('.zh-cell');
       if (zhCell && zhArr[i] != null) {
-        zhCell.innerHTML = wrapDialogue(zhArr[i], 'zh');
+        const enWords = (row.querySelector('.en-cell')?.textContent || '').trim().split(/\s+/).length;
+        zhCell.innerHTML = wrapDialogue(alignZhToEn(zhArr[i], enWords), 'zh');
       }
     });
     // Refresh subtitle if this block is the current paragraph
@@ -1951,9 +1999,9 @@ function saveGeminiKey() {
   setupTabs('theme-tabs', 'selectedTheme', (theme) => { document.body.className = theme; });
   setupTabs('size-tabs', 'fontSize', (size) => {
     const sizeMap = {
-      small: { en: '15px', zh: '12px' },
-      medium: { en: '18px', zh: '14px' },
-      large: { en: '22px', zh: '17px' }
+      small: { en: '15px', zh: '13px' },
+      medium: { en: '18px', zh: '15px' },
+      large: { en: '22px', zh: '18px' }
     };
     document.documentElement.style.setProperty('--en-size', sizeMap[size].en);
     document.documentElement.style.setProperty('--zh-size', sizeMap[size].zh);
@@ -2362,11 +2410,14 @@ function saveGeminiKey() {
     sentences.forEach(s => {
       const start = parseInt(s.dataset.start);
       const end = parseInt(s.dataset.end);
+      const zhCell = s.closest('.sentence-row')?.querySelector('.zh-cell');
       if (charIndex >= start && charIndex < end) {
         s.classList.add('active');
+        zhCell?.classList.add('active');
         activeEl = s;
       } else {
         s.classList.remove('active');
+        zhCell?.classList.remove('active');
       }
     });
     updateSubtitle(paraIdx, charIndex);
@@ -2545,8 +2596,12 @@ function saveGeminiKey() {
     if (!text) { speakEnSentences(rows, idx + 1); return; }
 
     // 高亮當前句、更新字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
-    rows.forEach(r => r.querySelector('.en-cell.sentence')?.classList.remove('active'));
+    rows.forEach(r => {
+      r.querySelector('.en-cell.sentence')?.classList.remove('active');
+      r.querySelector('.zh-cell')?.classList.remove('active');
+    });
     enCell?.classList.add('active');
+    zhCell?.classList.add('active');
     const subtitleText = document.getElementById('subtitle-text');
     if (subtitleText && zhCell) subtitleText.textContent = zhCell.textContent || '…';
 
@@ -2574,8 +2629,12 @@ function saveGeminiKey() {
     const zhText = zhCell?.textContent?.trim();
 
     // 高亮 + 字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
-    rows.forEach(r => r.querySelector('.en-cell.sentence')?.classList.remove('active'));
+    rows.forEach(r => {
+      r.querySelector('.en-cell.sentence')?.classList.remove('active');
+      r.querySelector('.zh-cell')?.classList.remove('active');
+    });
     enCell?.classList.add('active');
+    zhCell?.classList.add('active');
     const subtitleText = document.getElementById('subtitle-text');
     if (subtitleText && zhCell) subtitleText.textContent = zhText || '…';
 
