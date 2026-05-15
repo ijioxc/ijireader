@@ -1913,7 +1913,7 @@ function saveGeminiKey() {
   // ZH_CHARS_PER_LINE 以 15px Noto Serif TC ~413px 欄寬校準（約 28 字/行）
   function alignZhToEn(zhText, enWordCount) {
     const cleanText = zhText.replace(/<br\s*\/?>/gi, '');
-    const EN_WORDS_PER_LINE = 8;
+    const EN_WORDS_PER_LINE = 12;
     const ZH_CHARS_PER_LINE = 28;
     const enLines = Math.max(1, Math.ceil(enWordCount / EN_WORDS_PER_LINE));
     const zhChars = (cleanText.match(/[一-鿿㐀-䶿]/g) || []).length;
@@ -2258,10 +2258,14 @@ function saveGeminiKey() {
     });
   }
 
+  function clearHighlights() {
+    document.querySelectorAll('.en-cell.sentence.active, .zh-cell.active').forEach(el => el.classList.remove('active'));
+  }
+
   btnPlay.addEventListener('click', () => {
     isPlaying = !isPlaying;
     if (isPlaying) speakCurrent();
-    else SY.cancel();
+    else { SY.cancel(); clearHighlights(); }
     updateUI();
   });
 
@@ -2275,10 +2279,12 @@ function saveGeminiKey() {
   document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; localStorage.setItem('voiceLang', '中文'); updateUI(); });
 
   btnPrev.addEventListener('click', () => {
+    clearHighlights();
     if (currentParaIndex > 0) { currentParaIndex--; speakCurrent(); updateUI(); }
   });
 
   btnNext.addEventListener('click', () => {
+    clearHighlights();
     if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
   });
 
@@ -2729,15 +2735,17 @@ function saveGeminiKey() {
     if (e.key === ' ') {
       e.preventDefault();
       isPlaying = !isPlaying;
-      if (isPlaying) speakCurrent(); else SY.cancel();
+      if (isPlaying) speakCurrent(); else { SY.cancel(); clearHighlights(); }
       updateUI();
     }
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
+      clearHighlights();
       if (currentParaIndex > 0) { currentParaIndex--; speakCurrent(); updateUI(); }
     }
     if (e.key === 'ArrowRight') {
       e.preventDefault();
+      clearHighlights();
       if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
     }
     if (e.key === 'ArrowUp') {
