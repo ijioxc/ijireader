@@ -118,20 +118,6 @@
     background: var(--gold-dim);
   }
 
-  /* API Key 未設定警示紅點 */
-  .icon-btn.api-missing {
-    position: relative;
-  }
-  .icon-btn.api-missing::after {
-    content: '';
-    position: absolute;
-    top: 4px; right: 4px;
-    width: 7px; height: 7px;
-    background: #e05555;
-    border-radius: 50%;
-    box-shadow: 0 0 6px rgba(224,85,85,0.7);
-  }
-
   .icon-btn svg {
     width: 16px; height: 16px;
     stroke: currentColor;
@@ -191,11 +177,11 @@
     box-shadow: inset 0 0 40px var(--gold-glow);
   }
 
-  .paragraph-block.current-playing .en-cell {
+  .paragraph-block.current-playing .en-text {
     color: var(--t1);
   }
 
-  .paragraph-block.current-playing .zh-cell {
+  .paragraph-block.current-playing .zh-text {
     color: var(--t2);
   }
 
@@ -212,24 +198,18 @@
     padding: 0 2px;
   }
 
-  /* ── Sentence row (mobile 預設垂直堆疊) ── */
-  .sentence-row {
-    padding: 6px 0;
-    margin-bottom: 2px;
-  }
-
-  .en-cell {
+  .en-text {
     font-family: var(--serif-en);
     font-size: var(--en-size, 18px);
     font-weight: 300;
     line-height: 1.85;
     color: var(--t1);
     letter-spacing: 0.01em;
-    margin-bottom: 6px;
+    margin-bottom: 12px;
     display: block;
   }
 
-  .zh-cell {
+  .zh-text {
     font-family: var(--serif-zh);
     font-size: var(--zh-size, 14px);
     font-weight: 300;
@@ -269,127 +249,39 @@
     background: var(--gold-dim);
   }
 
-  /* ── MOBILE SUBTITLE BAR (< 580px) ── */
-  #subtitle-bar {
-    display: none;
-    padding: 8px 20px 10px;
-    font-family: var(--serif-zh);
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--t2);
-    text-align: center;
-    border-bottom: 0.5px solid var(--b1);
-    min-height: 42px;
-    align-items: center;
-    justify-content: center;
-  }
-  #subtitle-text {
-    transition: opacity 0.2s ease;
-  }
-  @media (max-width: 579px) {
-    #subtitle-bar { display: flex; }
-    .zh-cell { display: none !important; }
-  }
-
   /* ── DESKTOP TWO-COLUMN ── */
-  /* ── 雙欄對照：580px 起啟用（手機橫持、平板、桌面皆適用） ── */
-  @media (min-width: 580px) {
+  @media (min-width: 900px) {
     #reading-area {
-      max-width: none;
-      width: 100%;
-      padding: 80px 32px 180px;
+      max-width: 1080px;
+      padding: 80px 48px 160px;
     }
 
     .paragraph-block {
-      display: block;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
       border-left: none;
       border-top: 0.5px solid transparent;
       border-radius: 8px;
-      padding: 16px;
-    }
-    .paragraph-block:hover { border-left: none; border-top-color: var(--b2); }
-    .paragraph-block.current-playing { border-left: none; border-top: 1px solid var(--gold); }
-
-    .sentence-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      align-items: start;
-      padding: 5px 0;
-      border-bottom: 0.5px solid var(--b1);
-      margin-bottom: 0;
-    }
-    .sentence-row:last-child { border-bottom: none; }
-
-    .en-cell {
-      order: 1;
-      text-align: right;
-      font-size: var(--en-size, 15px);
-      margin-bottom: 0;
-      padding-right: 20px;
-      border-right: 0.5px solid var(--b1);
-    }
-    .zh-cell {
-      order: 2;
-      text-align: left;
-      padding-left: 20px;
-      font-size: var(--zh-size, 13px);
-      border-top: none;
-      margin-top: 0;
-      color: var(--t2);
+      padding: 24px;
     }
 
-    body.trans-first .en-cell {
-      order: 2; text-align: left;
-      padding-left: 20px; padding-right: 0;
-      border-right: none; border-left: 0.5px solid var(--b1);
-    }
-    body.trans-first .zh-cell {
-      order: 1; text-align: right;
-      padding-right: 20px; padding-left: 0;
+    .paragraph-block:hover {
+      border-left: none;
+      border-top-color: var(--b2);
     }
 
-    .para-num { display: block; }
-  }
+    .paragraph-block.current-playing {
+      border-left: none;
+      border-top: 1px solid var(--gold);
+    }
 
-  /* ── 桌面：900px 以上放大間距 ── */
-  @media (min-width: 900px) {
-    #reading-area { max-width: 1080px; padding: 80px 48px 160px; }
-    .paragraph-block { padding: 24px; }
-    .en-cell { font-size: var(--en-size, 17px); padding-right: 32px; }
-    .zh-cell { font-size: var(--zh-size, 14px); padding-left: 32px; }
-    body.trans-first .en-cell { padding-left: 32px; }
-    body.trans-first .zh-cell { padding-right: 32px; }
-  }
-
-  /* ── BACK TO READING BUBBLE ── */
-  #back-to-reading {
-    position: fixed;
-    bottom: 90px;
-    left: 50%;
-    transform: translateX(-50%) translateY(12px);
-    background: rgba(200,169,110,0.15);
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    padding: 7px 18px;
-    border-radius: 999px;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    white-space: nowrap;
-    z-index: 200;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
-  #back-to-reading.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(0);
+    .en-text { font-size: 17px; margin-bottom: 0; }
+    .zh-text { font-size: 14px; }
+    .paragraph-block > div:nth-child(2) { text-align: right; }
+    .paragraph-block > div:nth-child(3) { text-align: left; border-left: 0.5px solid var(--b1); padding-left: 32px; }
+    .para-num { grid-column: 1 / -1; }
   }
 
   /* ── BOTTOM PLAYER ── */
@@ -549,48 +441,29 @@
     background: rgba(200,169,110,0.22);
   }
 
-  /* Speed slider */
-  .speed-label {
+  /* Speed & font controls */
+  .speed-pills {
+    display: flex;
+    gap: 4px;
+  }
+
+  .speed-pill {
     font-family: var(--mono);
-    font-size: 10px;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    border: 0.5px solid var(--b1);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--t3);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .speed-pill.active, .speed-pill:hover {
+    border-color: var(--gold);
     color: var(--gold);
-    letter-spacing: 0.04em;
-    min-width: 32px;
-    text-align: right;
-  }
-
-  #speed-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 80px;
-    height: 2px;
-    background: var(--b2);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  #speed-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--gold);
-    cursor: pointer;
-    transition: transform 0.15s;
-  }
-
-  #speed-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.3);
-  }
-
-  #speed-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: none;
-    background: var(--gold);
-    cursor: pointer;
+    background: var(--gold-dim);
   }
 
   .font-controls {
@@ -628,210 +501,19 @@
     margin-top: 10px;
   }
 
-  /* ── MOBILE UI ── */
+  /* Divider between progress and controls on mobile */
   @media (max-width: 768px) {
-    /* 1. Player bar — 隱藏展開設計 */
+    .ctrl-group.side-controls {
+      display: none;
+    }
     .controls {
-      display: grid !important;
-      grid-template-columns: 1fr auto 1fr;
-      grid-template-rows: auto auto;
-      gap: 0;
-      align-items: center;
-    }
-
-    /* 工具列預設隱藏，展開後滑入 */
-    .ctrl-left {
-      grid-column: 1 / -1;
-      grid-row: 1;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 6px;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      pointer-events: none;
-      transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 0.25s ease,
-                  margin 0.3s ease;
-      margin-bottom: 0;
     }
-    #player.expanded .ctrl-left {
-      max-height: 60px;
-      opacity: 1;
-      pointer-events: auto;
-      margin-bottom: 10px;
-    }
-
-    .ctrl-center {
-      grid-column: 2;
-      grid-row: 2;
-    }
-    .ctrl-right {
-      grid-column: 3;
-      grid-row: 2;
-      justify-content: flex-end;
-      gap: 6px;
-    }
-
-    /* 速度滑桿預設隱藏，點 1.0× 展開 */
-    #speed-slider {
-      max-width: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
-      overflow: hidden;
-    }
-    #player.speed-open #speed-slider {
-      max-width: 80px;
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .speed-label {
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 20px;
-      transition: background 0.2s, color 0.2s;
-      border: 0.5px solid var(--b1);
-    }
-    .speed-label:hover, #player.speed-open .speed-label {
-      background: var(--gold-dim);
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* 展開按鈕 — 圓形 */
-    #mobile-expand {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 14px;
-      letter-spacing: 0.05em;
-      padding: 0;
-      flex-shrink: 0;
-      transition: background 0.2s, color 0.2s, transform 0.3s;
-    }
-    #player.expanded #mobile-expand {
-      background: var(--gold-dim);
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* 2. Progress bar — taller touch area */
-    .progress-wrap {
-      height: 20px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      margin-bottom: 4px;
-      background: transparent;
-      border-radius: 0;
-    }
-    .progress-wrap::before {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      height: 2px;
-      background: var(--b1);
-      border-radius: 2px;
-    }
-    .progress-fill {
-      height: 3px;
-    }
-    .progress-thumb {
-      width: 14px;
-      height: 14px;
-    }
-
-    /* 3. Settings & Voice popovers — bottom sheet */
-    .popover {
-      top: auto !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      width: 100% !important;
-      max-width: 100% !important;
-      border-radius: 20px 20px 0 0 !important;
-      max-height: 75vh !important;
-      display: flex !important;
-      flex-direction: column;
-      gap: 12px;
-      opacity: 1 !important;
-      transform: translateY(100%) !important;
-      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1) !important;
-      animation: none !important;
-    }
-    .popover.show {
-      transform: translateY(0) !important;
-    }
-    .popover::before {
-      content: '';
-      display: block;
-      width: 36px;
-      height: 4px;
-      background: var(--b2);
-      border-radius: 2px;
-      margin: 12px auto 8px;
-      flex-shrink: 0;
-      order: -1;
-    }
-
-    /* 4. Sidebar — full-width */
-    #sidebar {
-      width: 100%;
-      left: -100%;
-    }
-    #sidebar.open {
-      transform: translateX(100%);
-    }
-
-    /* 5. Reading area — mobile typography */
-    #reading-area {
-      padding: 72px 20px 200px;
-    }
-    .paragraph-block {
-      padding: 16px 0;
-      margin-bottom: 4px;
-    }
-    .en-cell {
-      font-size: var(--en-size, 18px);
-      line-height: 1.9;
-      margin-bottom: 8px;
-    }
-    .zh-cell {
-      font-size: var(--zh-size, 14px);
-      line-height: 2.0;
-      color: var(--t2);
-      padding-top: 2px;
-      border-top: 0.5px solid var(--b1);
-      margin-top: 4px;
-    }
-    .sentence-row {
-      padding: 10px 0;
-    }
-
-    /* 7. Speed slider — better touch target */
-    #speed-slider {
-      width: 70px;
-      height: 20px;
-    }
-    #speed-slider::-webkit-slider-thumb {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* 8. Player padding for 2-row layout */
-    #player {
-      padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
-    }
-
     .extra-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: 10px;
-    }
-    .ctrl-group.side-controls {
-      display: none;
     }
   }
 
@@ -839,11 +521,6 @@
     .extra-controls { display: none; }
     #player { padding: 14px 32px 18px; }
     .progress-wrap { margin-bottom: 16px; }
-    #mobile-expand { display: none; }
-    /* 桌面版速度滑桿永遠可見 */
-    #speed-slider { max-width: 80px; opacity: 1; pointer-events: auto; }
-    .speed-label { cursor: default; border: none; padding: 0; }
-    .speed-label:hover { background: none; color: var(--gold); border: none; }
   }
 
   /* ── 玻璃質感側邊欄 (Chapter) ── */
@@ -889,11 +566,18 @@
   }
 
   /* ── 你要求的文字排版對齊 ── */
-  .en-cell, .zh-cell {
+  .en-text, .zh-text {
     white-space: pre-wrap; /* 保留分行方式 */
   }
   
+  .trans-first .zh-text {
+    text-align: right;
+  }
+  
   .dialogue {
+    text-align: center;
+    display: block;
+    width: 100%;
     font-style: italic;
   }
   
@@ -1107,13 +791,7 @@
 
 <main id="reading-area">
 </main>
-
-<div id="back-to-reading">▶ 回到朗讀</div>
-
 <div id="player">
-  <!-- Subtitle bar (mobile only) -->
-  <div id="subtitle-bar"><span id="subtitle-text">…</span></div>
-
   <!-- Progress -->
   <div class="progress-wrap">
     <div class="progress-fill">
@@ -1141,11 +819,14 @@
       <button class="ctrl-btn" aria-label="下一句">›</button>
     </div>
 
-    <!-- 右下: 播放速度 + 手機展開鍵 -->
+    <!-- 右下: 播放速度 -->
     <div class="ctrl-right">
-      <span class="speed-label" id="speed-label-btn">1.0×</span>
-      <input type="range" id="speed-slider" min="0.5" max="2" step="0.1" value="1.0">
-      <button class="ctrl-btn" id="mobile-expand" aria-label="更多控制">···</button>
+      <span style="font-family: var(--mono); font-size: 9px; color: var(--t3);">播放速度</span>
+      <div class="speed-pills">
+        <button class="speed-pill">0.8×</button>
+        <button class="speed-pill active">1.0×</button>
+        <button class="speed-pill">1.2×</button>
+      </div>
     </div>
   </div>
 
@@ -1315,8 +996,7 @@
 
   const btnPrev = document.querySelector('.ctrl-btn[aria-label="上一句"]');
   const btnNext = document.querySelector('.ctrl-btn[aria-label="下一句"]');
-  const speedSlider = document.getElementById('speed-slider');
-  const speedLabel = document.querySelector('.speed-label');
+  const speedPills = document.querySelectorAll('.speed-pill');
 
   const readingArea = document.getElementById('reading-area');
   let paragraphs = [];
@@ -1334,9 +1014,7 @@
   let currentBookId = 'lotm';
   let currentChapterId = 1;
   let manifest = null;
-  let currentChapterTexts = [];    // 儲存當前章節的段落文字
-  let currentChapterSentences = []; // [[s1,s2,...], [...], ...] 每段的切句結果
-  let _pendingAutoPlay = false;    // 換章後自動繼續播放旗標
+  let currentChapterTexts = []; // 儲存當前章節的文字，供翻譯按鈕使用
   
   // ── Dynamic Loading Functions ──
   const urlParams = new URLSearchParams(window.location.search);
@@ -1367,13 +1045,6 @@
     }
   }
 
-  function cleanChapterTitle(title) {
-    let t = title.replace(/\[.*?\]/g, '').trim();           // 去掉 [ ... words ]
-    t = t.replace(/^.+?\s+-\s+(Chapter\s+\d+)/i, '$1');    // 去掉書名前綴
-    t = t.replace(/(Chapter\s+\d+)\s+-\s+\d+:\s*/i, '$1 - '); // 去掉重複數字
-    return t.trim();
-  }
-
   function populateSidebar() {
     const listEl = document.getElementById('chapter-list');
     if (!listEl || !manifest) return;
@@ -1387,7 +1058,7 @@
         a.style.color = "var(--gold)";
         a.style.fontWeight = "bold";
       }
-      a.textContent = cleanChapterTitle(ch.title);
+      a.textContent = ch.title;
       a.onclick = (e) => {
         e.preventDefault();
         currentChapterId = ch.id;
@@ -1431,42 +1102,54 @@
     const tlBtn = document.getElementById('tlAllBtn');
     if (tlBtn) tlBtn.onclick = () => translateChapter();
     
-    currentChapterSentences = [];
     paragraphs_text.forEach((pText, idx) => {
       const block = document.createElement('div');
       block.className = 'paragraph-block';
-
+      
       const num = document.createElement('span');
       num.className = 'para-num';
       num.innerHTML = `§ ${(idx + 1).toString().padStart(2, '0')} <button class="sp-tl" onclick="translatePara(${idx}, event)">譯</button>`;
       block.appendChild(num);
+      
+      const enDiv = document.createElement('div');
+      enDiv.className = 'en-text';
+      
+      // 分句與換行邏輯 (from reader001.html)
+      const cleanPText = pText.replace(/([.,!?;])([A-Za-z])/g, '$1 $2');
+      const rawEnLines = cleanPText.replace(/([^,.!?]{10,}[,.!?])\s+/g, '$1 \n').split('\n').filter(Boolean);
+      const enLines = rawEnLines.reduce((acc, line) => {
+        if (/^(and|or|but|nor)\s/i.test(line) && acc.length > 0) {
+          acc[acc.length - 1] += ' ' + line;
+        } else {
+          acc.push(line);
+        }
+        return acc;
+      }, []);
 
-      // 切句
-      const enSentences = splitEnSentences(pText);
-      currentChapterSentences.push(enSentences);
-
-      // 每句建一個 sentence-row（中英永遠對齊）
-      let charOffset = 0;
-      enSentences.forEach((s, si) => {
-        const row = document.createElement('div');
-        row.className = 'sentence-row';
-
-        const enCell = document.createElement('div');
-        enCell.className = 'en-cell sentence';
-        enCell.innerHTML = wrapDialogue(s, 'en');
-        enCell.dataset.start = charOffset;
-        enCell.dataset.end = charOffset + s.length;
-
-        const zhCell = document.createElement('div');
-        zhCell.className = 'zh-cell';
-        zhCell.textContent = '…';
-
-        row.appendChild(enCell);
-        row.appendChild(zhCell);
-        block.appendChild(row);
-        charOffset += s.length + 1; // +1 for the space in join(' ')
+      let currentOffset = 0;
+      enLines.forEach(s => {
+        const span = document.createElement('span');
+        span.className = 'sentence';
+        span.innerHTML = wrapDialogue(s, 'en');
+        span.dataset.start = currentOffset;
+        span.dataset.end = currentOffset + s.length;
+        enDiv.appendChild(span);
+        currentOffset += s.length;
       });
+      
+      const zhDiv = document.createElement('div');
+      zhDiv.className = 'zh-text';
+      zhDiv.textContent = '正在翻譯...';
 
+      const displayOrder = localStorage.getItem('display_order') || 'en';
+      if (displayOrder === 'zh') {
+        block.appendChild(zhDiv);
+        block.appendChild(enDiv);
+      } else {
+        block.appendChild(enDiv);
+        block.appendChild(zhDiv);
+      }
+      
       area.appendChild(block);
     });
     
@@ -1485,11 +1168,6 @@
     updateUI();
     translateChapter(paragraphs_text);
     checkAndShowHalo();
-    if (_pendingAutoPlay) {
-      _pendingAutoPlay = false;
-      isPlaying = true;
-      setTimeout(() => { speakCurrent(); updateUI(); }, 400);
-    }
   }
 
   // ── IndexedDB & Translation ──
@@ -1543,8 +1221,7 @@
     const geminiKey = localStorage.getItem('gemini_api_key');
     const deeplKey = localStorage.getItem('deepl_api_key');
     if (!geminiKey && !deeplKey) {
-      // 無 API Key 時靜默開啟語音設置氣泡引導用戶，不強制 alert
-      document.getElementById('popover-voice')?.classList.add('show');
+      alert('請先至右下角「語音設置」填寫 Gemini 或 DeepL API Key！');
       return;
     }
 
@@ -1560,34 +1237,67 @@
     // 找出需要翻譯的段落 (不在快取中的)
     const toTrans = [];
     for (let i = 0; i < paragraphs_text.length; i++) {
-      const cacheKey = `v2_${currentBookId}_${currentChapterId}_${i}`;
-      const cached = await getCachedTranslation(cacheKey);
-      if (!cached) {
-        toTrans.push({ i, enSentences: currentChapterSentences[i] });
+      const cacheKey = `${currentBookId}_${currentChapterId}_${i}`;
+      const zh = await getCachedTranslation(cacheKey);
+      if (!zh) {
+        toTrans.push({ i, en: paragraphs_text[i] });
       } else {
-        // 快取命中：解析 JSON 陣列並直接填入 UI
-        let zhArr;
-        try { zhArr = JSON.parse(cached); } catch { zhArr = [cached]; }
-        applyZhToBlock(blocks[i], zhArr);
+        // 如果有快取，直接更新 UI
+        const zhDiv = blocks[i].querySelector('.zh-text');
+        const enDiv = blocks[i].querySelector('.en-text');
+        if (zhDiv && enDiv) {
+          const enLinesCount = enDiv.querySelectorAll('.sentence').length;
+          const zhLines = smartZhSplit(zh, enLinesCount);
+          zhDiv.innerHTML = zhLines.map(line => wrapDialogue(line, 'zh')).join('\n');
+        }
       }
     }
 
+    const BATCH = 10;
     let done = 0;
-
-    // 並行翻譯所有段落，誰先回來誰先顯示
-    await Promise.all(toTrans.map(async (item) => {
+    
+    for (let b = 0; b < toTrans.length; b += BATCH) {
+      const batch = toTrans.slice(b, b + BATCH);
       try {
-        const zhArr = await callTranslate(item.enSentences);
-        const cacheKey = `v2_${currentBookId}_${currentChapterId}_${item.i}`;
-        await setCachedTranslation(cacheKey, JSON.stringify(zhArr));
-        applyZhToBlock(blocks[item.i], zhArr);
-        done++;
-        if (btn) btn.textContent = `⟳ ${done}/${toTrans.length}`;
+        const results = await callTranslate(batch.map(x => x.en));
+        for (let ri = 0; ri < results.length; ri++) {
+          const pi = batch[ri].i;
+          const zh = results[ri];
+          const cacheKey = `${currentBookId}_${currentChapterId}_${pi}`;
+          
+          await setCachedTranslation(cacheKey, zh);
+          
+          const zhDiv = blocks[pi].querySelector('.zh-text');
+          const enDiv = blocks[pi].querySelector('.en-text');
+          if (zhDiv && enDiv) {
+            const enLinesCount = enDiv.querySelectorAll('.sentence').length;
+            const zhLines = smartZhSplit(zh, enLinesCount);
+            zhDiv.innerHTML = zhLines.map(line => wrapDialogue(line, 'zh')).join('\n');
+          }
+          done++;
+        }
+        if (btn) {
+          btn.textContent = `⟳ ${done}/${toTrans.length}`;
+        }
       } catch (e) {
         console.error('Batch error:', e);
-        blocks[item.i].querySelectorAll('.zh-cell').forEach(c => { c.textContent = `翻譯失敗 (${e.message})`; });
+        // 如果失敗，標記剩餘的為失敗，並顯示錯誤原因
+        for (let ri = 0; ri < batch.length; ri++) {
+          const pi = batch[ri].i;
+          const gridContainer = blocks[pi].querySelector('.grid-container');
+          if (gridContainer) {
+            let zhSpan = gridContainer.querySelector('.sentence.zh');
+            if (!zhSpan) {
+              zhSpan = document.createElement('span');
+              zhSpan.className = 'sentence zh error';
+              gridContainer.appendChild(zhSpan);
+            }
+            zhSpan.textContent = `翻譯失敗 (${e.message})`;
+          }
+        }
       }
-    }));
+      await new Promise(resolve => setTimeout(resolve, 300)); // sleep 300ms
+    }
 
     if (btn) {
       btn.textContent = '⟳ 翻譯本章';
@@ -1598,24 +1308,38 @@
 
 window.translatePara = async function(pIdx, event) {
   if (event) event.stopPropagation();
-  const enSentences = currentChapterSentences[pIdx];
-  if (!enSentences || !enSentences.length) return;
-
+  const enText = currentChapterTexts[pIdx];
+  if (!enText) return;
+  
   const area = document.getElementById('reading-area');
   const blocks = area.querySelectorAll('.paragraph-block');
   const block = blocks[pIdx];
   if (!block) return;
-
-  block.querySelectorAll('.zh-cell').forEach(c => { c.textContent = '翻譯中…'; });
-
+  
+  const gridContainer = block.querySelector('.grid-container');
+  let zhSpan = gridContainer ? gridContainer.querySelector('.sentence.zh') : null;
+  
+  if (gridContainer && !zhSpan) {
+    zhSpan = document.createElement('span');
+    zhSpan.className = 'sentence zh loading';
+    gridContainer.appendChild(zhSpan);
+  }
+  if (zhSpan) zhSpan.textContent = '翻譯中...';
+  
   try {
-    const zhArr = await callTranslate(enSentences);
-    const cacheKey = `v2_${currentBookId}_${currentChapterId}_${pIdx}`;
-    await setCachedTranslation(cacheKey, JSON.stringify(zhArr));
-    applyZhToBlock(block, zhArr);
+    const results = await callTranslate([enText]);
+    const zh = results[0];
+    const cacheKey = `${currentBookId}_${currentChapterId}_${pIdx}`;
+    await setCachedTranslation(cacheKey, zh);
+    
+    if (zhDiv && enDiv) {
+      const enLinesCount = enDiv.querySelectorAll('.sentence').length;
+      const zhLines = smartZhSplit(zh, enLinesCount);
+      zhDiv.innerHTML = zhLines.map(line => wrapDialogue(line, 'zh')).join('\n');
+    }
   } catch (e) {
     console.error('Single trans error:', e);
-    block.querySelectorAll('.zh-cell').forEach(c => { c.textContent = '翻譯失敗'; });
+    if (zhDiv) zhDiv.textContent = '翻譯失敗';
   }
 };
 
@@ -1814,8 +1538,8 @@ function saveGeminiKey() {
 
       // 絲滑跟隨函式
       const follow = () => {
-        currentX += (targetX - currentX) * 0.12;
-        currentY += (targetY - currentY) * 0.12;
+        currentX += (targetX - currentX) * 0.05;
+        currentY += (targetY - currentY) * 0.05;
 
         halo.style.left = `${currentX}px`;
         halo.style.top = `${currentY}px`;
@@ -1850,74 +1574,32 @@ function saveGeminiKey() {
     }, 800);
   }
 
-  // ── 英文切句 ──
-  // 在逗號/分號語意邊界切子句（不切引號內部）
-  function splitAtClauses(text) {
-    const result = [];
-    let cur = '';
-    let depth = 0;
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      if (c === '\u201c' || c === '"') depth++;
-      else if (c === '\u201d' || c === '"') depth = Math.max(0, depth - 1);
-      cur += c;
-      if (depth === 0 && (c === ',' || c === ';') && i + 1 < text.length) {
-        const remaining = text.slice(i + 1).trimStart();
-        if (cur.trim().split(' ').length >= 5 && remaining.split(' ').length >= 5) {
-          result.push(cur.trim());
-          cur = '';
-          i++; // 跳過逗號後的空格
+  // ── Smart Chinese Split (from reader001.html) ──
+  function smartZhSplit(rawZh, lineCount) {
+    const ZH_PUNCT = /[，。、！？；…：]/;
+    const total = rawZh.length;
+    const lines = [];
+    let lastIdx = 0;
+
+    for (let i = 1; i < lineCount; i++) {
+      const target = Math.round(total * (i / lineCount));
+      const radius = Math.round(total * 0.2); // 搜尋半徑 ±20%
+      const lo = Math.max(lastIdx + 1, target - radius);
+      const hi = Math.min(total - 1, target + radius);
+
+      let bestIdx = target;
+      let minDiff = Infinity;
+      for (let j = lo; j <= hi; j++) {
+        if (ZH_PUNCT.test(rawZh[j])) {
+          const diff = Math.abs(j - target);
+          if (diff < minDiff) { minDiff = diff; bestIdx = j + 1; }
         }
       }
+      lines.push(rawZh.substring(lastIdx, bestIdx));
+      lastIdx = bestIdx;
     }
-    if (cur.trim()) result.push(cur.trim());
-    return result;
-  }
-
-  function splitEnSentences(text) {
-    const clean = text.replace(/\s+/g, ' ').trim();
-    // 按句末標點切句
-    const sentences = clean.match(/[^.!?]+[.!?]+["\u2019\u201d]?\s*/g) || [clean];
-    const chunks = [];
-    for (const sent of sentences) {
-      const s = sent.trim();
-      if (!s) continue;
-      if (s.split(' ').length > 14) {
-        // 長句進一步按逗號/分號切子句，讓中英行數對齊
-        splitAtClauses(s).forEach(c => chunks.push(c));
-      } else {
-        chunks.push(s);
-      }
-    }
-    // 太短的碎片（< 5 字）合併到前一段
-    return chunks.reduce((acc, s) => {
-      if (!s) return acc;
-      if (acc.length > 0 && s.split(' ').length < 5) {
-        acc[acc.length - 1] += ' ' + s;
-      } else {
-        acc.push(s);
-      }
-      return acc;
-    }, []);
-  }
-
-  // ── 將翻譯結果填入對應的 zh-cell ──
-  function applyZhToBlock(block, zhArr) {
-    const rows = block.querySelectorAll('.sentence-row');
-    rows.forEach((row, i) => {
-      const zhCell = row.querySelector('.zh-cell');
-      if (zhCell && zhArr[i] != null) {
-        zhCell.innerHTML = wrapDialogue(zhArr[i], 'zh');
-      }
-    });
-    // Refresh subtitle if this block is the current paragraph
-    if (window.innerWidth < 580 && paragraphs[currentParaIndex] === block) {
-      const subtitleText = document.getElementById('subtitle-text');
-      if (subtitleText) {
-        const firstZh = block.querySelector('.zh-cell');
-        if (firstZh) subtitleText.textContent = firstZh.textContent;
-      }
-    }
+    lines.push(rawZh.substring(lastIdx));
+    return lines;
   }
 
   // ── Tabs Setup ──
@@ -1938,7 +1620,7 @@ function saveGeminiKey() {
       if (!btn) return;
       container.querySelectorAll('.vt').forEach(b => b.classList.remove('on'));
       btn.classList.add('on');
-      const value = btn.dataset.theme || btn.dataset.size || btn.dataset.font || btn.dataset.order || btn.textContent;
+      const value = btn.dataset.theme || btn.dataset.size || btn.dataset.font || btn.textContent;
       localStorage.setItem(storageKey, value);
       if (applyFn) applyFn(value);
     });
@@ -1980,14 +1662,10 @@ function saveGeminiKey() {
 
   setupTabs('translator-tabs', 'translationEngine', null);
 
-  // 預設雙語播放：首次沒有儲存值時寫入 '混合' 當預設
-  if (!localStorage.getItem('voiceLang')) localStorage.setItem('voiceLang', '混合');
-
   setupTabs('voice-lang-tabs', 'voiceLang', (lang) => {
     if (lang === 'English') currentLangMode = 'en';
     else if (lang === '中文') currentLangMode = 'zh';
     else currentLangMode = 'both';
-    updateUI();
     renderV(currentLangMode);
   });
 
@@ -2003,14 +1681,13 @@ function saveGeminiKey() {
   function renderV(lang) {
     const el = document.getElementById('vlist');
     if (!el) return;
-    const isEnVoice = v => v.lang === 'en-US' || v.lang === 'en-GB';
     let vs;
     if (lang === 'en') {
-      vs = voices.filter(isEnVoice);
+      vs = voices.filter(v => v.lang.startsWith('en'));
     } else if (lang === 'zh') {
       vs = voices.filter(v => v.lang.startsWith('zh'));
     } else {
-      vs = voices.filter(v => isEnVoice(v) || v.lang.startsWith('zh'));
+      vs = voices.filter(v => v.lang.startsWith('en') || v.lang.startsWith('zh'));
     }
     if (!vs.length) { el.innerHTML = '<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
     const s = [...vs].sort((a, b) => ['n', 'p', 's'].indexOf(vq(a)) - ['n', 'p', 's'].indexOf(vq(b)));
@@ -2038,15 +1715,8 @@ function saveGeminiKey() {
         SY.speak(u);
       };
       d.onclick = () => {
-        if (lang === 'en') {
-          localStorage.setItem('selectedEnVoice', v.name);
-        } else if (lang === 'zh') {
-          localStorage.setItem('selectedZhVoice', v.name);
-        } else {
-          // 混和模式：依語音語言自動分類儲存
-          if (v.lang.startsWith('en')) localStorage.setItem('selectedEnVoice', v.name);
-          else if (v.lang.startsWith('zh')) localStorage.setItem('selectedZhVoice', v.name);
-        }
+        if (lang === 'en') localStorage.setItem('selectedEnVoice', v.name);
+        else if (lang === 'zh') localStorage.setItem('selectedZhVoice', v.name);
         alert(`已選擇語音: ${v.name}`);
       };
       el.appendChild(d);
@@ -2084,14 +1754,12 @@ function saveGeminiKey() {
   window.saveGeminiKey = function() {
     const key = document.getElementById('geminiKey').value;
     localStorage.setItem('gemini_api_key', key);
-    clearApiMissingDot();
     alert('Gemini API Key 儲存成功！');
   };
 
   window.saveDeeplKey = function() {
     const key = document.getElementById('deeplKey').value;
     localStorage.setItem('deepl_api_key', key);
-    clearApiMissingDot();
     alert('DeepL API Key 儲存成功！');
   };
 
@@ -2131,25 +1799,7 @@ function saveGeminiKey() {
     const savedOrder = localStorage.getItem('display_order') || 'en';
     document.getElementById('ord_en').classList.toggle('on', savedOrder === 'en');
     document.getElementById('ord_zh').classList.toggle('on', savedOrder === 'zh');
-
-    // ── API Key 未設定：紅點提示 + 自動展開語音設置
-    const hasKey = !!(localStorage.getItem('gemini_api_key') || localStorage.getItem('deepl_api_key'));
-    const voiceBtn = document.getElementById('btn-voice');
-    if (!hasKey) {
-      voiceBtn.classList.add('api-missing');
-      // 延遲 800ms 後自動打開語音設置面板，捲動到 API Key 輸入欄
-      setTimeout(() => {
-        popVoice.classList.add('show');
-        const apiSection = document.getElementById('gemini_section');
-        if (apiSection) apiSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 800);
-    }
   }, 100);
-
-  // 儲存 API Key 後移除紅點
-  function clearApiMissingDot() {
-    document.getElementById('btn-voice')?.classList.remove('api-missing');
-  }
 
   // ── Clear Cache ──
   const clearCacheBtn = popVoice.querySelector('button[style*="color: #ff6b6b"]');
@@ -2187,16 +1837,6 @@ function saveGeminiKey() {
     if (timeInfo && paragraphs.length > 0) {
       timeInfo.innerHTML = `${currentParaIndex + 1} / ${paragraphs.length}`;
     }
-
-    // Mobile subtitle: show first zh of current paragraph
-    if (window.innerWidth < 580) {
-      const subtitleText = document.getElementById('subtitle-text');
-      const para = paragraphs[currentParaIndex];
-      if (subtitleText && para) {
-        const firstZh = para.querySelector('.zh-cell');
-        subtitleText.textContent = firstZh ? firstZh.textContent : '…';
-      }
-    }
   }
 
   // ── Progress Bar Seek ──
@@ -2230,9 +1870,9 @@ function saveGeminiKey() {
     updateUI();
   });
 
-  document.getElementById('mL_both').addEventListener('click', () => { currentLangMode = 'both'; localStorage.setItem('voiceLang', '混合'); updateUI(); });
-  document.getElementById('mL_en').addEventListener('click', () => { currentLangMode = 'en'; localStorage.setItem('voiceLang', 'English'); updateUI(); });
-  document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; localStorage.setItem('voiceLang', '中文'); updateUI(); });
+  document.getElementById('mL_both').addEventListener('click', () => { currentLangMode = 'both'; updateUI(); });
+  document.getElementById('mL_en').addEventListener('click', () => { currentLangMode = 'en'; updateUI(); });
+  document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; updateUI(); });
 
   btnPrev.addEventListener('click', () => {
     if (currentParaIndex > 0) { currentParaIndex--; speakCurrent(); updateUI(); }
@@ -2242,372 +1882,60 @@ function saveGeminiKey() {
     if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
   });
 
-  // 6. Touch swipe for paragraph navigation
-  let touchStartX = 0, touchStartY = 0;
-  document.getElementById('reading-area').addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-
-  document.getElementById('reading-area').addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-      if (dx < 0) {
-        // swipe left → next paragraph
-        if (currentParaIndex < paragraphs.length - 1) { currentParaIndex++; speakCurrent(); updateUI(); }
-      } else {
-        // swipe right → previous paragraph
-        if (currentParaIndex > 0) { currentParaIndex--; speakCurrent(); updateUI(); }
-      }
-    }
-  }, { passive: true });
-
-  if (speedSlider) {
-    speedSlider.addEventListener('input', () => {
-      rate = parseFloat(speedSlider.value);
-      if (speedLabel) speedLabel.textContent = rate.toFixed(1) + '×';
+  speedPills.forEach(p => {
+    p.addEventListener('click', () => {
+      speedPills.forEach(b => b.classList.remove('active'));
+      p.classList.add('active');
+      rate = parseFloat(p.textContent);
     });
-  }
-
-  // ── 手機：展開/收起工具列 ──
-  const mobileExpandBtn = document.getElementById('mobile-expand');
-  const playerEl = document.getElementById('player');
-  if (mobileExpandBtn && playerEl) {
-    mobileExpandBtn.addEventListener('click', () => {
-      playerEl.classList.toggle('expanded');
-    });
-  }
-
-  // ── 手機：點速度標籤展開滑桿 ──
-  const speedLabelBtn = document.getElementById('speed-label-btn');
-  if (speedLabelBtn && playerEl) {
-    speedLabelBtn.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        playerEl.classList.toggle('speed-open');
-      }
-    });
-  }
-
-  // ── Silky Scroll (lerp rAF) ──
-  let _scrollTarget = window.scrollY;
-  let _scrollRAF = null;
-  let _lastActiveSentence = null;
-  let _autoScroll = true;   // false when user manually scrolls
-  let _readingTargetY = 0;  // last intended reading position
-
-  const _bubble = document.getElementById('back-to-reading');
-
-  function showBubble() {
-    if (_bubble) _bubble.classList.add('visible');
-  }
-  function hideBubble() {
-    if (_bubble) _bubble.classList.remove('visible');
-  }
-
-  if (_bubble) {
-    _bubble.addEventListener('click', () => {
-      _autoScroll = true;
-      hideBubble();
-      _doScrollTo(_readingTargetY, 260); // 快速回去
-    });
-  }
-
-  // 用戶手動滾動時暫停自動追蹤
-  let _userScrollTimer = null;
-  function onUserScroll() {
-    if (!isPlaying) return;
-    if (_scrollRAF) { cancelAnimationFrame(_scrollRAF); _scrollRAF = null; }
-    _autoScroll = false;
-    showBubble();
-    clearTimeout(_userScrollTimer);
-  }
-  window.addEventListener('wheel', onUserScroll, { passive: true });
-  window.addEventListener('touchstart', onUserScroll, { passive: true });
-  window.addEventListener('keydown', (e) => {
-    if (['ArrowUp','ArrowDown','PageUp','PageDown',' '].includes(e.key)) onUserScroll();
   });
-
-  function lerpScrollTo(targetY, duration = 320) {
-    _readingTargetY = Math.max(0, targetY);
-    if (!_autoScroll) return;
-    _doScrollTo(_readingTargetY, duration);
-  }
-
-  function _doScrollTo(targetY, duration) {
-    if (_scrollRAF) { cancelAnimationFrame(_scrollRAF); _scrollRAF = null; }
-    const startY = window.scrollY;
-    const dist = targetY - startY;
-    if (Math.abs(dist) < 1) return;
-    const startTime = performance.now();
-    function tick(now) {
-      const t = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 5); // ease-out quint：結尾大幅減速，便於眼球追蹤
-      window.scrollTo(0, startY + dist * eased);
-      if (t < 1) {
-        _scrollRAF = requestAnimationFrame(tick);
-      } else {
-        _scrollRAF = null;
-      }
-    }
-    _scrollRAF = requestAnimationFrame(tick);
-  }
 
   // ── Highlight Sentence ──
   function highlightSentence(paraIdx, charIndex) {
     const para = paragraphs[paraIdx];
     if (!para) return;
-    let activeEl = null;
-    const sentences = para.querySelectorAll('.en-cell.sentence');
+    const sentences = para.querySelectorAll('.en-text .sentence');
     sentences.forEach(s => {
       const start = parseInt(s.dataset.start);
       const end = parseInt(s.dataset.end);
       if (charIndex >= start && charIndex < end) {
         s.classList.add('active');
-        activeEl = s;
       } else {
         s.classList.remove('active');
       }
     });
-    updateSubtitle(paraIdx, charIndex);
-    if (!activeEl || activeEl === _lastActiveSentence) return;
-    _lastActiveSentence = activeEl;
-
-    // 桌面：同時預算下一句位置，讓動畫提前於下次高亮切換前抵達
-    const sentencesArr = [...sentences];
-    const activeIdx = sentencesArr.indexOf(activeEl);
-    const targetEl = (window.innerWidth >= 580 && activeIdx < sentencesArr.length - 1)
-      ? sentencesArr[activeIdx + 1]  // 桌面預滾到下一句
-      : activeEl;                    // 手機 / 最後一句滾到當前句
-
-    const elRect = targetEl.getBoundingClientRect();
-    if (window.innerWidth < 580) {
-      const player = document.getElementById('player');
-      const playerH = player ? player.offsetHeight : 120;
-      const targetBottom = window.innerHeight - playerH - 16;
-      lerpScrollTo(window.scrollY + elRect.bottom - targetBottom);
-    } else {
-      const centerOffset = (window.innerHeight - elRect.height) / 2;
-      lerpScrollTo(window.scrollY + elRect.top - centerOffset);
-    }
-  }
-
-  function updateSubtitle(paraIdx, charIndex) {
-    if (window.innerWidth >= 580) return;
-    const subtitleText = document.getElementById('subtitle-text');
-    if (!subtitleText) return;
-    const para = paragraphs[paraIdx];
-    if (!para) return;
-    const rows = para.querySelectorAll('.sentence-row');
-    let found = false;
-    rows.forEach(row => {
-      const enCell = row.querySelector('.en-cell.sentence');
-      if (!enCell || found) return;
-      const start = parseInt(enCell.dataset.start);
-      const end = parseInt(enCell.dataset.end);
-      if (charIndex >= start && charIndex < end) {
-        const zhCell = row.querySelector('.zh-cell');
-        if (zhCell) { subtitleText.textContent = zhCell.textContent; found = true; }
-      }
-    });
-    if (!found) {
-      const firstZh = para.querySelector('.zh-cell');
-      if (firstZh) subtitleText.textContent = firstZh.textContent;
-    }
   }
 
   // ── Speech Synthesis ──
-  const isEdge = navigator.userAgent.includes('Edg/');
-  const edgeDefaultEn = 'Microsoft AndrewMultilingual Online (Natural) - English (United States)';
-  const edgeDefaultZh = 'Microsoft YunXi Online (Natural) - Chinese (Mainland)';
-
-  function getVoice(lang) {
-    const key = lang === 'en-US' ? 'selectedEnVoice' : 'selectedZhVoice';
-    const saved = localStorage.getItem(key);
-    const fallback = isEdge ? (lang === 'en-US' ? edgeDefaultEn : edgeDefaultZh) : null;
-    const name = saved || fallback;
-    return name ? voices.find(v => v.name === name) || null : null;
-  }
-
-  function makeUtterance(text, lang) {
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = rate;
-    u.lang = lang;
-    const v = getVoice(lang);
-    if (v) u.voice = v;
-    return u;
-  }
-
-  function scrollToParaMobile(para) {
-    if (!para) return;
-    if (window.innerWidth < 580) {
-      scrollSentenceAbovePlayer(para.querySelector('.en-cell.sentence') || para);
-    } else {
-      // 桌面：新段落第一句置中
-      const firstSentence = para.querySelector('.en-cell.sentence') || para;
-      const rect = firstSentence.getBoundingClientRect();
-      const centerOffset = (window.innerHeight - rect.height) / 2;
-      lerpScrollTo(window.scrollY + rect.top - centerOffset);
-      _lastActiveSentence = null; // 重置，確保句子高亮能再次觸發滾動
-    }
-  }
-
-  function scrollSentenceAbovePlayer(el) {
-    if (!el || window.innerWidth >= 580) return;
-    const player = document.getElementById('player');
-    const playerH = player ? player.offsetHeight : 120;
-    const rect = el.getBoundingClientRect();
-    const targetBottom = window.innerHeight - playerH - 16;
-    lerpScrollTo(window.scrollY + rect.bottom - targetBottom);
-  }
-
-  // 等待 zh-cell 翻譯完成（最多等 10 秒，超時則跳過）
-  function waitForZh(zhCell, callback, maxWait = 10000) {
-    const start = Date.now();
-    const check = () => {
-      if (!isPlaying) return;
-      const text = zhCell?.textContent?.trim();
-      if (text && text !== '…') { callback(text); return; }
-      if (Date.now() - start > maxWait) { callback(null); return; }
-      setTimeout(check, 300);
-    };
-    check();
-  }
-
-  function advanceToNextChapter() {
-    if (!isAuto || !manifest) { isPlaying = false; updateUI(); return; }
-    const chapters = manifest.chapters;
-    const curIdx = chapters.findIndex(c => String(c.id) === String(currentChapterId));
-    if (curIdx === -1 || curIdx + 1 >= chapters.length) { isPlaying = false; updateUI(); return; }
-    const nextCh = chapters[curIdx + 1];
-    currentChapterId = nextCh.id;
-    const newUrl = new URL(window.location);
-    newUrl.searchParams.set('ch', nextCh.id);
-    window.history.pushState({}, '', newUrl);
-    populateSidebar();
-    _pendingAutoPlay = true;
-    loadChapter(nextCh.url);
-  }
-
   function speakCurrent() {
     SY.cancel();
     if (!isPlaying) return;
     const para = paragraphs[currentParaIndex];
     if (!para) return;
-
-    _autoScroll = true;
-    hideBubble();
-    scrollToParaMobile(para);
-
-    const isMobile = window.innerWidth < 580;
-    const rows = [...para.querySelectorAll('.sentence-row')];
+    const enText = para.querySelector('.en-text').textContent.trim();
+    const zhText = para.querySelector('.zh-text').textContent.trim();
 
     if (currentLangMode === 'both') {
-      // 手機：逐句 EN→ZH；桌面：整段 EN→整段 ZH
-      if (isMobile && rows.length > 0) {
-        speakBilingualSentences(rows, 0);
-      } else {
-        const enText = rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim();
-        const zhText = rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
-        speakBilingual(enText, zhText);
-      }
+      speakBilingual(enText, zhText);
     } else {
-      para.querySelectorAll('.en-cell.sentence').forEach(s => s.classList.remove('active'));
-
-      if (isMobile && currentLangMode === 'en' && rows.length > 0) {
-        // 手機英文模式：逐句朗讀 + 字幕同步
-        speakEnSentences(rows, 0);
-      } else {
-        const text = currentLangMode === 'en'
-          ? rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim()
-          : rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
-        const lang = currentLangMode === 'en' ? 'en-US' : 'zh-TW';
-        const u = makeUtterance(text, lang);
-        if (currentLangMode === 'en') {
-          u.onboundary = (e) => { if (e.name === 'word') highlightSentence(currentParaIndex, e.charIndex); };
-        }
-        u.onend = () => { if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); } };
-        SY.speak(u);
+      const text = currentLangMode === 'en' ? enText : zhText;
+      para.querySelectorAll('.en-text .sentence').forEach(s => s.classList.remove('active'));
+      
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = rate;
+      u.lang = currentLangMode === 'en' ? 'en-US' : 'zh-TW';
+      
+      if (currentLangMode === 'en') {
+        u.onboundary = (event) => {
+          if (event.name === 'word') {
+            highlightSentence(currentParaIndex, event.charIndex);
+          }
+        };
       }
-    }
-  }
-
-  // 手機英文模式：逐句朗讀，字幕追蹤
-  function speakEnSentences(rows, idx) {
-    if (!isPlaying || idx >= rows.length) {
-      if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
-      return;
-    }
-    const row = rows[idx];
-    const enCell = row.querySelector('.en-cell.sentence');
-    const zhCell = row.querySelector('.zh-cell');
-    const text = enCell?.textContent?.trim();
-    if (!text) { speakEnSentences(rows, idx + 1); return; }
-
-    // 高亮當前句、更新字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
-    rows.forEach(r => r.querySelector('.en-cell.sentence')?.classList.remove('active'));
-    enCell?.classList.add('active');
-    const subtitleText = document.getElementById('subtitle-text');
-    if (subtitleText && zhCell) subtitleText.textContent = zhCell.textContent || '…';
-
-    const u = makeUtterance(text, 'en-US');
-    u.onend = () => {
-      if (!isPlaying) return;
-      // 提前滾動到下一句，讓動畫先於高亮啟動
-      const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
-      if (nextCell) scrollSentenceAbovePlayer(nextCell);
-      speakEnSentences(rows, idx + 1);
-    };
-    SY.speak(u);
-  }
-
-  // 手機混和模式：逐句 EN→ZH
-  function speakBilingualSentences(rows, idx) {
-    if (!isPlaying || idx >= rows.length) {
-      if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
-      return;
-    }
-    const row = rows[idx];
-    const enCell = row.querySelector('.en-cell.sentence');
-    const zhCell = row.querySelector('.zh-cell');
-    const enText = enCell?.textContent?.trim();
-    const zhText = zhCell?.textContent?.trim();
-
-    // 高亮 + 字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
-    rows.forEach(r => r.querySelector('.en-cell.sentence')?.classList.remove('active'));
-    enCell?.classList.add('active');
-    const subtitleText = document.getElementById('subtitle-text');
-    if (subtitleText && zhCell) subtitleText.textContent = zhText || '…';
-
-    const isZhFirst = localStorage.getItem('display_order') === 'zh';
-    const parts = isZhFirst
-      ? [{ t: zhText, l: 'zh-TW' }, { t: enText, l: 'en-US' }]
-      : [{ t: enText, l: 'en-US' }, { t: zhText, l: 'zh-TW' }];
-
-    function speakPart(i) {
-      if (i >= parts.length) {
-        const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
-        if (nextCell) scrollSentenceAbovePlayer(nextCell);
-        speakBilingualSentences(rows, idx + 1);
-        return;
-      }
-      const { t, l } = parts[i];
-      if (!t) { speakPart(i + 1); return; }
-      // zh 翻譯未完成時等待，不跳過
-      if (l === 'zh-TW' && t === '…') {
-        waitForZh(zhCell, (resolved) => {
-          if (!resolved) { speakPart(i + 1); return; }
-          const u = makeUtterance(resolved, 'zh-TW');
-          u.onend = () => { if (isPlaying) speakPart(i + 1); };
-          SY.speak(u);
-        });
-        return;
-      }
-      const u = makeUtterance(t, l);
-      u.onend = () => { if (isPlaying) speakPart(i + 1); };
+      
+      u.onend = () => { if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else isPlaying = false; updateUI(); } };
       SY.speak(u);
     }
-    speakPart(0);
   }
 
   function speakBilingual(enText, zhText) {
@@ -2619,28 +1947,24 @@ function saveGeminiKey() {
 
     function speakPart(text, lang, isLast) {
       if (!text) { if (isLast && isPlaying && isAuto) skipNext(); return; }
-      // zh 翻譯未完成時等待，不跳過
-      if (lang === 'zh-TW' && text === '…') {
-        const para = paragraphs[currentParaIndex];
-        const firstZhCell = para?.querySelector('.zh-cell');
-        waitForZh(firstZhCell, (resolved) => {
-          if (!resolved || !isPlaying) { if (isLast && isAuto) skipNext(); return; }
-          const u = makeUtterance(resolved, 'zh-TW');
-          u.onend = () => { if (isPlaying && isAuto) skipNext(); };
-          SY.speak(u);
-        });
-        return;
-      }
-
+      
       const para = paragraphs[currentParaIndex];
       if (para && lang === 'en-US') {
-        para.querySelectorAll('.en-cell.sentence').forEach(s => s.classList.remove('active'));
+        para.querySelectorAll('.en-text .sentence').forEach(s => s.classList.remove('active'));
       }
-
-      const u = makeUtterance(text, lang);
+      
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = rate;
+      u.lang = lang;
+      
       if (lang === 'en-US') {
-        u.onboundary = (e) => { if (e.name === 'word') highlightSentence(currentParaIndex, e.charIndex); };
+        u.onboundary = (event) => {
+          if (event.name === 'word') {
+            highlightSentence(currentParaIndex, event.charIndex);
+          }
+        };
       }
+      
       u.onend = () => {
         if (!isPlaying) return;
         if (!isLast) speakPart(secondText, secondLang, true);
@@ -2651,8 +1975,9 @@ function saveGeminiKey() {
 
     function skipNext() {
       currentParaIndex++;
-      if (currentParaIndex < paragraphs.length) { speakCurrent(); updateUI(); }
-      else advanceToNextChapter();
+      if (currentParaIndex < paragraphs.length) speakCurrent();
+      else isPlaying = false;
+      updateUI();
     }
 
     speakPart(firstText, firstLang, false);
