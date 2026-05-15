@@ -1,0 +1,50 @@
+{
+  "title": "The Great Gatsby",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Chapter 1",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "Chapter 2",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "Chapter 3",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "Chapter 4",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "Chapter 5",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "Chapter 6",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "Chapter 7",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "Chapter 8",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "Chapter 9",
+      "url": "chapters/0009.json"
+    }
+  ]
+}

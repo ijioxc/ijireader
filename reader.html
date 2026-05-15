@@ -1412,6 +1412,7 @@
   let currentChapterTexts = [];    // 儲存當前章節的段落文字
   let currentChapterSentences = []; // [[s1,s2,...], [...], ...] 每段的切句結果
   let _pendingAutoPlay = false;    // 換章後自動繼續播放旗標
+  let _preloaded = { id: null, data: null };  // 預先載入的下一章資料
   
   // ── Dynamic Loading Functions ──
   const urlParams = new URLSearchParams(window.location.search);
@@ -1470,6 +1471,7 @@
         newUrl.searchParams.set('ch', ch.id);
         window.history.pushState({}, '', newUrl);
         
+        _preloaded = { id: null, data: null };
         loadChapter(ch.url);
         populateSidebar();
         sidebar.classList.remove('open');
@@ -1486,6 +1488,23 @@
       renderChapter(data);
     } catch (e) {
       console.error('Failed to load chapter:', e);
+    }
+  }
+
+  async function preloadNextChapter() {
+    if (!manifest) return;
+    const chapters = manifest.chapters;
+    const curIdx = chapters.findIndex(c => String(c.id) === String(currentChapterId));
+    if (curIdx === -1 || curIdx + 1 >= chapters.length) return;
+    const nextCh = chapters[curIdx + 1];
+    if (_preloaded.id === nextCh.id) return;
+    try {
+      const fullUrl = `books/${currentBookId}/${nextCh.url}`;
+      const res = await fetch(fullUrl);
+      const data = await res.json();
+      _preloaded = { id: nextCh.id, data };
+    } catch (e) {
+      console.warn('Preload next chapter failed:', e);
     }
   }
 
@@ -1565,6 +1584,7 @@
       isPlaying = true;
       setTimeout(() => { speakCurrent(); updateUI(); }, 400);
     }
+    preloadNextChapter();
   }
 
   // ── IndexedDB & Translation ──
@@ -2605,7 +2625,13 @@ function saveGeminiKey() {
     window.history.pushState({}, '', newUrl);
     populateSidebar();
     _pendingAutoPlay = true;
-    loadChapter(nextCh.url);
+    if (_preloaded.id === nextCh.id && _preloaded.data) {
+      const cached = _preloaded.data;
+      _preloaded = { id: null, data: null };
+      renderChapter(cached);
+    } else {
+      loadChapter(nextCh.url);
+    }
   }
 
   function speakCurrent() {
