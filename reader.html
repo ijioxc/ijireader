@@ -1341,6 +1341,7 @@
   const EDGE_API = 'https://web-production-ee70.up.railway.app/tts';
   let _currentAudio = null;
   let _edgeAborted = false;
+  let _speakToken = 0;  // 每次 speakCurrent 遞增，舊回調比對後自動失效
 
   const EDGE_EN_VOICES = [
     { id: 'en-US-AndrewMultilingualNeural', name: 'Andrew', accent: 'en-US' },
@@ -2640,6 +2641,9 @@ function saveGeminiKey() {
     const para = paragraphs[currentParaIndex];
     if (!para) return;
 
+    const tok = ++_speakToken;  // 本次朗讀的唯一 token
+    const alive = () => tok === _speakToken && isPlaying;
+
     _autoScroll = true;
     hideBubble();
     scrollToParaMobile(para);
@@ -2648,26 +2652,24 @@ function saveGeminiKey() {
     const rows = [...para.querySelectorAll('.sentence-row')];
 
     if (currentLangMode === 'both') {
-      // 手機：逐句 EN→ZH；桌面：整段 EN→整段 ZH
       if (isMobile && rows.length > 0) {
-        speakBilingualSentences(rows, 0);
+        speakBilingualSentences(rows, 0, alive);
       } else {
         const enText = rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim();
         const zhText = rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
-        speakBilingual(enText, zhText);
+        speakBilingual(enText, zhText, alive);
       }
     } else {
       para.querySelectorAll('.en-cell.sentence').forEach(s => s.classList.remove('active'));
 
       if (isMobile && currentLangMode === 'en' && rows.length > 0) {
-        // 手機英文模式：逐句朗讀 + 字幕同步
-        speakEnSentences(rows, 0);
+        speakEnSentences(rows, 0, alive);
       } else {
         const isEn = currentLangMode === 'en';
         const text = isEn
           ? rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim()
           : rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
-        const onEnd = () => { if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); } };
+        const onEnd = () => { if (!alive()) return; currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); };
         if (isEn) {
           speakEnglish(text, { onEnd });
         } else {
@@ -2678,18 +2680,17 @@ function saveGeminiKey() {
   }
 
   // 手機英文模式：逐句朗讀，字幕追蹤
-  function speakEnSentences(rows, idx) {
-    if (!isPlaying || idx >= rows.length) {
-      if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
+  function speakEnSentences(rows, idx, alive) {
+    if (!alive() || idx >= rows.length) {
+      if (alive()) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
       return;
     }
     const row = rows[idx];
     const enCell = row.querySelector('.en-cell.sentence');
     const zhCell = row.querySelector('.zh-cell');
     const text = enCell?.textContent?.trim();
-    if (!text) { speakEnSentences(rows, idx + 1); return; }
+    if (!text) { speakEnSentences(rows, idx + 1, alive); return; }
 
-    // 高亮當前句、更新字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
     rows.forEach(r => {
       r.querySelector('.en-cell.sentence')?.classList.remove('active');
       r.querySelector('.zh-cell')?.classList.remove('active');
@@ -2700,17 +2701,17 @@ function saveGeminiKey() {
     if (subtitleText && zhCell) subtitleText.textContent = zhCell.textContent || '…';
 
     speakEnglish(text, { onEnd: () => {
-      if (!isPlaying) return;
+      if (!alive()) return;
       const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
       if (nextCell) scrollSentenceAbovePlayer(nextCell);
-      speakEnSentences(rows, idx + 1);
+      speakEnSentences(rows, idx + 1, alive);
     }});
   }
 
   // 手機混和模式：逐句 EN→ZH
-  function speakBilingualSentences(rows, idx) {
-    if (!isPlaying || idx >= rows.length) {
-      if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
+  function speakBilingualSentences(rows, idx, alive) {
+    if (!alive() || idx >= rows.length) {
+      if (alive()) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
       return;
     }
     const row = rows[idx];
@@ -2719,7 +2720,6 @@ function saveGeminiKey() {
     const enText = enCell?.textContent?.trim();
     const zhText = zhCell?.textContent?.trim();
 
-    // 高亮 + 字幕（滾動由上一句 onend 提前觸發，第一句由 scrollToParaMobile 處理）
     rows.forEach(r => {
       r.querySelector('.en-cell.sentence')?.classList.remove('active');
       r.querySelector('.zh-cell')?.classList.remove('active');
@@ -2736,17 +2736,18 @@ function saveGeminiKey() {
 
     function speakPart(i) {
       if (i >= parts.length) {
+        if (!alive()) return;
         const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
         if (nextCell) scrollSentenceAbovePlayer(nextCell);
-        speakBilingualSentences(rows, idx + 1);
+        speakBilingualSentences(rows, idx + 1, alive);
         return;
       }
       const { t, l } = parts[i];
       if (!t) { speakPart(i + 1); return; }
-      const next = () => { if (isPlaying) speakPart(i + 1); };
+      const next = () => { if (alive()) speakPart(i + 1); };
       if (l === 'zh-TW' && t === '…') {
         waitForZh(zhCell, (resolved) => {
-          if (!resolved) { speakPart(i + 1); return; }
+          if (!alive() || !resolved) { speakPart(i + 1); return; }
           speakChinese(resolved, { onEnd: next });
         });
         return;
@@ -2757,7 +2758,7 @@ function saveGeminiKey() {
     speakPart(0);
   }
 
-  function speakBilingual(enText, zhText) {
+  function speakBilingual(enText, zhText, alive) {
     const isZhFirst = localStorage.getItem('display_order') === 'zh';
     const firstText = isZhFirst ? zhText : enText;
     const firstLang = isZhFirst ? 'zh-TW' : 'en-US';
@@ -2765,9 +2766,9 @@ function saveGeminiKey() {
     const secondLang = isZhFirst ? 'en-US' : 'zh-TW';
 
     function speakPart(text, lang, isLast) {
-      if (!text) { if (isLast && isPlaying && isAuto) skipNext(); return; }
+      if (!text) { if (isLast && alive() && isAuto) skipNext(); return; }
       const onEnd = () => {
-        if (!isPlaying) return;
+        if (!alive()) return;
         if (!isLast) speakPart(secondText, secondLang, true);
         else if (isAuto) skipNext();
       };
@@ -2775,7 +2776,7 @@ function saveGeminiKey() {
         const para = paragraphs[currentParaIndex];
         const firstZhCell = para?.querySelector('.zh-cell');
         waitForZh(firstZhCell, (resolved) => {
-          if (!resolved || !isPlaying) { if (isLast && isAuto) skipNext(); return; }
+          if (!alive() || !resolved) { if (isLast && isAuto) skipNext(); return; }
           speakChinese(resolved, { onEnd });
         });
         return;
