@@ -1336,6 +1336,74 @@
   let rate = 1.0;
   const SY = window.speechSynthesis;
   let voices = [];
+
+  // ── Edge TTS ──
+  const EDGE_API = 'http://127.0.0.1:8000/tts';
+  let _currentAudio = null;
+  let _edgeAborted = false;
+
+  const EDGE_EN_VOICES = [
+    { id: 'en-US-AndrewMultilingualNeural', name: 'Andrew', accent: 'en-US' },
+    { id: 'en-US-AriaNeural',               name: 'Aria',   accent: 'en-US' },
+    { id: 'en-US-GuyNeural',                name: 'Guy',    accent: 'en-US' },
+    { id: 'en-US-JennyNeural',              name: 'Jenny',  accent: 'en-US' },
+    { id: 'en-GB-RyanNeural',               name: 'Ryan',   accent: 'en-GB' },
+    { id: 'en-GB-SoniaNeural',              name: 'Sonia',  accent: 'en-GB' },
+  ];
+  const EDGE_ZH_VOICES = [
+    { id: 'zh-TW-HsiaoChenNeural', name: '曉臻', accent: 'zh-TW' },
+    { id: 'zh-TW-YunJheNeural',    name: '雲哲', accent: 'zh-TW' },
+    { id: 'zh-CN-XiaoxiaoNeural',  name: '曉曉', accent: 'zh-CN' },
+    { id: 'zh-CN-YunxiNeural',     name: '雲希', accent: 'zh-CN' },
+  ];
+
+  function getEdgeRate() {
+    const pct = Math.round((rate - 1) * 100);
+    return (pct >= 0 ? '+' : '') + pct + '%';
+  }
+  function getEdgeEnVoice() {
+    return localStorage.getItem('selectedEdgeEnVoice') || 'en-US-AndrewMultilingualNeural';
+  }
+  function getEdgeZhVoice() {
+    return localStorage.getItem('selectedEdgeZhVoice') || 'zh-TW-HsiaoChenNeural';
+  }
+
+  function cancelEdge() {
+    _edgeAborted = true;
+    if (_currentAudio) {
+      _currentAudio.pause();
+      _currentAudio.src = '';
+      _currentAudio = null;
+    }
+  }
+  function cancelAll() {
+    cancelEdge();
+    SY.cancel();
+  }
+
+  function speakEdge(text, voice, { onEnd } = {}) {
+    _edgeAborted = false;
+    const url = `${EDGE_API}?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}&rate=${encodeURIComponent(getEdgeRate())}`;
+    const audio = new Audio(url);
+    _currentAudio = audio;
+    audio.onended = () => { if (!_edgeAborted) onEnd?.(); };
+    audio.onerror = () => {
+      // Server 無回應時退回 Web Speech API
+      if (_edgeAborted) return;
+      const lang = voice.startsWith('zh') ? 'zh-TW' : 'en-US';
+      const u = makeUtterance(text, lang);
+      u.onend = onEnd;
+      SY.speak(u);
+    };
+    audio.play().catch(() => { if (!_edgeAborted) onEnd?.(); });
+  }
+
+  function speakEnglish(text, { onEnd } = {}) {
+    speakEdge(text, getEdgeEnVoice(), { onEnd });
+  }
+  function speakChinese(text, { onEnd } = {}) {
+    speakEdge(text, getEdgeZhVoice(), { onEnd });
+  }
   
   // ── Dynamic Loading State ──
   let currentBookId = 'lotm';
@@ -2043,54 +2111,51 @@ function saveGeminiKey() {
   function renderV(lang) {
     const el = document.getElementById('vlist');
     if (!el) return;
-    const isEnVoice = v => v.lang === 'en-US' || v.lang === 'en-GB';
-    let vs;
-    if (lang === 'en') {
-      vs = voices.filter(isEnVoice);
-    } else if (lang === 'zh') {
-      vs = voices.filter(v => v.lang.startsWith('zh'));
-    } else {
-      vs = voices.filter(v => isEnVoice(v) || v.lang.startsWith('zh'));
-    }
-    if (!vs.length) { el.innerHTML = '<div style="font-size:10px;padding:6px;color:var(--t3)">未找到語音</div>'; return; }
-    const s = [...vs].sort((a, b) => ['n', 'p', 's'].indexOf(vq(a)) - ['n', 'p', 's'].indexOf(vq(b)));
     el.innerHTML = '';
-    s.forEach(v => {
-      const q = vq(v), ql = { n: 'neural', p: 'premium', s: 'std' }[q];
+
+    function makeVoiceCard(v, isEn) {
+      const storageKey = isEn ? 'selectedEdgeEnVoice' : 'selectedEdgeZhVoice';
+      const savedId = localStorage.getItem(storageKey) || (isEn ? 'en-US-AndrewMultilingualNeural' : 'zh-TW-HsiaoChenNeural');
+      const isSelected = v.id === savedId;
       const d = document.createElement('div');
-      d.style.cssText = "background: var(--bg2); border: 1px solid var(--b1); border-radius: 6px; padding: 8px; display: flex; justify-content: space-between; align-items: center;";
+      d.style.cssText = `background:${isSelected ? 'var(--gold-dim)' : 'var(--bg2)'};border:1px solid ${isSelected ? 'var(--gold)' : 'var(--b1)'};border-radius:6px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:4px;`;
       d.innerHTML = `
         <div>
-          <div style="font-size: 12px; color: var(--t1);">${v.name}</div>
-          <div style="font-size: 9px; color: var(--t3);">${v.lang}</div>
+          <div style="font-size:12px;color:var(--t1);">${v.name}</div>
+          <div style="font-size:9px;color:var(--t3);">${v.accent}</div>
         </div>
-        <div style="display: flex; align-items: center; gap: 5px;">
-          <span style="font-size: 9px; color: #8bbfcf; border: 0.5px solid #8bbfcf; padding: 1px 4px; border-radius: 3px;">${ql}</span>
-          <button style="background: transparent; border: none; color: var(--t2); cursor: pointer;" aria-label="播放測試">▶</button>
-        </div>
-      `;
+        <div style="display:flex;align-items:center;gap:5px;">
+          <span style="font-size:9px;color:#8bbfcf;border:0.5px solid #8bbfcf;padding:1px 4px;border-radius:3px;">neural</span>
+          <button style="background:transparent;border:none;color:var(--t2);cursor:pointer;" aria-label="播放測試">▶</button>
+        </div>`;
       d.querySelector('button').onclick = (e) => {
         e.stopPropagation();
-        SY.cancel();
-        const u = new SpeechSynthesisUtterance("This is a test.");
-        u.voice = v;
-        u.lang = v.lang;
-        SY.speak(u);
+        cancelAll();
+        const sample = isEn ? 'This is a test.' : '這是測試音訊。';
+        speakEdge(sample, v.id);
       };
       d.onclick = () => {
-        if (lang === 'en') {
-          localStorage.setItem('selectedEnVoice', v.name);
-        } else if (lang === 'zh') {
-          localStorage.setItem('selectedZhVoice', v.name);
-        } else {
-          // 混和模式：依語音語言自動分類儲存
-          if (v.lang.startsWith('en')) localStorage.setItem('selectedEnVoice', v.name);
-          else if (v.lang.startsWith('zh')) localStorage.setItem('selectedZhVoice', v.name);
-        }
-        alert(`已選擇語音: ${v.name}`);
+        localStorage.setItem(storageKey, v.id);
+        renderV(currentLangMode);
       };
-      el.appendChild(d);
-    });
+      return d;
+    }
+
+    function sectionLabel(text) {
+      const h = document.createElement('div');
+      h.style.cssText = 'font-size:9px;color:var(--t3);margin:8px 0 5px;text-transform:uppercase;letter-spacing:1px;';
+      h.textContent = text;
+      return h;
+    }
+
+    if (lang === 'en' || lang === 'both') {
+      el.appendChild(sectionLabel('英文語音 (Edge TTS)'));
+      EDGE_EN_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, true)));
+    }
+    if (lang === 'zh' || lang === 'both') {
+      el.appendChild(sectionLabel('中文語音 (Edge TTS)'));
+      EDGE_ZH_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, false)));
+    }
   }
 
   function loadVoices() {
@@ -2107,18 +2172,6 @@ function saveGeminiKey() {
     }
   }, 3000);
 
-  popVoice.addEventListener('click', (e) => {
-    if (e.target.tagName === 'BUTTON' && e.target.getAttribute('aria-label') === '播放測試') {
-      const card = e.target.closest('div[style*="background: var(--bg2)"]');
-      const name = card.querySelector('div[style*="font-size: 12px"]').textContent.trim() || card.querySelector('div[style*="font-size: 11px"]').textContent.trim();
-      const voice = voices.find(v => v.name.includes(name));
-      const u = new SpeechSynthesisUtterance("This is a test.");
-      if (voice) u.voice = voice;
-      u.lang = voice ? voice.lang : 'en-US';
-      SY.cancel();
-      SY.speak(u);
-    }
-  });
 
   // ── API Key Storage ──
   window.saveGeminiKey = function() {
@@ -2539,7 +2592,7 @@ function saveGeminiKey() {
   }
 
   function speakCurrent() {
-    SY.cancel();
+    cancelAll();
     if (!isPlaying) return;
     const para = paragraphs[currentParaIndex];
     if (!para) return;
@@ -2567,16 +2620,16 @@ function saveGeminiKey() {
         // 手機英文模式：逐句朗讀 + 字幕同步
         speakEnSentences(rows, 0);
       } else {
-        const text = currentLangMode === 'en'
+        const isEn = currentLangMode === 'en';
+        const text = isEn
           ? rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim()
           : rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
-        const lang = currentLangMode === 'en' ? 'en-US' : 'zh-TW';
-        const u = makeUtterance(text, lang);
-        if (currentLangMode === 'en') {
-          u.onboundary = (e) => { if (e.name === 'word') highlightSentence(currentParaIndex, e.charIndex); };
+        const onEnd = () => { if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); } };
+        if (isEn) {
+          speakEnglish(text, { onEnd });
+        } else {
+          speakChinese(text, { onEnd });
         }
-        u.onend = () => { if (isPlaying && isAuto) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); } };
-        SY.speak(u);
       }
     }
   }
@@ -2603,15 +2656,12 @@ function saveGeminiKey() {
     const subtitleText = document.getElementById('subtitle-text');
     if (subtitleText && zhCell) subtitleText.textContent = zhCell.textContent || '…';
 
-    const u = makeUtterance(text, 'en-US');
-    u.onend = () => {
+    speakEnglish(text, { onEnd: () => {
       if (!isPlaying) return;
-      // 提前滾動到下一句，讓動畫先於高亮啟動
       const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
       if (nextCell) scrollSentenceAbovePlayer(nextCell);
       speakEnSentences(rows, idx + 1);
-    };
-    SY.speak(u);
+    }});
   }
 
   // 手機混和模式：逐句 EN→ZH
@@ -2650,19 +2700,16 @@ function saveGeminiKey() {
       }
       const { t, l } = parts[i];
       if (!t) { speakPart(i + 1); return; }
-      // zh 翻譯未完成時等待，不跳過
+      const next = () => { if (isPlaying) speakPart(i + 1); };
       if (l === 'zh-TW' && t === '…') {
         waitForZh(zhCell, (resolved) => {
           if (!resolved) { speakPart(i + 1); return; }
-          const u = makeUtterance(resolved, 'zh-TW');
-          u.onend = () => { if (isPlaying) speakPart(i + 1); };
-          SY.speak(u);
+          speakChinese(resolved, { onEnd: next });
         });
         return;
       }
-      const u = makeUtterance(t, l);
-      u.onend = () => { if (isPlaying) speakPart(i + 1); };
-      SY.speak(u);
+      if (l === 'en-US') { speakEnglish(t, { onEnd: next }); return; }
+      speakChinese(t, { onEnd: next });
     }
     speakPart(0);
   }
@@ -2676,34 +2723,22 @@ function saveGeminiKey() {
 
     function speakPart(text, lang, isLast) {
       if (!text) { if (isLast && isPlaying && isAuto) skipNext(); return; }
-      // zh 翻譯未完成時等待，不跳過
+      const onEnd = () => {
+        if (!isPlaying) return;
+        if (!isLast) speakPart(secondText, secondLang, true);
+        else if (isAuto) skipNext();
+      };
       if (lang === 'zh-TW' && text === '…') {
         const para = paragraphs[currentParaIndex];
         const firstZhCell = para?.querySelector('.zh-cell');
         waitForZh(firstZhCell, (resolved) => {
           if (!resolved || !isPlaying) { if (isLast && isAuto) skipNext(); return; }
-          const u = makeUtterance(resolved, 'zh-TW');
-          u.onend = () => { if (isPlaying && isAuto) skipNext(); };
-          SY.speak(u);
+          speakChinese(resolved, { onEnd });
         });
         return;
       }
-
-      const para = paragraphs[currentParaIndex];
-      if (para && lang === 'en-US') {
-        para.querySelectorAll('.en-cell.sentence').forEach(s => s.classList.remove('active'));
-      }
-
-      const u = makeUtterance(text, lang);
-      if (lang === 'en-US') {
-        u.onboundary = (e) => { if (e.name === 'word') highlightSentence(currentParaIndex, e.charIndex); };
-      }
-      u.onend = () => {
-        if (!isPlaying) return;
-        if (!isLast) speakPart(secondText, secondLang, true);
-        else if (isAuto) skipNext();
-      };
-      SY.speak(u);
+      if (lang === 'en-US') { speakEnglish(text, { onEnd }); return; }
+      speakChinese(text, { onEnd });
     }
 
     function skipNext() {
@@ -2727,7 +2762,10 @@ function saveGeminiKey() {
 
   // ── Keyboard Shortcuts ──
   document.addEventListener('keydown', (e) => {
-    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+    const tag = document.activeElement.tagName;
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
+    // Space/arrow on focusable elements (button, a, range) — let browser fire the native click
+    if (['BUTTON', 'A'].includes(tag) && (e.key === ' ' || e.key === 'Enter')) return;
     if (e.key === 't' || e.key === 'T') {
       e.preventDefault();
       translatePara(currentParaIndex);
@@ -2735,7 +2773,7 @@ function saveGeminiKey() {
     if (e.key === ' ') {
       e.preventDefault();
       isPlaying = !isPlaying;
-      if (isPlaying) speakCurrent(); else { SY.cancel(); clearHighlights(); }
+      if (isPlaying) speakCurrent(); else { cancelAll(); clearHighlights(); }
       updateUI();
     }
     if (e.key === 'ArrowLeft') {
