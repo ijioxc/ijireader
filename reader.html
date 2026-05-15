@@ -2000,24 +2000,25 @@ function saveGeminiKey() {
     return result.trim();
   }
 
-// ZH：掃描所有標點，兩側各 > 4 漢字即插 <br>（自然斷行，不綁定 EN）
-  function breakZhNaturally(text) {
-    const MIN = 4;
-    let result = '';
-    let segStart = 0;
-    for (let i = 0; i < text.length; i++) {
-      if ('，。；！？'.includes(text[i])) {
-        const seg = text.slice(segStart, i + 1);
-        const beforeCJK = (seg.match(/[一-鿿㐀-䶿]/g) || []).length;
-        const afterCJK  = (text.slice(i + 1).match(/[一-鿿㐀-䶿]/g) || []).length;
-        if (beforeCJK > MIN && afterCJK > MIN) {
-          result += seg + '<br>';
-          segStart = i + 1;
-        }
+  // ZH：貪婪遞迴，在最佳中點附近找標點插 <br>，兩側各需 ≥ 2 漢字（允許短連接詞獨行）
+  function _insertZhBreaks(text, count) {
+    if (count <= 0 || !text) return text;
+    const target = Math.floor(text.length / (count + 1));
+    let best = -1;
+    for (let d = 0; d <= 12; d++) {
+      for (const pos of [target + d, target - d]) {
+        if (pos <= 0 || pos >= text.length - 1) continue;
+        if (!'，。；！？'.includes(text[pos])) continue;
+        const beforeCJK = (text.slice(0, pos + 1).match(/[一-鿿㐀-䶿]/g) || []).length;
+        const afterCJK  = (text.slice(pos + 1).match(/[一-鿿㐀-䶿]/g) || []).length;
+        if (beforeCJK >= 2 && afterCJK >= 2) { best = pos; break; }
       }
+      if (best !== -1) break;
     }
-    result += text.slice(segStart);
-    return result;
+    if (best === -1) return text;
+    const left = text.slice(0, best + 1);
+    const right = text.slice(best + 1).trimStart();
+    return left + '<br>' + _insertZhBreaks(right, count - 1);
   }
 
   // ── 將翻譯結果填入對應的 zh-cell，同步更新 en-cell 逗號斷行 ──
@@ -2028,13 +2029,16 @@ function saveGeminiKey() {
       const zhCell = row.querySelector('.zh-cell');
       if (!zhCell || zhArr[i] == null) return;
 
-      // EN：確保逗號斷行（renderChapter 已設，此處補保險）
+      // EN：確保逗號斷行
       const rawEn = enCell?.textContent?.trim() || '';
-      if (enCell) enCell.innerHTML = wrapDialogue(insertEnBreaks(rawEn), 'en');
+      const enHTML = insertEnBreaks(rawEn);
+      if (enCell) enCell.innerHTML = wrapDialogue(enHTML, 'en');
 
-      // ZH：自然斷行
+      // ZH：對齊 EN 的 <br> 數量
+      const enBreaks = (enHTML.match(/<br>/g) || []).length;
       const cleanZh = zhArr[i].replace(/<br\s*\/?>/gi, '');
-      zhCell.innerHTML = wrapDialogue(breakZhNaturally(cleanZh), 'zh');
+      const zhHTML = enBreaks > 0 ? _insertZhBreaks(cleanZh, enBreaks) : cleanZh;
+      zhCell.innerHTML = wrapDialogue(zhHTML, 'zh');
     });
     // 手機字幕同步
     if (window.innerWidth < 580 && paragraphs[currentParaIndex] === block) {
