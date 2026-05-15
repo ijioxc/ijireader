@@ -2751,7 +2751,8 @@ function saveGeminiKey() {
       const next = () => { if (alive()) speakPart(i + 1); };
       if (l === 'zh-TW' && t === '…') {
         waitForZh(zhCell, (resolved) => {
-          if (!alive() || !resolved) { speakPart(i + 1); return; }
+          if (!alive()) return;
+          if (!resolved) { speakPart(i + 1); return; }
           speakChinese(resolved, { onEnd: next });
         });
         return;
@@ -2780,7 +2781,8 @@ function saveGeminiKey() {
         const para = paragraphs[currentParaIndex];
         const firstZhCell = para?.querySelector('.zh-cell');
         waitForZh(firstZhCell, (resolved) => {
-          if (!alive() || !resolved) { if (isLast && isAuto) skipNext(); return; }
+          if (!alive()) return;
+          if (!resolved) { if (isLast && isAuto) skipNext(); return; }
           speakChinese(resolved, { onEnd });
         });
         return;
