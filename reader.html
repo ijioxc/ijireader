@@ -1384,19 +1384,23 @@
 
   function speakEdge(text, voice, { onEnd } = {}) {
     _edgeAborted = false;
+    let _resolved = false;
+    // onerror 與 play().catch() 可能同時觸發，用 _resolved 確保只走一條路徑
+    const safeEnd = () => { if (!_resolved && !_edgeAborted) { _resolved = true; onEnd?.(); } };
     const url = `${EDGE_API}?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}&rate=${encodeURIComponent(getEdgeRate())}`;
     const audio = new Audio(url);
     _currentAudio = audio;
     audio.onended = () => { if (!_edgeAborted) onEnd?.(); };
     audio.onerror = () => {
       // Server 無回應時退回 Web Speech API
-      if (_edgeAborted) return;
+      if (_edgeAborted || _resolved) return;
+      _resolved = true;
       const lang = voice.startsWith('zh') ? 'zh-TW' : 'en-US';
       const u = makeUtterance(text, lang);
       u.onend = onEnd;
       SY.speak(u);
     };
-    audio.play().catch(() => { if (!_edgeAborted) onEnd?.(); });
+    audio.play().catch(() => safeEnd());
   }
 
   function speakEnglish(text, { onEnd } = {}) {
@@ -2793,16 +2797,6 @@ function saveGeminiKey() {
 
     speakPart(firstText, firstLang, false);
   }
-
-  // ── Click to play paragraph ──
-  paragraphs.forEach((p, i) => {
-    p.addEventListener('click', () => {
-      currentParaIndex = i;
-      isPlaying = true;
-      speakCurrent();
-      updateUI();
-    });
-  });
 
   // ── Keyboard Shortcuts ──
   document.addEventListener('keydown', (e) => {
