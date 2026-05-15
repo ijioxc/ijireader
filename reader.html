@@ -1134,7 +1134,8 @@
     <div class="ctrl-left">
       <button class="ctrl-btn" id="btn-autoplay" style="width: auto; padding: 0 10px;"><div class="adot"></div>自動播放</button>
       <div id="mg-lang">
-        <button class="mb on" id="mL_both">E/中</button>
+        <button class="mb on" id="mL_mixed">混合</button>
+        <button class="mb" id="mL_relay">接力</button>
         <button class="mb" id="mL_en">E</button>
         <button class="mb" id="mL_zh">中</button>
       </div>
@@ -1207,9 +1208,10 @@
   <!-- 朗讀語音 -->
   <div style="font-size: 11px; color: var(--t2); margin-bottom: 5px;">◆ 朗讀語音</div>
   <div class="vtabs" id="voice-lang-tabs">
-    <button class="vt on">English</button>
+    <button class="vt on">混合</button>
+    <button class="vt">接力</button>
+    <button class="vt">English</button>
     <button class="vt">中文</button>
-    <button class="vt">混合</button>
   </div>
 
   <!-- 語音列表 -->
@@ -1220,8 +1222,9 @@
   <!-- 運作模式 -->
   <div style="font-size: 10px; color: var(--t3); line-height: 1.4; margin-bottom: 10px; padding: 0 5px;">
     運作模式：<br>
-    • 於 English / 中文 選取：中英拆段各自用專屬語音，高亮精準。<br>
-    • 於 混合 選取：中英整串合併丟給語音，播放最流暢。
+    • 混合：用單一多語言語音朗讀中英，語音流暢自然。<br>
+    • 接力：英文語音讀英文 → 中文語音讀中文，各自選聲。<br>
+    • E / 中：只朗讀單一語言。
   </div>
 
   <!-- 語音品質 -->
@@ -1332,7 +1335,7 @@
   let currentParaIndex = 0;
   let isPlaying = false;
   let isAuto = true;
-  let currentLangMode = 'both'; // 'en', 'zh', 'both'
+  let currentLangMode = 'mixed'; // 'en', 'zh', 'relay', 'mixed'
   let rate = 1.0;
   const SY = window.speechSynthesis;
   let voices = [];
@@ -1357,6 +1360,7 @@
     { id: 'zh-CN-XiaoxiaoNeural',  name: '曉曉', accent: 'zh-CN' },
     { id: 'zh-CN-YunxiNeural',     name: '雲希', accent: 'zh-CN' },
   ];
+  const EDGE_MULTILINGUAL_VOICES = EDGE_EN_VOICES.filter(v => v.id.includes('Multilingual'));
 
   function getEdgeRate() {
     const pct = Math.round((rate - 1) * 100);
@@ -1367,6 +1371,12 @@
   }
   function getEdgeZhVoice() {
     return localStorage.getItem('selectedEdgeZhVoice') || 'zh-TW-HsiaoChenNeural';
+  }
+  function getEdgeMixedVoice() {
+    return localStorage.getItem('selectedEdgeMixedVoice') || 'en-US-AndrewMultilingualNeural';
+  }
+  function speakMixed(text, { onEnd } = {}) {
+    speakEdge(text, getEdgeMixedVoice(), { onEnd });
   }
 
   function cancelEdge() {
@@ -2136,7 +2146,8 @@ function saveGeminiKey() {
   setupTabs('voice-lang-tabs', 'voiceLang', (lang) => {
     if (lang === 'English') currentLangMode = 'en';
     else if (lang === '中文') currentLangMode = 'zh';
-    else currentLangMode = 'both';
+    else if (lang === '接力') currentLangMode = 'relay';
+    else currentLangMode = 'mixed';
     updateUI();
     renderV(currentLangMode);
   });
@@ -2155,9 +2166,8 @@ function saveGeminiKey() {
     if (!el) return;
     el.innerHTML = '';
 
-    function makeVoiceCard(v, isEn) {
-      const storageKey = isEn ? 'selectedEdgeEnVoice' : 'selectedEdgeZhVoice';
-      const savedId = localStorage.getItem(storageKey) || (isEn ? 'en-US-AndrewMultilingualNeural' : 'zh-TW-HsiaoChenNeural');
+    function makeVoiceCard(v, storageKey, sampleText) {
+      const savedId = localStorage.getItem(storageKey) || v.id;
       const isSelected = v.id === savedId;
       const d = document.createElement('div');
       d.style.cssText = `background:${isSelected ? 'var(--gold-dim)' : 'var(--bg2)'};border:1px solid ${isSelected ? 'var(--gold)' : 'var(--b1)'};border-radius:6px;padding:8px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:4px;`;
@@ -2172,9 +2182,9 @@ function saveGeminiKey() {
         </div>`;
       d.querySelector('button').onclick = (e) => {
         e.stopPropagation();
+        ++_speakToken;
         cancelAll();
-        const sample = isEn ? 'This is a test.' : '這是測試音訊。';
-        speakEdge(sample, v.id);
+        speakEdge(sampleText, v.id);
       };
       d.onclick = () => {
         localStorage.setItem(storageKey, v.id);
@@ -2190,13 +2200,17 @@ function saveGeminiKey() {
       return h;
     }
 
-    if (lang === 'en' || lang === 'both') {
-      el.appendChild(sectionLabel('英文語音 (Edge TTS)'));
-      EDGE_EN_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, true)));
+    if (lang === 'mixed') {
+      el.appendChild(sectionLabel('多語言語音 (Edge TTS)'));
+      EDGE_MULTILINGUAL_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, 'selectedEdgeMixedVoice', 'Hello! 這是測試音訊。')));
     }
-    if (lang === 'zh' || lang === 'both') {
+    if (lang === 'en' || lang === 'relay') {
+      el.appendChild(sectionLabel('英文語音 (Edge TTS)'));
+      EDGE_EN_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, 'selectedEdgeEnVoice', 'This is a test.')));
+    }
+    if (lang === 'zh' || lang === 'relay') {
       el.appendChild(sectionLabel('中文語音 (Edge TTS)'));
-      EDGE_ZH_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, false)));
+      EDGE_ZH_VOICES.forEach(v => el.appendChild(makeVoiceCard(v, 'selectedEdgeZhVoice', '這是測試音訊。')));
     }
   }
 
@@ -2299,10 +2313,12 @@ function saveGeminiKey() {
     btnPlay.innerHTML = isPlaying ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
     btnAutoplay.classList.toggle('on', isAuto);
     
-    const mL_both = document.getElementById('mL_both');
+    const mL_mixed = document.getElementById('mL_mixed');
+    const mL_relay = document.getElementById('mL_relay');
     const mL_en = document.getElementById('mL_en');
     const mL_zh = document.getElementById('mL_zh');
-    if (mL_both) mL_both.classList.toggle('on', currentLangMode === 'both');
+    if (mL_mixed) mL_mixed.classList.toggle('on', currentLangMode === 'mixed');
+    if (mL_relay) mL_relay.classList.toggle('on', currentLangMode === 'relay');
     if (mL_en) mL_en.classList.toggle('on', currentLangMode === 'en');
     if (mL_zh) mL_zh.classList.toggle('on', currentLangMode === 'zh');
 
@@ -2369,9 +2385,10 @@ function saveGeminiKey() {
     updateUI();
   });
 
-  document.getElementById('mL_both').addEventListener('click', () => { currentLangMode = 'both'; localStorage.setItem('voiceLang', '混合'); updateUI(); });
-  document.getElementById('mL_en').addEventListener('click', () => { currentLangMode = 'en'; localStorage.setItem('voiceLang', 'English'); updateUI(); });
-  document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; localStorage.setItem('voiceLang', '中文'); updateUI(); });
+  document.getElementById('mL_mixed').addEventListener('click', () => { currentLangMode = 'mixed'; localStorage.setItem('voiceLang', '混合'); updateUI(); renderV('mixed'); });
+  document.getElementById('mL_relay').addEventListener('click', () => { currentLangMode = 'relay'; localStorage.setItem('voiceLang', '接力'); updateUI(); renderV('relay'); });
+  document.getElementById('mL_en').addEventListener('click', () => { currentLangMode = 'en'; localStorage.setItem('voiceLang', 'English'); updateUI(); renderV('en'); });
+  document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; localStorage.setItem('voiceLang', '中文'); updateUI(); renderV('zh'); });
 
   btnPrev.addEventListener('click', () => {
     clearHighlights();
@@ -2655,13 +2672,21 @@ function saveGeminiKey() {
     const isMobile = window.innerWidth < 580;
     const rows = [...para.querySelectorAll('.sentence-row')];
 
-    if (currentLangMode === 'both') {
+    if (currentLangMode === 'relay') {
       if (isMobile && rows.length > 0) {
         speakBilingualSentences(rows, 0, alive);
       } else {
         const enText = rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim();
         const zhText = rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
         speakBilingual(enText, zhText, alive);
+      }
+    } else if (currentLangMode === 'mixed') {
+      if (isMobile && rows.length > 0) {
+        speakMixedSentences(rows, 0, alive);
+      } else {
+        const enText = rows.map(r => r.querySelector('.en-cell')?.textContent || '').join(' ').trim();
+        const zhText = rows.map(r => r.querySelector('.zh-cell')?.textContent || '').join('').trim();
+        speakMixedBilingual(enText, zhText, alive);
       }
     } else {
       para.querySelectorAll('.en-cell.sentence').forEach(s => s.classList.remove('active'));
@@ -2798,6 +2823,82 @@ function saveGeminiKey() {
     }
 
     speakPart(firstText, firstLang, false);
+  }
+
+  // 桌機混合模式：用同一個多語言語音讀中英（依顯示順序）
+  function speakMixedBilingual(enText, zhText, alive) {
+    const isZhFirst = localStorage.getItem('display_order') === 'zh';
+    const firstText = isZhFirst ? zhText : enText;
+    const secondText = isZhFirst ? enText : zhText;
+
+    function skipNext() {
+      currentParaIndex++;
+      if (currentParaIndex < paragraphs.length) { speakCurrent(); updateUI(); }
+      else advanceToNextChapter();
+    }
+
+    const onSecondEnd = () => { if (alive() && isAuto) skipNext(); };
+    const onFirstEnd = () => {
+      if (!alive()) return;
+      if (secondText) speakMixed(secondText, { onEnd: onSecondEnd });
+      else if (isAuto) skipNext();
+    };
+
+    if (firstText) {
+      speakMixed(firstText, { onEnd: onFirstEnd });
+    } else if (secondText) {
+      speakMixed(secondText, { onEnd: onSecondEnd });
+    }
+  }
+
+  // 手機混合模式：逐句用同一個多語言語音讀中英
+  function speakMixedSentences(rows, idx, alive) {
+    if (!alive() || idx >= rows.length) {
+      if (alive()) { currentParaIndex++; if (currentParaIndex < paragraphs.length) speakCurrent(); else advanceToNextChapter(); }
+      return;
+    }
+    const row = rows[idx];
+    const enCell = row.querySelector('.en-cell.sentence');
+    const zhCell = row.querySelector('.zh-cell');
+    const enText = enCell?.textContent?.trim();
+    const zhText = zhCell?.textContent?.trim();
+
+    rows.forEach(r => {
+      r.querySelector('.en-cell.sentence')?.classList.remove('active');
+      r.querySelector('.zh-cell')?.classList.remove('active');
+    });
+    enCell?.classList.add('active');
+    zhCell?.classList.add('active');
+    const subtitleText = document.getElementById('subtitle-text');
+    if (subtitleText && zhCell) subtitleText.textContent = zhText || '…';
+
+    const isZhFirst = localStorage.getItem('display_order') === 'zh';
+    const texts = isZhFirst ? [zhText, enText] : [enText, zhText];
+
+    function speakPart(i) {
+      if (i >= texts.length) {
+        if (!alive()) return;
+        const nextCell = rows[idx + 1]?.querySelector('.en-cell.sentence');
+        if (nextCell) scrollSentenceAbovePlayer(nextCell);
+        speakMixedSentences(rows, idx + 1, alive);
+        return;
+      }
+      const t = texts[i];
+      if (!t || t === '…') {
+        if (i === (isZhFirst ? 0 : 1) && t === '…') {
+          waitForZh(zhCell, (resolved) => {
+            if (!alive()) return;
+            if (!resolved) { speakPart(i + 1); return; }
+            speakMixed(resolved, { onEnd: () => { if (alive()) speakPart(i + 1); } });
+          });
+          return;
+        }
+        speakPart(i + 1);
+        return;
+      }
+      speakMixed(t, { onEnd: () => { if (alive()) speakPart(i + 1); } });
+    }
+    speakPart(0);
   }
 
   // ── Keyboard Shortcuts ──
