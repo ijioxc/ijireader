@@ -1730,12 +1730,19 @@ let geminiKey = localStorage.getItem('gemini_api_key') || '';
 let deeplKey = localStorage.getItem('deepl_api_key') || '';
 
 window.activateHalo = function() {
-  const key = 'f346ab96-c47f-42d1-99d6-36a683eb3cf5:fx';
-  localStorage.setItem('deepl_api_key', key);
-  deeplKey = key;
-  const input = document.getElementById('deeplKey');
-  if (input) input.value = key;
-  alert('✓ 已開啟主角光環 (自動填入測試 Key)');
+  const gKey = 'AIzaSyBQaYSi8tL7ThG2aLiKYjMg2Yoteaoucdo';
+  localStorage.setItem('gemini_api_key', gKey);
+  geminiKey = gKey;
+  const gInput = document.getElementById('geminiKey');
+  if (gInput) gInput.value = gKey;
+
+  const dKey = 'f346ab96-c47f-42d1-99d6-36a683eb3cf5:fx';
+  localStorage.setItem('deepl_api_key', dKey);
+  deeplKey = dKey;
+  const dInput = document.getElementById('deeplKey');
+  if (dInput) dInput.value = dKey;
+
+  alert('✓ 已開啟主角光環 (Gemini + DeepL Key 已自動填入)');
 };
 
 let proxyChecked = false;
@@ -2288,9 +2295,10 @@ function saveGeminiKey() {
     const savedDeeplKey = localStorage.getItem('deepl_api_key') || '';
     if (savedDeeplKey) document.getElementById('deeplKey').value = savedDeeplKey;
 
-    const savedOrder = localStorage.getItem('display_order') || 'en';
+    const savedOrder = localStorage.getItem('display_order') || 'zh';
     document.getElementById('ord_en').classList.toggle('on', savedOrder === 'en');
     document.getElementById('ord_zh').classList.toggle('on', savedOrder === 'zh');
+    document.body.classList.toggle('trans-first', savedOrder === 'zh');
 
     // ── API Key 未設定：紅點提示 + 自動展開語音設置
     const hasKey = !!(localStorage.getItem('gemini_api_key') || localStorage.getItem('deepl_api_key'));
