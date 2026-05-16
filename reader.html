@@ -1179,8 +1179,8 @@
   <!-- 翻譯模型 -->
   <div style="font-size: 11px; color: var(--t2); margin-bottom: 5px;">◆ 翻譯模型</div>
   <div class="vtabs" id="translator-tabs">
-    <button class="vt on" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
-    <button class="vt" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
+    <button class="vt" id="eng_deepl" onclick="setEngine('deepl')">DeepL</button>
+    <button class="vt on" id="eng_gemini" onclick="setEngine('gemini')">Gemini</button>
   </div>
 
   <!-- DeepL API -->
@@ -2286,7 +2286,7 @@ function saveGeminiKey() {
 
   // 載入初始設定
   setTimeout(() => {
-    const savedEngine = localStorage.getItem('translation_engine') || 'deepl';
+    const savedEngine = localStorage.getItem('translation_engine') || 'gemini';
     setEngine(savedEngine);
 
     const savedGeminiKey = localStorage.getItem('gemini_api_key') || '';
