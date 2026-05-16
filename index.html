@@ -274,24 +274,47 @@
       color: var(--t3)
     }
 
+    .card-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 2px;
+    }
     .read-btn {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid rgba(200, 169, 110, .3);
-      background: var(--goldd);
+      flex: 3;
+      padding: 11px 8px;
+      border: 1px solid rgba(200, 169, 110, .5);
+      background: rgba(200, 169, 110, .12);
       border-radius: 8px;
       color: var(--gold);
       font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: .1em;
+      font-size: 11px;
+      letter-spacing: .08em;
       cursor: pointer;
       transition: .2s;
       text-align: center
     }
-
     .read-btn:hover {
-      background: rgba(200, 169, 110, .2);
+      background: rgba(200, 169, 110, .22);
       border-color: var(--gold)
+    }
+    .detail-btn {
+      flex: 1;
+      padding: 11px 8px;
+      border: 1px solid var(--b2);
+      background: transparent;
+      border-radius: 8px;
+      color: var(--t3);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .06em;
+      cursor: pointer;
+      transition: .2s;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .detail-btn:hover {
+      border-color: var(--t2);
+      color: var(--t2);
     }
 
     /* loading state */
@@ -954,8 +977,19 @@
               <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
               <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
             </div>
-            <div class="read-btn">詳細資訊 →</div>
+            <div class="card-btns">
+              <div class="read-btn btn-enter-read">▶ 進入閱讀</div>
+              <div class="detail-btn btn-detail">詳細資訊</div>
+            </div>
           `;
+          card.querySelector('.btn-enter-read').addEventListener('click', (e) => {
+            e.stopPropagation();
+            window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
+          });
+          card.querySelector('.btn-detail').addEventListener('click', (e) => {
+            e.stopPropagation();
+            openDrawer(book.id);
+          });
           card.addEventListener('click', () => openDrawer(book.id));
         } else {
           card.innerHTML = `
