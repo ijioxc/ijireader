@@ -2389,7 +2389,7 @@ function saveGeminiKey() {
   btnPlay.addEventListener('click', () => {
     isPlaying = !isPlaying;
     if (isPlaying) speakCurrent();
-    else { SY.cancel(); clearHighlights(); }
+    else { cancelAll(); clearHighlights(); }
     updateUI();
   });
 
