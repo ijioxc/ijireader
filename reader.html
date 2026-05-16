@@ -1867,11 +1867,11 @@ function saveGeminiKey() {
   }
 
   // ── Popover Toggles ──
-  btnChapter.addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.toggle('open'); popVoice.classList.remove('show'); popSettings.classList.remove('show'); });
-  btnVoice.addEventListener('click', (e) => { e.stopPropagation(); popVoice.classList.toggle('show'); popSettings.classList.remove('show'); sidebar.classList.remove('open'); });
-  btnSettings.addEventListener('click', (e) => { e.stopPropagation(); popSettings.classList.toggle('show'); popVoice.classList.remove('show'); sidebar.classList.remove('open'); });
+  btnChapter.addEventListener('click', (e) => { e.stopPropagation(); const opening = !sidebar.classList.contains('open'); sidebar.classList.toggle('open'); btnChapter.style.opacity = opening ? '0' : ''; btnChapter.style.pointerEvents = opening ? 'none' : ''; popVoice.classList.remove('show'); popSettings.classList.remove('show'); });
+  btnVoice.addEventListener('click', (e) => { e.stopPropagation(); popVoice.classList.toggle('show'); popSettings.classList.remove('show'); sidebar.classList.remove('open'); btnChapter.style.opacity = ''; btnChapter.style.pointerEvents = ''; });
+  btnSettings.addEventListener('click', (e) => { e.stopPropagation(); popSettings.classList.toggle('show'); popVoice.classList.remove('show'); sidebar.classList.remove('open'); btnChapter.style.opacity = ''; btnChapter.style.pointerEvents = ''; });
   document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && e.target !== btnChapter) sidebar.classList.remove('open');
+    if (!sidebar.contains(e.target) && e.target !== btnChapter) { sidebar.classList.remove('open'); btnChapter.style.opacity = ''; btnChapter.style.pointerEvents = ''; }
     if (!popVoice.contains(e.target) && e.target !== btnVoice) popVoice.classList.remove('show');
     if (!popSettings.contains(e.target) && e.target !== btnSettings) popSettings.classList.remove('show');
   });
