@@ -581,10 +581,10 @@
 
     #drawer-desc {
       font-family: 'Noto Serif TC', serif;
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 200;
       color: var(--t2);
-      line-height: 1.85;
+      line-height: 2;
       letter-spacing: .04em
     }
 
@@ -839,8 +839,9 @@
       document.getElementById('drawer-author').textContent = book.author;
 
       // desc
-      document.getElementById('drawer-desc').textContent =
-        book.desc || '（暫無描述）';
+      const descEl = document.getElementById('drawer-desc');
+      const descText = book.desc || '（暫無描述）';
+      descEl.innerHTML = descText.replace(/。/g, '。<br><br>').replace(/<br><br>$/, '');
 
       // progress stats
       document.getElementById('drawer-stats').innerHTML = `
