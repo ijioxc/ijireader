@@ -1,0 +1,65 @@
+{
+  "title": "Meditations",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "BookI",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "BookII",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "BookIII",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "BookIV",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "BookV",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "BookVI",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "BookVII",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "BookVIII",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "BookIX",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "BookX",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "BookXI",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "BookXII",
+      "url": "chapters/0012.json"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "title": "The Prophet",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "The Coming of the Ship",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "On Love",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "On Marriage",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "On Children",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "On Giving",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "On Eating and Drinking",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "On Work",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "On Joy and Sorrow",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "On Houses",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "On Buying and Selling",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "On Crime and Punishment",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "On Laws",
+      "url": "chapters/0012.json"
+    },
+    {
+      "id": 13,
+      "title": "On Freedom",
+      "url": "chapters/0013.json"
+    },
+    {
+      "id": 14,
+      "title": "On Reason and Passion",
+      "url": "chapters/0014.json"
+    },
+    {
+      "id": 15,
+      "title": "On Pain",
+      "url": "chapters/0015.json"
+    },
+    {
+      "id": 16,
+      "title": "On Self-Knowledge",
+      "url": "chapters/0016.json"
+    },
+    {
+      "id": 17,
+      "title": "On Teaching",
+      "url": "chapters/0017.json"
+    },
+    {
+      "id": 18,
+      "title": "On Friendship",
+      "url": "chapters/0018.json"
+    },
+    {
+      "id": 19,
+      "title": "On Talking",
+      "url": "chapters/0019.json"
+    },
+    {
+      "id": 20,
+      "title": "On Time",
+      "url": "chapters/0020.json"
+    },
+    {
+      "id": 21,
+      "title": "On Good and Evil",
+      "url": "chapters/0021.json"
+    },
+    {
+      "id": 22,
+      "title": "On Prayer",
+      "url": "chapters/0022.json"
+    },
+    {
+      "id": 23,
+      "title": "On Pleasure",
+      "url": "chapters/0023.json"
+    },
+    {
+      "id": 24,
+      "title": "On Beauty",
+      "url": "chapters/0024.json"
+    },
+    {
+      "id": 25,
+      "title": "On Religion",
+      "url": "chapters/0025.json"
+    },
+    {
+      "id": 26,
+      "title": "On Death",
+      "url": "chapters/0026.json"
+    },
+    {
+      "id": 27,
+      "title": "The Farewell",
+      "url": "chapters/0027.json"
+    }
+  ]
+}

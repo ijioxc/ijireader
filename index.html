@@ -321,6 +321,62 @@
       width: 70%
     }
 
+    /* filter bar */
+    #filter-bar {
+      max-width: 900px;
+      margin: 0 auto 24px;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px
+    }
+
+    .filter-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--t2);
+      background: transparent;
+      border: 1px solid var(--b1);
+      border-radius: 6px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: all .2s
+    }
+
+    .filter-btn:hover {
+      border-color: var(--b2);
+      color: var(--t1)
+    }
+
+    .filter-btn.active {
+      border-color: var(--gold);
+      background: var(--goldd);
+      color: var(--gold)
+    }
+
+    /* dimmed card (coming soon) */
+    .book-card.dimmed {
+      opacity: .42;
+      pointer-events: none;
+      cursor: default
+    }
+
+    .coming-soon-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 7px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--t3);
+      border: 1px solid var(--b1);
+      border-radius: 4px;
+      padding: 3px 7px
+    }
+
     /* empty state */
     #empty {
       display: none;
@@ -439,6 +495,8 @@
     <div class="divider-line"></div>
   </div>
 
+  <div id="filter-bar"></div>
+
   <div id="books">
     <!-- Loading skeletons -->
     <div class="loading-card" id="sk1">
@@ -456,103 +514,126 @@
   <div id="empty">No books found. Check your books/ folder.</div>
 
   <script>
-    // ── 書目設定（新增書只需在這裡加） ──────────────────
-    const BOOK_LIST = [
-      {
-        id: 'shadow_slave',
-        title: 'Shadow Slave',
-        desc: '一個被惡夢咒語選中的少年，在殘酷的夢境試煉中求生……',
-        manifest: 'books/shadow_slave/manifest.json'
-      },
-      {
-        id: 'lotm',
-        title: 'Lord of the Mysteries',
-        desc: '穿越維多利亞時代的神秘世界，在克蘇魯氛圍中探索秘術……',
-        manifest: 'books/lotm/manifest.json'
+    let allCards = [];
+    let activeFilter = 'All';
+
+    function applyFilter(type) {
+      activeFilter = type;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === type);
+      });
+      allCards.forEach(({ card, bookType }) => {
+        const show = type === 'All' || bookType === type;
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    function buildFilterBar(types) {
+      const bar = document.getElementById('filter-bar');
+      const all = ['All', ...types];
+      bar.innerHTML = all.map(t =>
+        `<button class="filter-btn${t === 'All' ? ' active' : ''}" data-type="${t}">${t}</button>`
+      ).join('');
+      bar.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => applyFilter(btn.dataset.type));
+      });
+    }
+
+    function openPortal(bookId, savedCh) {
+      let portal = document.getElementById('portal-overlay');
+      if (!portal) {
+        portal = document.createElement('div');
+        portal.id = 'portal-overlay';
+        portal.innerHTML = `
+          <div class="portal-circle">
+            ${Array.from({ length: 8 }, (_, i) => `
+              <div class="portal-text" style="transform: rotate(${i * 45}deg) translateX(70px)">
+                ${i % 2 === 0 ? 'SYSTEM LOADING' : '進入世界'}
+              </div>
+            `).join('')}
+          </div>
+        `;
+        document.body.appendChild(portal);
       }
-    ];
-    // ──────────────────────────────────────────────────
+      setTimeout(() => portal.classList.add('active'), 10);
+      setTimeout(() => {
+        window.location.href = `reader.html?book=${bookId}&ch=${savedCh}`;
+      }, 1000);
+    }
 
     async function loadLibrary() {
       const container = document.getElementById('books');
 
-      // 平行發送所有請求
-      const promises = BOOK_LIST.map(async (book) => {
-        try {
-          const manifest = await fetch(book.manifest).then(r => r.json());
-          return { book, manifest };
-        } catch (e) {
-          console.warn(`Failed to load ${book.id}:`, e);
-          return null;
-        }
+      const books = await fetch('books/books.json').then(r => r.json());
+
+      // 平行 fetch 有 id 的書的 manifest
+      const manifestMap = {};
+      await Promise.all(
+        books.filter(b => b.id).map(async b => {
+          try {
+            const m = await fetch(`books/${b.id}/manifest.json`).then(r => r.json());
+            manifestMap[b.id] = m;
+          } catch (e) {
+            // 無章節
+          }
+        })
+      );
+
+      // 收集所有 type（保持出現順序，去重）
+      const typeSet = [];
+      books.forEach(b => {
+        if (!typeSet.includes(b.type)) typeSet.push(b.type);
       });
+      buildFilterBar(typeSet);
 
-      const results = await Promise.all(promises);
-
-      // 資料全部回來後才清空骨架屏
       container.innerHTML = '';
-      let loaded = 0;
+      let readyCount = 0;
 
-      for (const res of results) {
-        if (!res) continue;
-        const { book, manifest } = res;
-        const chapterCount = manifest.chapters?.length || 0;
-        const savedCh = parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1');
-        const savedPara = parseInt(localStorage.getItem(`progress_${book.id}_para`) || '0');
-        const totalRead = (savedCh - 1);
-        const pct = chapterCount > 0 ? Math.min(100, Math.round(totalRead / chapterCount * 100)) : 0;
+      for (const book of books) {
+        const manifest = book.id ? manifestMap[book.id] : null;
+        const isReady = !!manifest;
+        if (isReady) readyCount++;
+
+        const chapterCount = manifest?.chapters?.length || 0;
+        const savedCh = isReady ? parseInt(localStorage.getItem(`progress_${book.id}_ch`) || '1') : 0;
+        const pct = chapterCount > 0 ? Math.min(100, Math.round((savedCh - 1) / chapterCount * 100)) : 0;
 
         const card = document.createElement('div');
-        card.className = 'book-card';
-        card.innerHTML = `
-          <div class="book-meta">Novel · English/中文</div>
-          <div class="book-title">${book.title}</div>
-          <div class="book-desc">${book.desc}</div>
-          <div class="book-stats">
-            <div class="stat"><div class="stat-val">${chapterCount}</div><div class="stat-lbl">Chapters</div></div>
-            <div class="stat"><div class="stat-val">${savedCh}</div><div class="stat-lbl">Last Read</div></div>
-            <div class="stat"><div class="stat-val">${pct}%</div><div class="stat-lbl">Progress</div></div>
-          </div>
-          <div class="book-progress">
-            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-            <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
-          </div>
-          <div class="read-btn">▶ Continue Reading</div>
-        `;
-        card.onclick = () => {
-          // 建立傳送門 Overlay
-          let portal = document.getElementById('portal-overlay');
-          if (!portal) {
-            portal = document.createElement('div');
-            portal.id = 'portal-overlay';
-            portal.innerHTML = `
-              <div class="portal-circle">
-                ${Array.from({ length: 8 }, (_, i) => `
-                  <div class="portal-text" style="transform: rotate(${i * 45}deg) translateX(70px)">
-                    ${i % 2 === 0 ? 'SYSTEM LOADING' : '進入世界'}
-                  </div>
-                `).join('')}
-              </div>
-            `;
-            document.body.appendChild(portal);
-          }
+        card.className = 'book-card' + (isReady ? '' : ' dimmed');
+        card.dataset.bookType = book.type;
 
-          // 啟動動畫
-          setTimeout(() => {
-            portal.classList.add('active');
-          }, 10);
+        if (isReady) {
+          card.innerHTML = `
+            <div class="book-meta">${book.type} · ${book.source}</div>
+            <div class="book-title">${book.title}</div>
+            ${book.desc ? `<div class="book-desc">${book.desc}</div>` : `<div class="book-desc">${book.author}</div>`}
+            <div class="book-stats">
+              <div class="stat"><div class="stat-val">${chapterCount}</div><div class="stat-lbl">Chapters</div></div>
+              <div class="stat"><div class="stat-val">${savedCh}</div><div class="stat-lbl">Last Read</div></div>
+              <div class="stat"><div class="stat-val">${pct}%</div><div class="stat-lbl">Progress</div></div>
+            </div>
+            <div class="book-progress">
+              <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+              <div class="progress-text">Chapter ${savedCh} / ${chapterCount}</div>
+            </div>
+            <div class="read-btn">▶ Continue Reading</div>
+          `;
+          card.onclick = () => openPortal(book.id, savedCh);
+        } else {
+          card.innerHTML = `
+            <div class="coming-soon-badge">即將推出</div>
+            <div class="book-meta">${book.type} · ${book.source}</div>
+            <div class="book-title">${book.title}</div>
+            <div class="book-desc">${book.author}</div>
+          `;
+        }
 
-          // 延遲跳轉
-          setTimeout(() => {
-            window.location.href = `reader.html?book=${book.id}&ch=${savedCh}`;
-          }, 1000); // 1秒後跳轉
-        };
         container.appendChild(card);
-        loaded++;
+        allCards.push({ card, bookType: book.type });
       }
 
-      document.getElementById('lib-count').textContent = `${loaded} books`;
-      if (loaded === 0) {
+      document.getElementById('lib-count').textContent = `${readyCount} / ${books.length} books`;
+      if (books.length === 0) {
         document.getElementById('empty').style.display = 'block';
       }
     }

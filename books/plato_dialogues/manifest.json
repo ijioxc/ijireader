@@ -1,0 +1,125 @@
+{
+  "title": "Plato: Dialogues",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Charmides",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "Lysis",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "Laches",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "Protagoras",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "Euthydemus",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "Cratylus",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "Phaedrus",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "Ion",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "Symposium",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "Meno",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "Euthyphro",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "Apology",
+      "url": "chapters/0012.json"
+    },
+    {
+      "id": 13,
+      "title": "Crito",
+      "url": "chapters/0013.json"
+    },
+    {
+      "id": 14,
+      "title": "Phaedo",
+      "url": "chapters/0014.json"
+    },
+    {
+      "id": 15,
+      "title": "Gorgias",
+      "url": "chapters/0015.json"
+    },
+    {
+      "id": 16,
+      "title": "Republic",
+      "url": "chapters/0016.json"
+    },
+    {
+      "id": 17,
+      "title": "Timaeus",
+      "url": "chapters/0017.json"
+    },
+    {
+      "id": 18,
+      "title": "Critias",
+      "url": "chapters/0018.json"
+    },
+    {
+      "id": 19,
+      "title": "Parmenides",
+      "url": "chapters/0019.json"
+    },
+    {
+      "id": 20,
+      "title": "Theaetetus",
+      "url": "chapters/0020.json"
+    },
+    {
+      "id": 21,
+      "title": "Sophist",
+      "url": "chapters/0021.json"
+    },
+    {
+      "id": 22,
+      "title": "Statesman",
+      "url": "chapters/0022.json"
+    },
+    {
+      "id": 23,
+      "title": "Philebus",
+      "url": "chapters/0023.json"
+    },
+    {
+      "id": 24,
+      "title": "Laws",
+      "url": "chapters/0024.json"
+    }
+  ]
+}

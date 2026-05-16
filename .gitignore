@@ -1,0 +1,6 @@
+books/_epub_cache/
+books/__pycache__/
+books/venv/
+__pycache__/
+*.pyc
+.DS_Store

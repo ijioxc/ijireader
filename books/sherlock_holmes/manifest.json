@@ -1,0 +1,65 @@
+{
+  "title": "The Adventures of Sherlock Holmes",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "A Scandal in Bohemia",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "The Redheaded League",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "A Case of Identity",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "The Boscombe Valley Mystery",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "The Five Orange Pips",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "The Man with the Twisted Lip",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "The Adventure of the Blue Carbuncle",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "The Adventure of the Speckled Band",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "The Adventure of the Engineer’s Thumb",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "The Adventure of the Noble Bachelor",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "The Adventure of the Beryl Coronet",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "The Adventure of the Copper Beeches",
+      "url": "chapters/0012.json"
+    }
+  ]
+}

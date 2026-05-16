@@ -1,0 +1,105 @@
+{
+  "title": "The Picture of Dorian Gray",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "I",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "II",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "III",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "IV",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "V",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "VI",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "VII",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "VIII",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "IX",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "X",
+      "url": "chapters/0010.json"
+    },
+    {
+      "id": 11,
+      "title": "XI",
+      "url": "chapters/0011.json"
+    },
+    {
+      "id": 12,
+      "title": "XII",
+      "url": "chapters/0012.json"
+    },
+    {
+      "id": 13,
+      "title": "XIII",
+      "url": "chapters/0013.json"
+    },
+    {
+      "id": 14,
+      "title": "XIV",
+      "url": "chapters/0014.json"
+    },
+    {
+      "id": 15,
+      "title": "XV",
+      "url": "chapters/0015.json"
+    },
+    {
+      "id": 16,
+      "title": "XVI",
+      "url": "chapters/0016.json"
+    },
+    {
+      "id": 17,
+      "title": "XVII",
+      "url": "chapters/0017.json"
+    },
+    {
+      "id": 18,
+      "title": "XVIII",
+      "url": "chapters/0018.json"
+    },
+    {
+      "id": 19,
+      "title": "XIX",
+      "url": "chapters/0019.json"
+    },
+    {
+      "id": 20,
+      "title": "XX",
+      "url": "chapters/0020.json"
+    }
+  ]
+}

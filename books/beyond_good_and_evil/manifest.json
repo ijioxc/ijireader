@@ -1,0 +1,55 @@
+{
+  "title": "Beyond Good and Evil",
+  "chapters": [
+    {
+      "id": 1,
+      "title": "I",
+      "url": "chapters/0001.json"
+    },
+    {
+      "id": 2,
+      "title": "II",
+      "url": "chapters/0002.json"
+    },
+    {
+      "id": 3,
+      "title": "III",
+      "url": "chapters/0003.json"
+    },
+    {
+      "id": 4,
+      "title": "IV",
+      "url": "chapters/0004.json"
+    },
+    {
+      "id": 5,
+      "title": "V",
+      "url": "chapters/0005.json"
+    },
+    {
+      "id": 6,
+      "title": "VI",
+      "url": "chapters/0006.json"
+    },
+    {
+      "id": 7,
+      "title": "VII",
+      "url": "chapters/0007.json"
+    },
+    {
+      "id": 8,
+      "title": "VIII",
+      "url": "chapters/0008.json"
+    },
+    {
+      "id": 9,
+      "title": "IX",
+      "url": "chapters/0009.json"
+    },
+    {
+      "id": 10,
+      "title": "From the Heights",
+      "url": "chapters/0010.json"
+    }
+  ]
+}

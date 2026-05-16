@@ -1,9 +1,107 @@
 [
   {
+    "id": "shadow_slave",
+    "title": "Shadow Slave",
+    "author": "Guiltythree",
+    "type": "Fantasy",
+    "source": "Royal Road",
+    "desc": "一個被惡夢咒語選中的少年，在殘酷的夢境試煉中求生……"
+  },
+  {
+    "id": "lotm",
+    "title": "Lord of the Mysteries",
+    "author": "Cuttlefish That Loves Diving",
+    "type": "Fantasy",
+    "source": "Novel Updates",
+    "desc": "穿越維多利亞時代的神秘世界，在克蘇魯氛圍中探索秘術……"
+  },
+  {
+    "id": "gatsby",
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "爵士時代的紙醉金迷，一場注定幻滅的美國夢……"
+  },
+  {
+    "id": "dorian_gray",
     "title": "The Picture of Dorian Gray",
     "author": "Oscar Wilde",
     "type": "Classic",
-    "source": "Standard Ebooks"
+    "source": "Standard Ebooks",
+    "desc": "一幅畫像替他承受了歲月與罪惡，而他繼續年輕……"
+  },
+  {
+    "id": "sherlock_holmes",
+    "title": "The Adventures of Sherlock Holmes",
+    "author": "Arthur Conan Doyle",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "貝克街 221B，霧都倫敦，最敏銳的推理頭腦……"
+  },
+  {
+    "id": "frankenstein",
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "科學與造物的邊界，一個被創造者的悲鳴……"
+  },
+  {
+    "id": "moby_dick",
+    "title": "Moby-Dick",
+    "author": "Herman Melville",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "白色巨鯨與復仇的海洋，美國文學最宏大的史詩……"
+  },
+  {
+    "id": "meditations",
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "type": "Philosophy",
+    "source": "Standard Ebooks",
+    "desc": "羅馬皇帝寫給自己的哲學札記，斯多葛主義的精華……"
+  },
+  {
+    "id": "beyond_good_and_evil",
+    "title": "Beyond Good and Evil",
+    "author": "Friedrich Nietzsche",
+    "type": "Philosophy",
+    "source": "Standard Ebooks",
+    "desc": "尼采對道德、宗教與哲學的猛烈批判……"
+  },
+  {
+    "id": "the_prophet",
+    "title": "The Prophet",
+    "author": "Kahlil Gibran",
+    "type": "Philosophy",
+    "source": "Standard Ebooks",
+    "desc": "先知臨別前對人類最深的叮嚀，愛、自由與死亡……"
+  },
+  {
+    "id": "monte_cristo",
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "被冤枉囚禁多年的水手，如何化身伯爵展開精密復仇……"
+  },
+  {
+    "id": "three_musketeers",
+    "title": "The Three Musketeers",
+    "author": "Alexandre Dumas",
+    "type": "Classic",
+    "source": "Standard Ebooks",
+    "desc": "一切為一人，一人為一切——劍客與友情的冒險傳奇……"
+  },
+  {
+    "id": "plato_dialogues",
+    "title": "Dialogues",
+    "author": "Plato",
+    "type": "Philosophy",
+    "source": "Standard Ebooks",
+    "desc": "柏拉圖與蘇格拉底的哲學對話，涵蓋理想國、靈魂與真理……"
   },
   {
     "title": "Mushoku Tensei: Jobless Reincarnation",
@@ -18,52 +116,16 @@
     "source": "Novel Updates"
   },
   {
-    "title": "The Great Gatsby",
-    "author": "F. Scott Fitzgerald",
-    "type": "Classic",
-    "source": "Standard Ebooks"
-  },
-  {
     "title": "Mother of Learning",
     "author": "nobody123",
     "type": "English Web Novel",
     "source": "Royal Road"
   },
   {
-    "title": "Meditations",
-    "author": "Marcus Aurelius",
-    "type": "Philosophy",
-    "source": "Standard Ebooks"
-  },
-  {
-    "title": "Beyond Good and Evil",
-    "author": "Friedrich Nietzsche",
-    "type": "Philosophy",
-    "source": "Standard Ebooks"
-  },
-  {
-    "title": "The Republic",
-    "author": "Plato",
-    "type": "Philosophy",
-    "source": "Standard Ebooks"
-  },
-  {
-    "title": "The Prophet",
-    "author": "Kahlil Gibran",
-    "type": "Philosophy",
-    "source": "Standard Ebooks"
-  },
-  {
     "title": "Howl's Moving Castle",
     "author": "Diana Wynne Jones",
     "type": "Fantasy",
     "source": "Library"
-  },
-  {
-    "title": "The Adventures of Sherlock Holmes",
-    "author": "Arthur Conan Doyle",
-    "type": "Classic / Mystery",
-    "source": "Standard Ebooks"
   },
   {
     "title": "No Longer Human",
@@ -80,36 +142,18 @@
   {
     "title": "Dune",
     "author": "Frank Herbert",
-    "type": "Sci-Fi Classic",
+    "type": "Sci-Fi",
     "source": "Library"
-  },
-  {
-    "title": "The Count of Monte Cristo",
-    "author": "Alexandre Dumas",
-    "type": "Classic / Revenge",
-    "source": "Standard Ebooks"
-  },
-  {
-    "title": "The Three Musketeers",
-    "author": "Alexandre Dumas",
-    "type": "Classic / Adventure",
-    "source": "Standard Ebooks"
   },
   {
     "title": "1984",
     "author": "George Orwell",
-    "type": "Classic / Dystopian",
+    "type": "Classic",
     "source": "Standard Ebooks"
   },
   {
-    "title": "Frankenstein",
-    "author": "Mary Shelley",
-    "type": "Classic / Sci-Fi",
-    "source": "Standard Ebooks"
-  },
-  {
-    "title": "Moby-Dick",
-    "author": "Herman Melville",
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
     "type": "Classic",
     "source": "Standard Ebooks"
   },
@@ -117,19 +161,13 @@
     "title": "The Wandering Inn",
     "author": "pirateaba",
     "type": "English Web Novel",
-    "source": "Royal Road / Official Site"
+    "source": "Royal Road"
   },
   {
     "title": "The Hitchhiker's Guide to the Galaxy",
     "author": "Douglas Adams",
-    "type": "Sci-Fi / Comedy",
+    "type": "Sci-Fi",
     "source": "Library"
-  },
-  {
-    "title": "Brave New World",
-    "author": "Aldous Huxley",
-    "type": "Classic / Dystopian",
-    "source": "Standard Ebooks"
   },
   {
     "title": "The Catcher in the Rye",
@@ -140,19 +178,19 @@
   {
     "title": "The Bible",
     "author": "Various",
-    "type": "Religious / Cultural Foundation",
+    "type": "Philosophy",
     "source": "Standard Ebooks"
   },
   {
     "title": "The Protestant Ethic and the Spirit of Capitalism",
     "author": "Max Weber",
-    "type": "Sociology / Philosophy",
+    "type": "Philosophy",
     "source": "Library"
   },
   {
     "title": "Orientalism",
     "author": "Edward W. Said",
-    "type": "Cultural Criticism",
+    "type": "Philosophy",
     "source": "Library"
   }
 ]
