@@ -1134,10 +1134,8 @@
     <div class="ctrl-left">
       <button class="ctrl-btn" id="btn-autoplay" style="width: auto; padding: 0 10px;"><div class="adot"></div>自動播放</button>
       <div id="mg-lang">
-        <button class="mb on" id="mL_mixed">混合</button>
-        <button class="mb" id="mL_relay">接力</button>
-        <button class="mb" id="mL_en">E</button>
-        <button class="mb" id="mL_zh">中</button>
+        <button class="mb" id="mL_zh">中文</button>
+        <button class="mb" id="mL_en">English</button>
       </div>
       <button class="ctrl-btn" id="tlAllBtn" style="width: auto; padding: 0 10px;">⟳ 翻譯本章</button>
     </div>
@@ -1207,11 +1205,9 @@
 
   <!-- 朗讀語音 -->
   <div style="font-size: 11px; color: var(--t2); margin-bottom: 5px;">◆ 朗讀語音</div>
-  <div class="vtabs" id="voice-lang-tabs">
-    <button class="vt on">混合</button>
-    <button class="vt">接力</button>
-    <button class="vt">English</button>
-    <button class="vt">中文</button>
+  <div id="voice-lang-tabs" style="display:flex;border:0.5px solid rgba(255,255,255,0.1);border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.04);margin-bottom:10px;">
+    <button class="mb" id="sL_zh">中文</button>
+    <button class="mb" id="sL_en">English</button>
   </div>
 
   <!-- 語音列表 -->
@@ -1222,9 +1218,9 @@
   <!-- 運作模式 -->
   <div style="font-size: 10px; color: var(--t3); line-height: 1.4; margin-bottom: 10px; padding: 0 5px;">
     運作模式：<br>
-    • 混合：用單一多語言語音朗讀中英，語音流暢自然。<br>
-    • 接力：英文語音讀英文 → 中文語音讀中文，各自選聲。<br>
-    • E / 中：只朗讀單一語言。
+    • 中文 ＋ English（同時選）→ 接力模式：英文語音讀英文，中文語音讀中文。<br>
+    • 只選 English → 僅朗讀英文。<br>
+    • 只選 中文 → 僅朗讀中文。
   </div>
 
   <!-- 語音品質 -->
@@ -1335,7 +1331,8 @@
   let currentParaIndex = 0;
   let isPlaying = false;
   let isAuto = true;
-  let currentLangMode = 'mixed'; // 'en', 'zh', 'relay', 'mixed'
+  let currentLangMode = 'relay'; // 'en', 'zh', 'relay'
+  let enOn = true, zhOn = true;
   let rate = 1.0;
   const SY = window.speechSynthesis;
   let voices = [];
@@ -2140,17 +2137,31 @@ function saveGeminiKey() {
 
   setupTabs('translator-tabs', 'translationEngine', null);
 
-  // 預設雙語播放：首次沒有儲存值時寫入 '混合' 當預設
-  if (!localStorage.getItem('voiceLang')) localStorage.setItem('voiceLang', '混合');
+  // 從 localStorage 還原語言選擇
+  (function restoreLang() {
+    const saved = localStorage.getItem('voiceLang') || 'relay';
+    if (saved === 'English') { enOn = true; zhOn = false; }
+    else if (saved === '中文') { enOn = false; zhOn = true; }
+    else { enOn = true; zhOn = true; } // relay / mixed / 其他 → 雙語
+    applyLangMode();
+  })();
 
-  setupTabs('voice-lang-tabs', 'voiceLang', (lang) => {
-    if (lang === 'English') currentLangMode = 'en';
-    else if (lang === '中文') currentLangMode = 'zh';
-    else if (lang === '接力') currentLangMode = 'relay';
-    else currentLangMode = 'mixed';
+  function applyLangMode() {
+    if (enOn && zhOn) currentLangMode = 'relay';
+    else if (enOn)    currentLangMode = 'en';
+    else              currentLangMode = 'zh';
+    const saveVal = (enOn && zhOn) ? 'relay' : enOn ? 'English' : '中文';
+    localStorage.setItem('voiceLang', saveVal);
     updateUI();
     renderV(currentLangMode);
-  });
+  }
+
+  function toggleLang(which) {
+    if (which === 'en') enOn = !enOn;
+    else                zhOn = !zhOn;
+    if (!enOn && !zhOn) { if (which === 'en') enOn = true; else zhOn = true; }
+    applyLangMode();
+  }
 
   // ── Voice List Test ──
   function vq(v) {
@@ -2313,14 +2324,8 @@ function saveGeminiKey() {
     btnPlay.innerHTML = isPlaying ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
     btnAutoplay.classList.toggle('on', isAuto);
     
-    const mL_mixed = document.getElementById('mL_mixed');
-    const mL_relay = document.getElementById('mL_relay');
-    const mL_en = document.getElementById('mL_en');
-    const mL_zh = document.getElementById('mL_zh');
-    if (mL_mixed) mL_mixed.classList.toggle('on', currentLangMode === 'mixed');
-    if (mL_relay) mL_relay.classList.toggle('on', currentLangMode === 'relay');
-    if (mL_en) mL_en.classList.toggle('on', currentLangMode === 'en');
-    if (mL_zh) mL_zh.classList.toggle('on', currentLangMode === 'zh');
+    ['mL_en','sL_en'].forEach(id => document.getElementById(id)?.classList.toggle('on', enOn));
+    ['mL_zh','sL_zh'].forEach(id => document.getElementById(id)?.classList.toggle('on', zhOn));
 
     paragraphs.forEach((p, i) => {
       p.classList.toggle('current-playing', i === currentParaIndex);
@@ -2385,10 +2390,10 @@ function saveGeminiKey() {
     updateUI();
   });
 
-  document.getElementById('mL_mixed').addEventListener('click', () => { currentLangMode = 'mixed'; localStorage.setItem('voiceLang', '混合'); updateUI(); renderV('mixed'); });
-  document.getElementById('mL_relay').addEventListener('click', () => { currentLangMode = 'relay'; localStorage.setItem('voiceLang', '接力'); updateUI(); renderV('relay'); });
-  document.getElementById('mL_en').addEventListener('click', () => { currentLangMode = 'en'; localStorage.setItem('voiceLang', 'English'); updateUI(); renderV('en'); });
-  document.getElementById('mL_zh').addEventListener('click', () => { currentLangMode = 'zh'; localStorage.setItem('voiceLang', '中文'); updateUI(); renderV('zh'); });
+  document.getElementById('mL_en').addEventListener('click', () => toggleLang('en'));
+  document.getElementById('mL_zh').addEventListener('click', () => toggleLang('zh'));
+  document.getElementById('sL_en').addEventListener('click', () => toggleLang('en'));
+  document.getElementById('sL_zh').addEventListener('click', () => toggleLang('zh'));
 
   btnPrev.addEventListener('click', () => {
     clearHighlights();
